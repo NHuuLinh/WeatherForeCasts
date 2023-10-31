@@ -41,6 +41,7 @@
 		A474ED2D2AECB78D00E3FD3B /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */; };
 		A474ED2E2AECB78D00E3FD3B /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */; };
 		A474ED2F2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1C2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf */; };
+		A479E5EE2AF1633F004F2515 /* qweViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A479E5ED2AF1633F004F2515 /* qweViewController.swift */; };
 		A4A5BD842AF022C500046884 /* WeatherByDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A5BD822AF022C500046884 /* WeatherByDayTableViewCell.swift */; };
 		A4A5BD852AF022C500046884 /* WeatherByDayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4A5BD832AF022C500046884 /* WeatherByDayTableViewCell.xib */; };
 		A4A876BB2AE3738600ADD832 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A876BA2AE3738600ADD832 /* UserDefaults.swift */; };
@@ -99,6 +100,7 @@
 		A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		A474ED1C2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A479E5ED2AF1633F004F2515 /* qweViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qweViewController.swift; sourceTree = "<group>"; };
 		A4A5BD822AF022C500046884 /* WeatherByDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherByDayTableViewCell.swift; sourceTree = "<group>"; };
 		A4A5BD832AF022C500046884 /* WeatherByDayTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherByDayTableViewCell.xib; sourceTree = "<group>"; };
 		A4A876BA2AE3738600ADD832 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				A4EBDD6F2AEE417900446C7B /* Network */,
 				A474ED092AECB74D00E3FD3B /* Poppins Font */,
 				A4B5119C2AE97B8200FB1AAB /* DailyResponse.swift */,
+				A479E5ED2AF1633F004F2515 /* qweViewController.swift */,
 				A45FB6832AE1160700F7E599 /* WeatherForeCasts.xcworkspace */,
 				A4A876C02AE51AB000ADD832 /* Extension */,
 				A419369F2ADE6F6B00ED58BE /* AppDelegate.swift */,
@@ -468,6 +471,7 @@
 				A4EBDD712AEE41B900446C7B /* NetworkConstant.swift in Sources */,
 				A4EBDD7F2AEEB5B900446C7B /* DatesCollectionViewCell.swift in Sources */,
 				A41936A22ADE6F6B00ED58BE /* SceneDelegate.swift in Sources */,
+				A479E5EE2AF1633F004F2515 /* qweViewController.swift in Sources */,
 				A4BD34522AEFAAC0008245A1 /* testCollectionViewCell.swift in Sources */,
 				A4A876BB2AE3738600ADD832 /* UserDefaults.swift in Sources */,
 				A41936B62ADE7A5900ED58BE /* LoginPresenter.swift in Sources */,

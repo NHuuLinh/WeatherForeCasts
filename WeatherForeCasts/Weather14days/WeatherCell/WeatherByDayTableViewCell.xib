@@ -24,7 +24,7 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="805" id="KGk-i7-Jjw" customClass="WeatherByDayTableViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="805"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="805"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -44,8 +44,8 @@
                                     <constraint firstAttribute="height" constant="65" id="p2T-dM-aJG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25°" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26S-Ya-gLe">
-                                <rect key="frame" x="188" y="73" width="34" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26S-Ya-gLe">
+                                <rect key="frame" x="189.33333333333334" y="73" width="31.333333333333343" height="28"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -574,6 +574,7 @@
                     <constraint firstItem="3Og-94-JTC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1b1-fc-lAi"/>
                     <constraint firstItem="bqu-yg-Ssn" firstAttribute="leading" secondItem="3Og-94-JTC" secondAttribute="leading" id="Cp1-Lo-kcf"/>
                     <constraint firstItem="bqu-yg-Ssn" firstAttribute="top" secondItem="3Og-94-JTC" secondAttribute="bottom" constant="10" id="HZW-53-pn0"/>
+                    <constraint firstAttribute="bottom" secondItem="bqu-yg-Ssn" secondAttribute="bottom" id="muH-DM-mbj"/>
                     <constraint firstItem="3Og-94-JTC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="pxf-rJ-Xbq"/>
                 </constraints>
             </tableViewCellContentView>

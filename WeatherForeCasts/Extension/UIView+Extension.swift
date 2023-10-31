@@ -28,4 +28,14 @@ extension UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         return storyboard.instantiateViewController(identifier: identifier) as! Self
     }
+    
+}
+extension UITableViewCell {
+    func extractImageNameCell(url: String) -> String {
+        let cleanedURL = url
+            .replacingOccurrences(of: "//cdn.weatherapi.com/weather/64x64/", with: "")
+            .replacingOccurrences(of: ".png", with: "")
+            .replacingOccurrences(of: "/", with: "")
+        return cleanedURL
+    }
 }

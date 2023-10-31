@@ -17,9 +17,9 @@ class DatesCollectionViewCell: UICollectionViewCell {
 //        dateLb.text = nil
       }
       
-    func bindData(date: String) {
-            dateLb.text = date
-        print(date)
-        }
+    func bindData(date title: String?) {
+         dateLb.text = title
+         print("date có title là : \(title ?? "")")
+       }
   }
 

@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import Alamofire
+
 
 
 class WeatherLongDayViewController: UIViewController {
-
+    
     @IBOutlet weak var Weather14dayTbView: UITableView!
     var dates = [String]()
-    var forecastdays = [Forecastday]()
+    var forecastdays: [ForecastDay1] = []
     var dateSelectedHandler: (() -> Void)?
     enum TotalSection: Int {
         case dateSection // 0
@@ -23,8 +25,9 @@ class WeatherLongDayViewController: UIViewController {
         super.viewDidLoad()
         get14DaysData()
         setupTableView()
-        print(Weather14dayTbView.frame)
-
+        //        Weather14dayTbView.estimatedRowHeight = 100 // Adjust this to a reasonable estimate
+        //            Weather14dayTbView.rowHeight = UITableView.automaticDimension
+        
     }
     private func setupTableView() {
         Weather14dayTbView.dataSource = self // self chính instance của HomeViewController
@@ -37,68 +40,48 @@ class WeatherLongDayViewController: UIViewController {
         Weather14dayTbView.register(datasCell, forCellReuseIdentifier: "DatesTableViewCell")
         let weatherByDayCell = UINib(nibName: "WeatherByDayTableViewCell", bundle: nil)
         Weather14dayTbView.register(weatherByDayCell, forCellReuseIdentifier: "WeatherByDayTableViewCell")
+        
     }
     func get14DaysData() {
         APIClient.shared.getWeatherData { result in
             switch result {
             case .success(let weatherData):
                 let forecastdays = weatherData.forecast.forecastday
-                // Lấy danh sách 14 ngày
-                self.dates = forecastdays.map { $0.date }
-                self.Weather14dayTbView.reloadData()
-                print("success")
-                
-                // In giá trị date sau khi lấy dữ liệu
-                for date in self.dates {
-                    print("Date: \(date)")
-                }
+                                    // Lấy danh sách các ngày trong tuần
+                                    self.dates = forecastdays.map { $0.date }
+//                self.forecastdays = weatherData.forecast.forecastday
+                                    self.Weather14dayTbView.reloadData()
+                                    print("success")
+//                 In giá trị date sau khi lấy dữ liệu
+                                    for date in self.dates {
+                                        print("Date: \(date)")
+                                    }
             case .failure(let error):
                 print("API error: \(error)")
             }
         }
     }
-
 }
+
+        
     
 extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let homeSection = TotalSection(rawValue: section)
-        switch homeSection {
-        case .dateSection:
-            return forecastdays.count
-        case.WeatherSection:
-            return forecastdays.count
-        default :
-            return 0
-        }
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row < dates.count {
+        if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DatesTableViewCell", for: indexPath) as! DatesTableViewCell
-            cell.bindData(date: dates[indexPath.row])
-            cell.setOnClickDateHandler { selectedIndexPath in
+            cell.bindData(dates: dates) { selectedIndexPath in
+//                //            // Xử lý sự kiện khi người dùng chọn một ngày
+//                ////            print("Selected date: \(self.dates[selectedIndexPath.row])")
             }
-            return cell
+                return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherByDayTableViewCell", for: indexPath) as! WeatherByDayTableViewCell
-            let forecastData = forecastdays[indexPath.row - dates.count]
-            cell.updateValue(withForecastData: forecastData)
+
             return cell
         }
     }
 }
-//extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return forecastdays.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "DatesTableViewCell", for: indexPath) as! DatesTableViewCell
-//
-//        // Truyền danh sách ngày và closure xử lý sự kiện từ WeatherLongDayViewController
-//        cell.bindData(date: dates[indexPath.row])
-//        return cell
-//    }
-//}
-
