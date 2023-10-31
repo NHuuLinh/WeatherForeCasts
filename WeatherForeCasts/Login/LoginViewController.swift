@@ -129,13 +129,13 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     }
     func routeToMain() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homePageVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+        let testVC = storyboard.instantiateViewController(withIdentifier: "WeatherLongDayViewController")
         let keyWindow = UIApplication.shared.connectedScenes
                 .filter({$0.activationState == .foregroundActive})
                 .compactMap({$0 as? UIWindowScene})
                 .first?.windows
                 .filter({$0.isKeyWindow}).first
-        keyWindow?.rootViewController = homePageVC
+        keyWindow?.rootViewController = testVC
     }
     func showLoading(isShow: Bool) {
         if isShow {

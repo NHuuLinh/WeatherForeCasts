@@ -7,14 +7,18 @@ target 'WeatherForeCasts' do
 
   # Pods for WeatherForeCasts
   pod 'FirebaseAuth'
-  pod 'Alamofire'
+  pod 'Alamofire', '5.8.0'
+  pod 'AlamofireImage', '4.3.0'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'Kingfisher', '~> 7.0'
+
 
   
   
   pod 'FirebaseDatabase'
   pod 'FirebaseFirestore'
   pod 'MBProgressHUD', '~> 1.2.0'
+
   
 
 end

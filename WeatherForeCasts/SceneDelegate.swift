@@ -19,22 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        
-        var controller: UIViewController!
-            
+    
         if UserDefaults.standard.hasOnboarded {
             if Auth.auth().currentUser != nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                controller = storyboard.instantiateViewController(identifier: "HomeNC") as! UINavigationController
+//                gotoHomeViewController()
+                gotoLoginViewController()
+
             } else {
                 gotoLoginViewController()
             }
         } else {
-            controller = OnboardingViewController.instantiate()
+            gotoOnBroad()
         }
-        window?.rootViewController = controller
-        window?.makeKeyAndVisible()
-
     }
 
     func gotoLoginViewController() {
@@ -44,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = loginNavigation
             window!.makeKeyAndVisible()
     }
-    func gotoMainViewController() {
+    func gotoHomeViewController() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
         let MainVC = storybroad.instantiateViewController(withIdentifier: "HomeViewController")
         let loginNavigation = UINavigationController(rootViewController: MainVC)
@@ -53,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     func gotoOnBroad() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
-        let OnbroadVC = storybroad.instantiateViewController(withIdentifier: "OnbroadViewController")
+        let OnbroadVC = storybroad.instantiateViewController(withIdentifier: "OnboardingViewController")
         let OnbroadNavigation = UINavigationController(rootViewController: OnbroadVC)
         window?.rootViewController = OnbroadVC
         window!.makeKeyAndVisible()

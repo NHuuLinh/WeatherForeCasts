@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DatesCollectionViewCell" id="gTV-IL-0wX" customClass="DatesCollectionViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="182" height="161"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="182" height="161"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWh-Tm-6cB">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2023-11-06" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ien-Cz-FkR">
+                                <rect key="frame" x="0.0" y="4.6666666666666679" width="50" height="40.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ien-Cz-FkR" firstAttribute="centerX" secondItem="nWh-Tm-6cB" secondAttribute="centerX" id="7tH-bG-uIQ"/>
+                            <constraint firstItem="Ien-Cz-FkR" firstAttribute="centerY" secondItem="nWh-Tm-6cB" secondAttribute="centerY" id="T30-82-NEL"/>
+                            <constraint firstItem="Ien-Cz-FkR" firstAttribute="leading" secondItem="nWh-Tm-6cB" secondAttribute="leading" id="hEk-ny-b4u"/>
+                            <constraint firstAttribute="height" constant="50" id="mP4-Zl-4Sr"/>
+                            <constraint firstAttribute="width" constant="50" id="uuy-xy-UNp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="nWh-Tm-6cB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="JpK-vd-XUS"/>
+                <constraint firstItem="nWh-Tm-6cB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fGO-4t-TjW"/>
+                <constraint firstItem="nWh-Tm-6cB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="r2B-j6-UTq"/>
+                <constraint firstItem="nWh-Tm-6cB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="wTu-nL-I4x"/>
+            </constraints>
+            <size key="customSize" width="182" height="161"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="dateBackGroundColors" destination="nWh-Tm-6cB" id="Gil-1V-25U"/>
+                <outlet property="dateLb" destination="Ien-Cz-FkR" id="3QN-J4-8Sl"/>
+            </connections>
+            <point key="canvasLocation" x="129.7709923664122" y="27.816901408450704"/>
+        </collectionViewCell>
+    </objects>
+</document>
