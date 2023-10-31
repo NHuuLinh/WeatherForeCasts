@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Kingfisher
+
+
 
 class Weather24hCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
@@ -17,5 +20,23 @@ class Weather24hCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+//    func runcode(){
+//        bindData(news: news)
+//    }
+//    func bindData(news: Condition) {
+//        if let newsImageString = news.icon {
+//            let newsImageUrl = URL(string: newsImageString)
+//            if let imageUrlString = newsImageUrl?.absoluteString {
+//                print("Địa chỉ URL của hình ảnh: \(imageUrlString)")
+//                
+//                // Call the delegate method to pass the value
+//            }
+//            
+//            weatherIconImageView.kf.setImage(with: newsImageUrl)
+//        } else {
+//            weatherIconImageView.image = UIImage(named: "warning")
+//        }
+//    }
+
 
 }

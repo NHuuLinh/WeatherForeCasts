@@ -17,13 +17,45 @@
 		A41936B62ADE7A5900ED58BE /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41936B52ADE7A5900ED58BE /* LoginPresenter.swift */; };
 		A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41ADF852AE524CB0020A1BE /* OnbroadingSlide.swift */; };
 		A41ADF882AE52EE30020A1BE /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41ADF872AE52EE30020A1BE /* OnboardingCollectionViewCell.swift */; };
-		A45FB6842AE1160700F7E599 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45FB6832AE1160700F7E599 /* HomeViewController.swift */; };
+		A45FB6842AE1160700F7E599 /* WeatherForeCasts.xcworkspace in Sources */ = {isa = PBXBuildFile; fileRef = A45FB6832AE1160700F7E599 /* WeatherForeCasts.xcworkspace */; };
 		A46351EF2AE132A100F8D65A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A46351EE2AE132A100F8D65A /* GoogleService-Info.plist */; };
 		A46351F12AE1345700F8D65A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46351F02AE1345700F8D65A /* RegisterViewController.swift */; };
 		A46351F32AE138E100F8D65A /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46351F22AE138E100F8D65A /* RegisterPresenter.swift */; };
+		A474ED012AECAE4800E3FD3B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A474ED002AECAE4800E3FD3B /* HomeViewController.swift */; };
+		A474ED1D2AECB78D00E3FD3B /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0A2AECB77F00E3FD3B /* Poppins-SemiBold.ttf */; };
+		A474ED1E2AECB78D00E3FD3B /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0B2AECB78000E3FD3B /* Poppins-Thin.ttf */; };
+		A474ED1F2AECB78D00E3FD3B /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0C2AECB78000E3FD3B /* Poppins-Light.ttf */; };
+		A474ED202AECB78D00E3FD3B /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0D2AECB78100E3FD3B /* Poppins-Bold.ttf */; };
+		A474ED212AECB78D00E3FD3B /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0E2AECB78200E3FD3B /* Poppins-Regular.ttf */; };
+		A474ED222AECB78D00E3FD3B /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0F2AECB78300E3FD3B /* Poppins-BlackItalic.ttf */; };
+		A474ED232AECB78D00E3FD3B /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED102AECB78300E3FD3B /* Poppins-ExtraBold.ttf */; };
+		A474ED242AECB78D00E3FD3B /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = A474ED112AECB78400E3FD3B /* OFL.txt */; };
+		A474ED252AECB78D00E3FD3B /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED122AECB78500E3FD3B /* Poppins-LightItalic.ttf */; };
+		A474ED262AECB78D00E3FD3B /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED132AECB78600E3FD3B /* Poppins-ExtraBoldItalic.ttf */; };
+		A474ED272AECB78D00E3FD3B /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED142AECB78700E3FD3B /* Poppins-ExtraLightItalic.ttf */; };
+		A474ED282AECB78D00E3FD3B /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED152AECB78800E3FD3B /* Poppins-Black.ttf */; };
+		A474ED292AECB78D00E3FD3B /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED162AECB78900E3FD3B /* Poppins-ExtraLight.ttf */; };
+		A474ED2A2AECB78D00E3FD3B /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED172AECB78900E3FD3B /* Poppins-Italic.ttf */; };
+		A474ED2B2AECB78D00E3FD3B /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED182AECB78A00E3FD3B /* Poppins-Medium.ttf */; };
+		A474ED2C2AECB78D00E3FD3B /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED192AECB78B00E3FD3B /* Poppins-MediumItalic.ttf */; };
+		A474ED2D2AECB78D00E3FD3B /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */; };
+		A474ED2E2AECB78D00E3FD3B /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */; };
+		A474ED2F2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1C2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf */; };
+		A4A5BD842AF022C500046884 /* WeatherByDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A5BD822AF022C500046884 /* WeatherByDayTableViewCell.swift */; };
+		A4A5BD852AF022C500046884 /* WeatherByDayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4A5BD832AF022C500046884 /* WeatherByDayTableViewCell.xib */; };
 		A4A876BB2AE3738600ADD832 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A876BA2AE3738600ADD832 /* UserDefaults.swift */; };
 		A4A876BF2AE4CAAA00ADD832 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A876BE2AE4CAA900ADD832 /* OnboardingViewController.swift */; };
 		A4A876C62AE51B2400ADD832 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A876C52AE51B2400ADD832 /* UIView+Extension.swift */; };
+		A4B5119D2AE97B8400FB1AAB /* DailyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B5119C2AE97B8200FB1AAB /* DailyResponse.swift */; };
+		A4BD344D2AEFA989008245A1 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD344C2AEFA989008245A1 /* testViewController.swift */; };
+		A4BD34522AEFAAC0008245A1 /* testCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BD34502AEFAAC0008245A1 /* testCollectionViewCell.swift */; };
+		A4BD34532AEFAAC0008245A1 /* testCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BD34512AEFAAC0008245A1 /* testCollectionViewCell.xib */; };
+		A4EBDD712AEE41B900446C7B /* NetworkConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBDD702AEE41B900446C7B /* NetworkConstant.swift */; };
+		A4EBDD762AEE457100446C7B /* WeatherLongDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBDD742AEE457100446C7B /* WeatherLongDayViewController.swift */; };
+		A4EBDD7F2AEEB5B900446C7B /* DatesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBDD7D2AEEB5B900446C7B /* DatesCollectionViewCell.swift */; };
+		A4EBDD802AEEB5B900446C7B /* DatesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EBDD7E2AEEB5B900446C7B /* DatesCollectionViewCell.xib */; };
+		A4EBDD832AEEB94E00446C7B /* DatesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBDD812AEEB94E00446C7B /* DatesTableViewCell.swift */; };
+		A4EBDD842AEEB94E00446C7B /* DatesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EBDD822AEEB94E00446C7B /* DatesTableViewCell.xib */; };
 		A4FE84D32AE7AE85004CA5F8 /* Weather24hCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FE84D12AE7AE85004CA5F8 /* Weather24hCollectionViewCell.swift */; };
 		A4FE84D42AE7AE85004CA5F8 /* Weather24hCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4FE84D22AE7AE85004CA5F8 /* Weather24hCollectionViewCell.xib */; };
 		FE8A95F6A29C75A3848A5C23 /* Pods_WeatherForeCasts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8814337DCD6E84096BA6CA61 /* Pods_WeatherForeCasts.framework */; };
@@ -43,13 +75,45 @@
 		A41936B52ADE7A5900ED58BE /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		A41ADF852AE524CB0020A1BE /* OnbroadingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnbroadingSlide.swift; sourceTree = "<group>"; };
 		A41ADF872AE52EE30020A1BE /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
-		A45FB6832AE1160700F7E599 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A45FB6832AE1160700F7E599 /* WeatherForeCasts.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = WeatherForeCasts.xcworkspace; path = ../WeatherForeCasts.xcworkspace; sourceTree = "<group>"; };
 		A46351EE2AE132A100F8D65A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A46351F02AE1345700F8D65A /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A46351F22AE138E100F8D65A /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
+		A474ED002AECAE4800E3FD3B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = SOURCE_ROOT; };
+		A474ED0A2AECB77F00E3FD3B /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		A474ED0B2AECB78000E3FD3B /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		A474ED0C2AECB78000E3FD3B /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
+		A474ED0D2AECB78100E3FD3B /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		A474ED0E2AECB78200E3FD3B /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		A474ED0F2AECB78300E3FD3B /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
+		A474ED102AECB78300E3FD3B /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A474ED112AECB78400E3FD3B /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		A474ED122AECB78500E3FD3B /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
+		A474ED132AECB78600E3FD3B /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		A474ED142AECB78700E3FD3B /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		A474ED152AECB78800E3FD3B /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
+		A474ED162AECB78900E3FD3B /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A474ED172AECB78900E3FD3B /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		A474ED182AECB78A00E3FD3B /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		A474ED192AECB78B00E3FD3B /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
+		A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		A474ED1C2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A4A5BD822AF022C500046884 /* WeatherByDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherByDayTableViewCell.swift; sourceTree = "<group>"; };
+		A4A5BD832AF022C500046884 /* WeatherByDayTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherByDayTableViewCell.xib; sourceTree = "<group>"; };
 		A4A876BA2AE3738600ADD832 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		A4A876BE2AE4CAA900ADD832 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		A4A876C52AE51B2400ADD832 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		A4B5119C2AE97B8200FB1AAB /* DailyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyResponse.swift; sourceTree = "<group>"; };
+		A4BD344C2AEFA989008245A1 /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		A4BD34502AEFAAC0008245A1 /* testCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testCollectionViewCell.swift; sourceTree = "<group>"; };
+		A4BD34512AEFAAC0008245A1 /* testCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = testCollectionViewCell.xib; sourceTree = "<group>"; };
+		A4EBDD702AEE41B900446C7B /* NetworkConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstant.swift; sourceTree = "<group>"; };
+		A4EBDD742AEE457100446C7B /* WeatherLongDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLongDayViewController.swift; sourceTree = "<group>"; };
+		A4EBDD7D2AEEB5B900446C7B /* DatesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesCollectionViewCell.swift; sourceTree = "<group>"; };
+		A4EBDD7E2AEEB5B900446C7B /* DatesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatesCollectionViewCell.xib; sourceTree = "<group>"; };
+		A4EBDD812AEEB94E00446C7B /* DatesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesTableViewCell.swift; sourceTree = "<group>"; };
+		A4EBDD822AEEB94E00446C7B /* DatesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatesTableViewCell.xib; sourceTree = "<group>"; };
 		A4FE84D12AE7AE85004CA5F8 /* Weather24hCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather24hCollectionViewCell.swift; sourceTree = "<group>"; };
 		A4FE84D22AE7AE85004CA5F8 /* Weather24hCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Weather24hCollectionViewCell.xib; sourceTree = "<group>"; };
 		B43CFDDC8B4A34837CD729F6 /* Pods-WeatherForeCasts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForeCasts.release.xcconfig"; path = "Target Support Files/Pods-WeatherForeCasts/Pods-WeatherForeCasts.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,14 +161,22 @@
 		A419369E2ADE6F6B00ED58BE /* WeatherForeCasts */ = {
 			isa = PBXGroup;
 			children = (
+				A4EBDD6F2AEE417900446C7B /* Network */,
+				A474ED092AECB74D00E3FD3B /* Poppins Font */,
+				A4B5119C2AE97B8200FB1AAB /* DailyResponse.swift */,
+				A45FB6832AE1160700F7E599 /* WeatherForeCasts.xcworkspace */,
 				A4A876C02AE51AB000ADD832 /* Extension */,
 				A419369F2ADE6F6B00ED58BE /* AppDelegate.swift */,
 				A41936A12ADE6F6B00ED58BE /* SceneDelegate.swift */,
 				A4A876BA2AE3738600ADD832 /* UserDefaults.swift */,
 				A41936A32ADE6F6B00ED58BE /* ViewController.swift */,
+				A41ADF822AE524630020A1BE /* Onbroad */,
 				A41936B72ADE7A6D00ED58BE /* Login */,
-				A45FB6832AE1160700F7E599 /* HomeViewController.swift */,
 				A41936A52ADE6F6B00ED58BE /* Main.storyboard */,
+				A474ED002AECAE4800E3FD3B /* HomeViewController.swift */,
+				A4BD34552AEFBD3F008245A1 /* Weather14days */,
+				A4BD34542AEFAACA008245A1 /* New Group1 */,
+				A4EBDD782AEE457E00446C7B /* New Group */,
 				A4FE84D12AE7AE85004CA5F8 /* Weather24hCollectionViewCell.swift */,
 				A4FE84D22AE7AE85004CA5F8 /* Weather24hCollectionViewCell.xib */,
 				A41936A82ADE6F7000ED58BE /* Assets.xcassets */,
@@ -122,7 +194,6 @@
 				A41936B52ADE7A5900ED58BE /* LoginPresenter.swift */,
 				A46351F02AE1345700F8D65A /* RegisterViewController.swift */,
 				A46351F22AE138E100F8D65A /* RegisterPresenter.swift */,
-				A41ADF822AE524630020A1BE /* Onbroad */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -137,12 +208,101 @@
 			path = Onbroad;
 			sourceTree = "<group>";
 		};
+		A474ED092AECB74D00E3FD3B /* Poppins Font */ = {
+			isa = PBXGroup;
+			children = (
+				A474ED112AECB78400E3FD3B /* OFL.txt */,
+				A474ED152AECB78800E3FD3B /* Poppins-Black.ttf */,
+				A474ED0F2AECB78300E3FD3B /* Poppins-BlackItalic.ttf */,
+				A474ED0D2AECB78100E3FD3B /* Poppins-Bold.ttf */,
+				A474ED1C2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf */,
+				A474ED102AECB78300E3FD3B /* Poppins-ExtraBold.ttf */,
+				A474ED132AECB78600E3FD3B /* Poppins-ExtraBoldItalic.ttf */,
+				A474ED162AECB78900E3FD3B /* Poppins-ExtraLight.ttf */,
+				A474ED142AECB78700E3FD3B /* Poppins-ExtraLightItalic.ttf */,
+				A474ED172AECB78900E3FD3B /* Poppins-Italic.ttf */,
+				A474ED0C2AECB78000E3FD3B /* Poppins-Light.ttf */,
+				A474ED122AECB78500E3FD3B /* Poppins-LightItalic.ttf */,
+				A474ED182AECB78A00E3FD3B /* Poppins-Medium.ttf */,
+				A474ED192AECB78B00E3FD3B /* Poppins-MediumItalic.ttf */,
+				A474ED0E2AECB78200E3FD3B /* Poppins-Regular.ttf */,
+				A474ED0A2AECB77F00E3FD3B /* Poppins-SemiBold.ttf */,
+				A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */,
+				A474ED0B2AECB78000E3FD3B /* Poppins-Thin.ttf */,
+				A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */,
+			);
+			path = "Poppins Font";
+			sourceTree = "<group>";
+		};
+		A4A5BD862AF0243000046884 /* DatesCell */ = {
+			isa = PBXGroup;
+			children = (
+				A4EBDD812AEEB94E00446C7B /* DatesTableViewCell.swift */,
+				A4EBDD822AEEB94E00446C7B /* DatesTableViewCell.xib */,
+				A4BD34562AEFBD7D008245A1 /* Cells */,
+			);
+			path = DatesCell;
+			sourceTree = "<group>";
+		};
+		A4A5BD872AF0245B00046884 /* WeatherCell */ = {
+			isa = PBXGroup;
+			children = (
+				A4A5BD822AF022C500046884 /* WeatherByDayTableViewCell.swift */,
+				A4A5BD832AF022C500046884 /* WeatherByDayTableViewCell.xib */,
+			);
+			path = WeatherCell;
+			sourceTree = "<group>";
+		};
 		A4A876C02AE51AB000ADD832 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				A4A876C52AE51B2400ADD832 /* UIView+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		A4BD34542AEFAACA008245A1 /* New Group1 */ = {
+			isa = PBXGroup;
+			children = (
+				A4BD344C2AEFA989008245A1 /* testViewController.swift */,
+				A4BD34502AEFAAC0008245A1 /* testCollectionViewCell.swift */,
+				A4BD34512AEFAAC0008245A1 /* testCollectionViewCell.xib */,
+			);
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		A4BD34552AEFBD3F008245A1 /* Weather14days */ = {
+			isa = PBXGroup;
+			children = (
+				A4EBDD742AEE457100446C7B /* WeatherLongDayViewController.swift */,
+				A4A5BD872AF0245B00046884 /* WeatherCell */,
+				A4A5BD862AF0243000046884 /* DatesCell */,
+			);
+			path = Weather14days;
+			sourceTree = "<group>";
+		};
+		A4BD34562AEFBD7D008245A1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A4EBDD7E2AEEB5B900446C7B /* DatesCollectionViewCell.xib */,
+				A4EBDD7D2AEEB5B900446C7B /* DatesCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A4EBDD6F2AEE417900446C7B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A4EBDD702AEE41B900446C7B /* NetworkConstant.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		A4EBDD782AEE457E00446C7B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		C791A713062B7E3319046BE8 /* Pods */ = {
@@ -214,11 +374,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A474ED272AECB78D00E3FD3B /* Poppins-ExtraLightItalic.ttf in Resources */,
+				A474ED282AECB78D00E3FD3B /* Poppins-Black.ttf in Resources */,
 				A4FE84D42AE7AE85004CA5F8 /* Weather24hCollectionViewCell.xib in Resources */,
+				A474ED2D2AECB78D00E3FD3B /* Poppins-ThinItalic.ttf in Resources */,
+				A474ED202AECB78D00E3FD3B /* Poppins-Bold.ttf in Resources */,
+				A474ED2A2AECB78D00E3FD3B /* Poppins-Italic.ttf in Resources */,
+				A4A5BD852AF022C500046884 /* WeatherByDayTableViewCell.xib in Resources */,
+				A4BD34532AEFAAC0008245A1 /* testCollectionViewCell.xib in Resources */,
+				A474ED1E2AECB78D00E3FD3B /* Poppins-Thin.ttf in Resources */,
 				A41936AC2ADE6F7000ED58BE /* LaunchScreen.storyboard in Resources */,
+				A474ED232AECB78D00E3FD3B /* Poppins-ExtraBold.ttf in Resources */,
+				A474ED1F2AECB78D00E3FD3B /* Poppins-Light.ttf in Resources */,
+				A474ED2B2AECB78D00E3FD3B /* Poppins-Medium.ttf in Resources */,
+				A4EBDD802AEEB5B900446C7B /* DatesCollectionViewCell.xib in Resources */,
 				A46351EF2AE132A100F8D65A /* GoogleService-Info.plist in Resources */,
+				A474ED1D2AECB78D00E3FD3B /* Poppins-SemiBold.ttf in Resources */,
+				A4EBDD842AEEB94E00446C7B /* DatesTableViewCell.xib in Resources */,
+				A474ED242AECB78D00E3FD3B /* OFL.txt in Resources */,
+				A474ED262AECB78D00E3FD3B /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				A474ED2F2AECB78D00E3FD3B /* Poppins-BoldItalic.ttf in Resources */,
+				A474ED292AECB78D00E3FD3B /* Poppins-ExtraLight.ttf in Resources */,
+				A474ED252AECB78D00E3FD3B /* Poppins-LightItalic.ttf in Resources */,
 				A41936A92ADE6F7000ED58BE /* Assets.xcassets in Resources */,
 				A41936A72ADE6F6B00ED58BE /* Main.storyboard in Resources */,
+				A474ED212AECB78D00E3FD3B /* Poppins-Regular.ttf in Resources */,
+				A474ED2E2AECB78D00E3FD3B /* Poppins-SemiBoldItalic.ttf in Resources */,
+				A474ED2C2AECB78D00E3FD3B /* Poppins-MediumItalic.ttf in Resources */,
+				A474ED222AECB78D00E3FD3B /* Poppins-BlackItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,19 +454,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4B5119D2AE97B8400FB1AAB /* DailyResponse.swift in Sources */,
 				A41ADF882AE52EE30020A1BE /* OnboardingCollectionViewCell.swift in Sources */,
 				A4A876C62AE51B2400ADD832 /* UIView+Extension.swift in Sources */,
+				A4EBDD832AEEB94E00446C7B /* DatesTableViewCell.swift in Sources */,
 				A41936B42ADE79DE00ED58BE /* LoginViewController.swift in Sources */,
 				A41936A42ADE6F6B00ED58BE /* ViewController.swift in Sources */,
 				A46351F12AE1345700F8D65A /* RegisterViewController.swift in Sources */,
 				A41936A02ADE6F6B00ED58BE /* AppDelegate.swift in Sources */,
 				A4FE84D32AE7AE85004CA5F8 /* Weather24hCollectionViewCell.swift in Sources */,
+				A4BD344D2AEFA989008245A1 /* testViewController.swift in Sources */,
+				A474ED012AECAE4800E3FD3B /* HomeViewController.swift in Sources */,
+				A4EBDD712AEE41B900446C7B /* NetworkConstant.swift in Sources */,
+				A4EBDD7F2AEEB5B900446C7B /* DatesCollectionViewCell.swift in Sources */,
 				A41936A22ADE6F6B00ED58BE /* SceneDelegate.swift in Sources */,
+				A4BD34522AEFAAC0008245A1 /* testCollectionViewCell.swift in Sources */,
 				A4A876BB2AE3738600ADD832 /* UserDefaults.swift in Sources */,
 				A41936B62ADE7A5900ED58BE /* LoginPresenter.swift in Sources */,
 				A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */,
 				A4A876BF2AE4CAAA00ADD832 /* OnboardingViewController.swift in Sources */,
-				A45FB6842AE1160700F7E599 /* HomeViewController.swift in Sources */,
+				A4A5BD842AF022C500046884 /* WeatherByDayTableViewCell.swift in Sources */,
+				A45FB6842AE1160700F7E599 /* WeatherForeCasts.xcworkspace in Sources */,
+				A4EBDD762AEE457100446C7B /* WeatherLongDayViewController.swift in Sources */,
 				A46351F32AE138E100F8D65A /* RegisterPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

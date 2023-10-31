@@ -32,13 +32,14 @@ class OnboardingViewController: UIViewController {
             OnboardingSlide(title: "Dự báo vị trí khác nhau",description: "Dễ dàng nắm bắt thời tiết các địa diểm mong muốn.",image: #imageLiteral(resourceName: "Onbroad3"))
         ]
         pageControl.numberOfPages = slides.count
-
     }
     @IBAction func nextBtnHandle(_ sender: UIButton) {
 //        moveToNextPage()
         if currentPage == slides.count - 1 {
             gotoLoginVC()
+            
         } else {
+            UserDefaults.standard.hasOnboarded = true
             currentPage += 1
                         collectionViewOnbroad.isPagingEnabled = false
                         collectionViewOnbroad.scrollToItem(
