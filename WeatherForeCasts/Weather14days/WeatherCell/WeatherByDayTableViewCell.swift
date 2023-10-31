@@ -29,7 +29,7 @@ class WeatherByDayTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,10 +37,17 @@ class WeatherByDayTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    func updateValue(withForecastData forecastData: Forecastday) {
-        forecastDayAvgTemp.text = ("\(forecastData.day.avgtempC)")
-        forecastDayConditionText.text = forecastData.day.condition.text
-    }
+    func updateValue(withForecastData forecastData: ForecastDay1) {
+            // Update UI elements with data from forecastData
+//            let iconName = extractImageNameCell(url: forecastData.day.condition.icon)
+//            forecastDayIcone.image = UIImage(named: iconName)
+//            forecastDayAvgTemp.text = "\(forecastData.day.avgtempC)"
+//            forecastDayConditionText.text = forecastData.day.condition.text
+//        forecastDayMaxTemp.text = forecastData.day
+            // Update other UI elements as needed
+//        forecastDayConditionText.text = ConditionText
+        
+        }
     
 }
 

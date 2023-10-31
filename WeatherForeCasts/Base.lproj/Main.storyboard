@@ -477,7 +477,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Location" translatesAutoresizingMaskIntoConstraints="NO" id="ZTm-tw-iQ9">
-                                                        <rect key="frame" x="225.66666666666669" y="5.6666666666666714" width="15" height="15"/>
+                                                        <rect key="frame" x="225.66666666666669" y="5.333333333333333" width="15" height="15.333333333333336"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="15" id="HBf-2h-jKe"/>
                                                             <constraint firstAttribute="height" constant="15" id="a57-rF-Dxs"/>
@@ -630,15 +630,13 @@
                                 <rect key="frame" x="10" y="59" width="410" height="873"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="HDj-hW-fxs">
-                                        <rect key="frame" x="0.0" y="0.0" width="410" height="5000"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="410" height="873"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="5000" id="iHW-Fs-NG3"/>
-                                        </constraints>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.28235294117647058" green="0.29411764705882354" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="HDj-hW-fxs" secondAttribute="bottom" id="cK7-dM-dRk"/>
                                     <constraint firstItem="HDj-hW-fxs" firstAttribute="leading" secondItem="f8S-84-C9s" secondAttribute="leading" id="kbg-et-7rh"/>
                                     <constraint firstAttribute="trailing" secondItem="HDj-hW-fxs" secondAttribute="trailing" id="nrB-ZU-oHW"/>
                                     <constraint firstItem="HDj-hW-fxs" firstAttribute="top" secondItem="f8S-84-C9s" secondAttribute="top" id="xdP-eK-A43"/>
