@@ -16,9 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
-        guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+        (UIApplication.shared.delegate as? AppDelegate)?.window = window
+//        guard let _ = (scene as? UIWindowScene) else { return }
+//        guard let scene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(windowScene: scene)
     
         if UserDefaults.standard.hasOnboarded {
             if Auth.auth().currentUser != nil {
@@ -33,25 +36,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    func gotoLoginViewController() {
+    private func gotoLoginViewController() {
             let storybroad = UIStoryboard(name: "Main", bundle: nil)
             let LoginVC = storybroad.instantiateViewController(withIdentifier: "LoginViewController")
         let loginNavigation = UINavigationController(rootViewController: LoginVC)
-            window?.rootViewController = loginNavigation
+            window!.rootViewController = loginNavigation
             window!.makeKeyAndVisible()
     }
-    func gotoHomeViewController() {
+    private func gotoHomeViewController() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
         let MainVC = storybroad.instantiateViewController(withIdentifier: "HomeViewController")
         let loginNavigation = UINavigationController(rootViewController: MainVC)
-        window?.rootViewController = MainVC
+        window!.rootViewController = MainVC
         window!.makeKeyAndVisible()
     }
-    func gotoOnBroad() {
+    private func gotoOnBroad() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
         let OnbroadVC = storybroad.instantiateViewController(withIdentifier: "OnboardingViewController")
         let OnbroadNavigation = UINavigationController(rootViewController: OnbroadVC)
-        window?.rootViewController = OnbroadVC
+        window!.rootViewController = OnbroadVC
         window!.makeKeyAndVisible()
     }
 

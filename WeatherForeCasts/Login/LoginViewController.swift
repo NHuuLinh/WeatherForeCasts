@@ -146,7 +146,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     }
     @IBAction func LoginButton(_ sender: Any) {
         loginPresenter.login(email: emailTF.text ?? "", password: passwordTF.text ?? "")
-        print("1123")
+        print("GoToMain")
 //        routeToMain()
 
     }
