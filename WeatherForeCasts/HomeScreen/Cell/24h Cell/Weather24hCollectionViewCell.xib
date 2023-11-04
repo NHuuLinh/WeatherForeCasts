@@ -12,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Weather24hCollectionViewCell" reuseIdentifier="Weather24hCollectionViewCell" id="gTV-IL-0wX" customClass="Weather24hCollectionViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="377" height="310"/>
+            <rect key="frame" x="0.0" y="0.0" width="131" height="240"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="377" height="310"/>
+                <rect key="frame" x="0.0" y="0.0" width="131" height="240"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6j-GM-59R">
@@ -76,19 +76,19 @@
                     </view>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <viewLayoutGuide key="safeArea" id="dVC-zX-O6y"/>
             <constraints>
-                <constraint firstItem="k6j-GM-59R" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Gyn-EV-uoJ"/>
-                <constraint firstItem="k6j-GM-59R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XqR-Da-JNL"/>
+                <constraint firstItem="k6j-GM-59R" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="bM6-1N-Tsh"/>
+                <constraint firstItem="k6j-GM-59R" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="wl3-iI-aVL"/>
             </constraints>
-            <size key="customSize" width="679" height="367"/>
+            <size key="customSize" width="730" height="387"/>
             <connections>
                 <outlet property="precipitationLabel" destination="btz-uc-ToL" id="wmt-iT-MMA"/>
                 <outlet property="temperatureLabel" destination="ZYq-er-2LP" id="p1s-gU-APr"/>
                 <outlet property="timeLabel" destination="kQ0-Ak-eYU" id="uWP-Pl-Pl8"/>
                 <outlet property="weatherIconImageView" destination="0rV-7p-GV7" id="0Up-67-MU7"/>
             </connections>
-            <point key="canvasLocation" x="510.68702290076334" y="101.40845070422536"/>
+            <point key="canvasLocation" x="548.85496183206101" y="108.45070422535211"/>
         </collectionViewCell>
     </objects>
     <resources>

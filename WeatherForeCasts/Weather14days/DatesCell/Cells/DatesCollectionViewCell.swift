@@ -13,13 +13,19 @@ class DatesCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        dateBackGroundColors.backgroundColor = UIColor.white
+//        dateBackGroundColors.backgroundColor = UIColor.white
 //        dateLb.text = nil
       }
       
-    func bindData(date title: String?) {
-         dateLb.text = title
-         print("date có title là : \(title ?? "")")
-       }
-  }
+    func bindData(date: String, isSelected: Bool) {
+        dateLb.text = date
+        if isSelected {
+            dateBackGroundColors.backgroundColor = UIColor(red: 0.11, green: 0.11, blue: 0.14, alpha: 1.00)
+            dateLb.textColor = UIColor.white
+        } else {
+            dateBackGroundColors.backgroundColor = UIColor.white
+            dateLb.textColor = UIColor.black
+        }
+    }
+}
 
