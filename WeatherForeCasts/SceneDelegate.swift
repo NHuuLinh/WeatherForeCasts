@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     private func gotoHomeViewController() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
-        let MainVC = storybroad.instantiateViewController(withIdentifier: "HomeViewController")
+        let MainVC = storybroad.instantiateViewController(withIdentifier: "MainViewController")
         let loginNavigation = UINavigationController(rootViewController: MainVC)
         window!.rootViewController = MainVC
         window!.makeKeyAndVisible()

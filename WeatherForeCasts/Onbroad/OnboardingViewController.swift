@@ -56,13 +56,13 @@ class OnboardingViewController: UIViewController {
             let indexPath = IndexPath(item: currentPage, section: 0)
             collectionViewOnbroad.scrollToItem(at: indexPath, at: .left, animated: true)
             collectionViewOnbroad.reloadData()
-//            collectionViewOnbroad.isPagingEnabled = false
-//            collectionViewOnbroad.scrollToItem(
-//                at: IndexPath(item: currentPage, section: 0),
-//                at: .centeredHorizontally,
-//                animated: true
-//            )
-//            collectionViewOnbroad.isPagingEnabled = true
+            collectionViewOnbroad.isPagingEnabled = false
+            collectionViewOnbroad.scrollToItem(
+                at: IndexPath(item: currentPage, section: 0),
+                at: .centeredHorizontally,
+                animated: true
+            )
+            collectionViewOnbroad.isPagingEnabled = true
         }
     }
     func gotoLoginVC() {

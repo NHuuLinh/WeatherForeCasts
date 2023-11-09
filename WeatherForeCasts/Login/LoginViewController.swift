@@ -129,7 +129,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     }
     func routeToMain() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let testVC = storyboard.instantiateViewController(withIdentifier: "WeatherLongDayViewController")
+        let testVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
         let keyWindow = UIApplication.shared.connectedScenes
                 .filter({$0.activationState == .foregroundActive})
                 .compactMap({$0 as? UIWindowScene})
@@ -150,11 +150,21 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
 //        routeToMain()
 
     }
+    @IBAction func signUpBtn(_ sender: Any) {
+        goToResgister()
+    }
     func goToResgister() {
         let storybroad = UIStoryboard(name: "Main", bundle: nil)
         let RegisterVC = storybroad.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
         navigationController?.pushViewController(RegisterVC, animated: true)
 //        UserDefaults.standard.hasOnbroaded = true
     }
+//    func getToRegister() {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("RegisterViewController") as NewsDetailsViewController
+//         vc.newsObj = newsObj
+//         navigationController?.pushViewController(vc,
+//         animated: true)
+//    }
 }
         

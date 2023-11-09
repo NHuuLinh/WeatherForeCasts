@@ -19,11 +19,13 @@ class DailyCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    func getData24h(data24h: Hour ) {
-        timeLabel.text = data24h.time
-        temperatureLabel.text = "\(data24h.tempC)"
-        precipitationLabel.text = "\(data24h.chanceOfRain)"
-        let weatherIcon = extractImageNameCollect(url: "\(data24h.condition.text)")
+    func getData24h(with hour: Hour ) {
+        timeLabel.text = hour.time
+//        print(timeLabel.text)
+        temperatureLabel.text = "\(hour.tempC)"
+        precipitationLabel.text = "\(hour.chanceOfRain)"
+        let weatherIcon = extractImageNameCollect(url: "\(hour.condition.icon)")
+//        print(weatherIcon)
         weatherIconImageView.image = UIImage(named: weatherIcon)
     }
 }

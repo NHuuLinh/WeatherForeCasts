@@ -84,10 +84,9 @@ class APIClient2 {
         let parameters: [String: Any] = [
             "key": apiKey,
             "q": "Hanoi",
-            "days": 14,
+            "days": 1,
             "aqi": "yes",
             "lang": "vi"
-            
         ]
 
         AF.request(baseURL, method: .get, parameters: parameters).responseDecodable(of: Forecastday.self) { response in
@@ -101,6 +100,35 @@ class APIClient2 {
     }
     
 }
+class APIManager {
+    static let shared = APIManager()
+
+    private init() {}
+
+    func fetchWeatherData(completion: @escaping (WeatherData24h?) -> Void) {
+        let url = "http://api.weatherapi.com/v1/forecast.json"
+        let parameters: [String: Any] = [
+            "key": "29eecb9c4b7945d282190107232910",
+            "q": "Hanoi",
+            "days": 7,
+            "aqi": "yes"
+        ]
+
+        AF.request(url, parameters: parameters).response { response in
+            if let data = response.data {
+                let decoder = JSONDecoder()
+                do {
+                    let weatherData = try decoder.decode(WeatherData24h.self, from: data)
+                    completion(weatherData)
+                } catch {
+                    print("Error decoding: \(error)")
+                    completion(nil)
+                }
+            }
+        }
+    }
+}
+
 
 
 

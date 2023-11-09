@@ -56,7 +56,7 @@ struct Current: Codable {
     let uv: Double
     let gustMph: Double
     let gustKph: Double
-    let air_quality: AirQuality?
+    let airQuality: AirQuality
 
     enum CodingKeys: String, CodingKey {
         case lastUpdatedEpoch = "last_updated_epoch"
@@ -82,29 +82,48 @@ struct Current: Codable {
         case uv
         case gustMph = "gust_mph"
         case gustKph = "gust_kph"
-        case air_quality = "air_quality"
+        case airQuality = "air_quality"
     }
 }
-struct AirQuality: Codable{
-    let co: Float?
-    let no2: Float?
-    let o3: Float?
-    let so2: Float?
-    let pm2_5: Float?
-    let pm10: Float?
-    let us_epa_index : Int?
-    let gb_defra_index : Int?
+struct AirQuality: Codable {
+    let co, no2, o3, so2: Double?
+    let pm25, pm10: Double?
+    let usEpaIndex, gbDefraIndex: Int?
+    let aqiData: AqiData?
+
     enum CodingKeys: String, CodingKey {
-        case co = "co"
-        case no2 = "no2"
-        case o3 = "03"
-        case so2 = "so2"
-        case pm2_5 = "pm2_5"
-        case pm10 = "pm10"
-        case us_epa_index = "us-epa-index"
-        case gb_defra_index = "gb-defra-index"
+        case co, no2, o3, so2
+        case pm25 = "pm2_5"
+        case pm10
+        case usEpaIndex = "us-epa-index"
+        case gbDefraIndex = "gb-defra-index"
+        case aqiData = "aqi_data"
     }
 }
+
+enum AqiData: String, Codable {
+    case null = "null"
+}
+//struct AirQuality: Codable {
+//    let co: Double
+//    let no2: Double
+//    let o3: Double
+//    let so2: Double
+//    let pm2_5: Double
+//    let pm10: Double
+//    let usepaindex: Int
+//    let gbdefraindex: Int
+//    enum CodingKeys: String, CodingKey {
+//        case co = "co"
+//        case no2 = "no2"
+//        case o3 = "o3"
+//        case so2 = "so2"
+//        case pm2_5 = "pm2_5"
+//        case pm10 = "pm10"
+//        case usepaindex = "us-epa-index"
+//        case gbdefraindex = "gb-defra-index"
+//    }
+//}
 
 struct Condition: Codable {
     let text: String
