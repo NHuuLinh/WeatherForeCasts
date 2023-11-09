@@ -20,13 +20,13 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    func getWeeklyDatas(weeklyDatas: Forecastday ) {
-        weeklyDate.text = weeklyDatas.date
-        let icon = extractImageNameCollect(url: "\(weeklyDatas.day.condition.icon)")
+    func getWeeklyDatas(with week: Forecastday ) {
+        weeklyDate.text = week.date
+        let icon = extractImageNameCollect(url: "\(week.day.condition.icon)")
         weeklyImage.image = UIImage(named: icon)
-        weeklyConditionText.text = weeklyDatas.day.condition.text
-        minTemp.text = "\(weeklyDatas.day.mintempC)"
-        maxTemp.text = "\(weeklyDatas.day.maxtempC)"
+        weeklyConditionText.text = week.day.condition.text
+        minTemp.text = "\(week.day.mintempC)"
+        maxTemp.text = "\(week.day.maxtempC)"
     }
 
 }

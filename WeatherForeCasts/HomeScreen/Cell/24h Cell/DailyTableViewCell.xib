@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Bold.ttf">
+            <string>Poppins-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="260" id="KGk-i7-Jjw" customClass="DailyTableViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="410" height="260"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="410" height="260"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="h4C-nE-t3J">
+                        <rect key="frame" x="0.0" y="40" width="410" height="220"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="220" id="dVc-TU-e1C"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bDG-v2-t28">
+                            <size key="itemSize" width="60" height="220"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHJ-sn-o8e">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="40"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forecast 24h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llQ-6i-gHN">
+                                <rect key="frame" x="5" y="7" width="119" height="26"/>
+                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow forward ios" translatesAutoresizingMaskIntoConstraints="NO" id="9rZ-7S-8QT">
+                                <rect key="frame" x="375" y="7.6666666666666679" width="25" height="25.000000000000004"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="7Qz-gf-iL8"/>
+                                    <constraint firstAttribute="height" constant="25" id="Xxm-Df-y04"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XBd-Oa-dVr">
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="40"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XBd-Oa-dVr" firstAttribute="leading" secondItem="zHJ-sn-o8e" secondAttribute="leading" id="3ey-i4-aMv"/>
+                            <constraint firstItem="XBd-Oa-dVr" firstAttribute="top" secondItem="zHJ-sn-o8e" secondAttribute="top" id="4bH-Qv-ZpX"/>
+                            <constraint firstAttribute="trailing" secondItem="9rZ-7S-8QT" secondAttribute="trailing" constant="10" id="HP5-l0-lag"/>
+                            <constraint firstItem="llQ-6i-gHN" firstAttribute="centerY" secondItem="zHJ-sn-o8e" secondAttribute="centerY" id="MLC-O9-Zlg"/>
+                            <constraint firstAttribute="bottom" secondItem="XBd-Oa-dVr" secondAttribute="bottom" id="RJi-kn-HKn"/>
+                            <constraint firstAttribute="height" constant="40" id="g1e-hb-VCm"/>
+                            <constraint firstItem="9rZ-7S-8QT" firstAttribute="centerY" secondItem="zHJ-sn-o8e" secondAttribute="centerY" id="kqX-hT-6lL"/>
+                            <constraint firstAttribute="trailing" secondItem="XBd-Oa-dVr" secondAttribute="trailing" id="kwl-K8-HrD"/>
+                            <constraint firstItem="llQ-6i-gHN" firstAttribute="leading" secondItem="zHJ-sn-o8e" secondAttribute="leading" constant="5" id="oj5-os-qgw"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="h4C-nE-t3J" secondAttribute="bottom" id="7i1-uF-wmi"/>
+                    <constraint firstItem="zHJ-sn-o8e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9CF-C6-gys"/>
+                    <constraint firstItem="h4C-nE-t3J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="O5f-Lq-aC2"/>
+                    <constraint firstItem="zHJ-sn-o8e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Vd4-nH-K98"/>
+                    <constraint firstAttribute="trailing" secondItem="zHJ-sn-o8e" secondAttribute="trailing" id="f0f-dD-aYc"/>
+                    <constraint firstItem="h4C-nE-t3J" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="kgO-AO-tz1"/>
+                    <constraint firstAttribute="trailing" secondItem="h4C-nE-t3J" secondAttribute="trailing" id="nZ4-nz-CAg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="dailyCollectionView" destination="h4C-nE-t3J" id="9hJ-GQ-xOx"/>
+            </connections>
+            <point key="canvasLocation" x="236.64122137404578" y="60.563380281690144"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Arrow forward ios" width="20" height="20"/>
+    </resources>
+</document>

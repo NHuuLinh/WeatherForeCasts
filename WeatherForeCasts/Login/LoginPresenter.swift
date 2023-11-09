@@ -93,11 +93,11 @@ class LoginPresenterImpl: LoginPresenter {
                 default:
                     message = error?.localizedDescription ?? "Lỗi không xác định"
                 }
-                loginVC.loginFailure(message: message)
+                self.loginVC.loginFailure(message: message)
                 print("fail")
                 return
             }
-            loginVC.routeToMain()
+            self.loginVC.routeToMain()
             print("gotoMain")
         }
     }

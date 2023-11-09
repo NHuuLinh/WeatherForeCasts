@@ -46,8 +46,8 @@ class WeatherByDayTableViewCell: UITableViewCell {
         forecastDayHumidity.text = "\(datasForecast.day.avghumidity)"
 //        forecastDayHumidity.text = "\(datasForecast.day.air_quality?.co ?? 0 )"
 
-        forecastDayAirQly.text = "\(datasForecast.day.air_quality?.us_epa_index ?? 0)"
-        let AirQlyText = airQlyDataCell(numb: datasForecast.day.air_quality?.us_epa_index ?? 0)
+        forecastDayAirQly.text = "\(datasForecast.day.air_quality?.usEpaIndex ?? 0)"
+        let AirQlyText = airQlyDataCell(numb: datasForecast.day.air_quality?.usEpaIndex ?? 0)
         forecastDayAirQlyText.text = AirQlyText
         forecastDaySunRaise.text = datasForecast.astro.sunrise
         forecastDaySunSet.text = datasForecast.astro.sunset
