@@ -85,13 +85,13 @@ class LoginPresenterImpl: LoginPresenter {
                 
                 switch AuthErrorCode.Code(rawValue: error!._code) {
                 case .userDisabled:
-                    message = "Tài khoản đã bị vô hiệu hoá"
+                    message = "Account had been disabled"
                 case .wrongPassword:
-                    message = "Sai mật khẩu! Vui lòng thử lại"
+                    message = "wrong password, please try again"
                 case .userNotFound:
-                    message = "Không tìm thấy tài khoản với email đã nhập"
+                    message = "email don't exis"
                 default:
-                    message = error?.localizedDescription ?? "Lỗi không xác định"
+                    message = error?.localizedDescription ?? "error"
                 }
                 self.loginVC.loginFailure(message: message)
                 print("fail")

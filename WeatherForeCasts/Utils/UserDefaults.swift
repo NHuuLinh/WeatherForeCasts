@@ -12,6 +12,7 @@ import Foundation
 extension UserDefaults {
     private enum UserDefaultsKeys: String {
         case hasOnboarded
+        case hasLogout
     }
     var hasOnboarded : Bool {
         get {
@@ -22,4 +23,5 @@ extension UserDefaults {
         }
     }
 }
+
 

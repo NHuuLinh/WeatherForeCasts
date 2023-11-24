@@ -1,9 +1,3 @@
-//
-//  RegisterViewController.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 15/10/2023.
-//
 
 import UIKit
 import FirebaseAuth
@@ -13,6 +7,7 @@ protocol RegisterDisplay {
     func registerFailure(message: String)
     func registerSuccess()
 }
+
 class RegisterViewController: UIViewController {
 
     @IBOutlet weak var emailTF: UITextField!
@@ -87,15 +82,22 @@ class RegisterViewController: UIViewController {
             self.routeToMain()
         }
     }
+    @IBAction func goToLoginVC(_ sender: Any) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
     private func routeToMain() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homePageVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
-        let keyWindow = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .compactMap({$0 as? UIWindowScene})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first
-        keyWindow?.rootViewController = homePageVC
+        if let uwWindow = (UIApplication.shared.delegate as? AppDelegate)?.window {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+            
+            let loginNavigation = UINavigationController(rootViewController: loginVC)
+            
+            uwWindow.rootViewController = loginNavigation// Đưa cho windown 1 viewcontroller
+            /// Make visible keywindown
+            uwWindow.makeKeyAndVisible()
+        } else {
+            print("LỖI")
+        }
     }
 }
 extension RegisterViewController: RegisterDisplay {
