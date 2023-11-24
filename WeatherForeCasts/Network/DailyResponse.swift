@@ -9,7 +9,6 @@ struct WeatherData24h: Codable {
         case forecast
     }
 }
-
 struct Location: Codable {
     let name: String
     let region: String
@@ -31,7 +30,6 @@ struct Location: Codable {
         case localtime
     }
 }
-
 struct Current: Codable {
     let lastUpdatedEpoch: Int
     let lastUpdated: String
@@ -104,27 +102,6 @@ struct AirQuality: Codable {
 enum AqiData: String, Codable {
     case null = "null"
 }
-//struct AirQuality: Codable {
-//    let co: Double
-//    let no2: Double
-//    let o3: Double
-//    let so2: Double
-//    let pm2_5: Double
-//    let pm10: Double
-//    let usepaindex: Int
-//    let gbdefraindex: Int
-//    enum CodingKeys: String, CodingKey {
-//        case co = "co"
-//        case no2 = "no2"
-//        case o3 = "o3"
-//        case so2 = "so2"
-//        case pm2_5 = "pm2_5"
-//        case pm10 = "pm10"
-//        case usepaindex = "us-epa-index"
-//        case gbdefraindex = "gb-defra-index"
-//    }
-//}
-
 struct Condition: Codable {
     let text: String
     let icon: String
@@ -136,7 +113,6 @@ struct Condition: Codable {
         case code
     }
 }
-
 struct Forecast: Codable {
     let forecastday: [Forecastday]
 
@@ -144,14 +120,12 @@ struct Forecast: Codable {
         case forecastday
     }
 }
-
 struct Forecastday: Codable {
     let date: String
     let dateEpoch: Int
     let day: Day
     let astro: Astro
     let hour: [Hour]
-
     enum CodingKeys: String, CodingKey {
         case date
         case dateEpoch = "date_epoch"
@@ -160,7 +134,6 @@ struct Forecastday: Codable {
         case hour
     }
 }
-
 struct Day: Codable {
     let maxtempC: Double
     let maxtempF: Double
@@ -182,8 +155,7 @@ struct Day: Codable {
     let dailyChanceOfSnow: Int
     let condition: Condition
     let uv: Double
-    let air_quality: AirQuality?
-
+    let airQuality: AirQuality
 
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -206,10 +178,9 @@ struct Day: Codable {
         case dailyChanceOfSnow = "daily_chance_of_snow"
         case condition
         case uv
-        case air_quality = "air_quality"
+        case airQuality = "air_quality"
     }
 }
-
 struct Astro: Codable {
     let sunrise: String
     let sunset: String
@@ -231,7 +202,6 @@ struct Astro: Codable {
         case isSunUp = "is_sun_up"
     }
 }
-
 struct Hour: Codable {
     let timeEpoch: Int
     let time: String
@@ -266,10 +236,8 @@ struct Hour: Codable {
     let gustMph: Double
     let gustKph: Double
     let uv: Double
-    let air_quality: AirQuality?
-
+    let airQuality: AirQuality
     
-
     enum CodingKeys: String, CodingKey {
         case timeEpoch = "time_epoch"
         case time
@@ -304,7 +272,6 @@ struct Hour: Codable {
         case gustMph = "gust_mph"
         case gustKph = "gust_kph"
         case uv
-        case air_quality = "air_quality"
-
+        case airQuality = "air_quality"
     }
 }

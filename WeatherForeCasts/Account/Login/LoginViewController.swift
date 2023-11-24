@@ -9,8 +9,6 @@ import UIKit
 import FirebaseAuth
 import MBProgressHUD
 
-
-
 protocol LoginViewControllerDisplay {
     func loginValidateFailure(field: LoginFormField, message: String?)
     func loginFailure(message: String)
@@ -25,8 +23,6 @@ enum LoginFormField {
     case email
     case password
 }
-private var loginPresenter: LoginPresenter!
-
 
 class LoginViewController: UIViewController, LoginViewControllerDisplay {
 
@@ -43,6 +39,8 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     @IBOutlet weak var passwordErorrView: UIView!
     @IBOutlet weak var passwordTextView: UIView!
     @IBOutlet weak var passwordErrorViewHieght: NSLayoutConstraint!
+    private var loginPresenter: LoginPresenter!
+
     
     override func viewDidLoad() {
         loginPresenter = LoginPresenterImpl(loginVC: self)
@@ -119,52 +117,73 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
             emailerrorTF.isHidden = false
             emailerrorTF.text = message
             emailErrorColor()
-            //            printContent(message)
         case .password:
             passwordErrrorTF.isHidden = false
             passwordErrrorTF.text = message
             passWordErrorColor()
-            
         }
     }
+
     func routeToMain() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let testVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        let keyWindow = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .compactMap({$0 as? UIWindowScene})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first
-        keyWindow?.rootViewController = testVC
-    }
-    func showLoading(isShow: Bool) {
-        if isShow {
-            MBProgressHUD.showAdded(to: self.view, animated: true)
+        if let uwWindow = (UIApplication.shared.delegate as? AppDelegate)?.window {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+            let loginNavigation = UINavigationController(rootViewController: loginVC)
+            uwWindow.rootViewController = loginNavigation// Đưa cho windown 1 viewcontroller
+            /// Make visible keywindown
+            uwWindow.makeKeyAndVisible()
         } else {
-            MBProgressHUD.hide(for: self.view, animated: true)
+            print("LỖI")
         }
+    }
+    @IBAction func forgotPWBtn(_ sender: Any) {
+        goToForgotPassword()
     }
     @IBAction func LoginButton(_ sender: Any) {
         loginPresenter.login(email: emailTF.text ?? "", password: passwordTF.text ?? "")
-        print("GoToMain")
-//        routeToMain()
-
     }
     @IBAction func signUpBtn(_ sender: Any) {
         goToResgister()
     }
     func goToResgister() {
-        let storybroad = UIStoryboard(name: "Main", bundle: nil)
-        let RegisterVC = storybroad.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
-        navigationController?.pushViewController(RegisterVC, animated: true)
-//        UserDefaults.standard.hasOnbroaded = true
+        /**
+         Step 1: Lấy được instance của class RegisterController từ storyboard Main
+         Step 2: Gọi navigation controller từ màn login để thực hiện push register controller
+         Step 3: Nếu muốn back lại thì sử dụng pop
+         */
+        
+        /// Step 1: Lấy được instance của class RegisterController từ storyboard Main
+        /**
+         Step 1.1: Khởi tạo đối tượng của storyboard Main
+         name: "Main" => Tên file storyboard
+         */
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        /**
+         Step 1.2: Gọi ra instance của 1 viewcontroller bất kỳ dựa vào StoryboardID
+         */
+        
+        let registerViewController: RegisterViewController = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
+        
+        
+//        registerViewController.bienNhanDuLieuTuLogin = "Data tu login"
+        
+        /// Có thể ép kiểu từ UIViewController => RegisterViewController
+        /// as? => Optional
+        /// as! => NẾu mà không ép kiểu được thì sẽ bị crash
+        
+        /// Step 2: Gọi navigation controller từ màn login để thực hiện push register controller
+        navigationController?.pushViewController(registerViewController, animated: true )
     }
-//    func getToRegister() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("RegisterViewController") as NewsDetailsViewController
-//         vc.newsObj = newsObj
-//         navigationController?.pushViewController(vc,
-//         animated: true)
-//    }
+    func goToForgotPassword() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let forgotVC: ForgotPasswordViewController = storyboard.instantiateViewController(withIdentifier: "ForgotPasswordViewController") as! ForgotPasswordViewController
+        //gán giá trị email sau khi reset mật khẩu
+        forgotVC.onSuccessResetPassword = { [weak self] email in
+            self?.emailTF.text = email
+            self?.passwordTF.text = ""
+        }
+        navigationController?.pushViewController(forgotVC, animated: true )
+    }
 }
         
