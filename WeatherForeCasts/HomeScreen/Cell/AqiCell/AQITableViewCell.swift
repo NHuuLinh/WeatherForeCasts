@@ -15,8 +15,6 @@ class AQITableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("\(currentAirLevel.frame.size.width)")
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -27,12 +25,11 @@ class AQITableViewCell: UITableViewCell {
     func getAirData(with forecastAqi : AirQuality) {
         let AirQlyNumber = forecastAqi.usEpaIndex ?? 0
         currentAirQuality.text = "\(AirQlyNumber)"
-        let airCondition = airQlyDataCell(numb: AirQlyNumber)
+        let airCondition = AQIHandle.airQlyDataCondition(numb: AirQlyNumber)
         currentAirCondition.text = airCondition
-        let airLevel = airQlyLevel(width: AirQlyNumber)
+        let airLevel = AQIHandle.airQlyLevel(width: AirQlyNumber)
         currentAirLevelWidth.constant = airLevel
-        let airQlyColor = airQlyColor(numb: AirQlyNumber)
+        let airQlyColor = AQIHandle.airQlyColor(numb: AirQlyNumber)
         currentAirLevel.backgroundColor = airQlyColor
-        
     }
 }
