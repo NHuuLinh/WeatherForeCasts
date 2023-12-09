@@ -14,52 +14,33 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var currentFeelsLikeTemp: UILabel!
     @IBOutlet weak var currentWeatherIcon: UIImageView!
     @IBOutlet weak var currentWillRain: UILabel!
+    @IBOutlet weak var currentWillSnow: UILabel!
+    @IBOutlet weak var feelLikeLb: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        translateLangue()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     func getCurrentData(with forecastCurrent : WeatherData24h ) {
-        currentTime.text = forecastCurrent.location.localtime
-        currentTemp.text = "\(forecastCurrent.current.tempC)°C"
+        let localTime = forecastCurrent.location.localtime
+//        print( "localTime: \(localTime)")
+        currentTime.text = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm EEEE")
+        currentTemp.text = "\(Int(forecastCurrent.current.tempC.rounded()))°C"
         currentWeatherCondition.text = forecastCurrent.current.condition.text
-        currentFeelsLikeTemp.text = "\(forecastCurrent.current.feelslikeC)°C"
-        let icon = extractImageNameCell(url: forecastCurrent.current.condition.icon)
-        currentWeatherIcon.image = UIImage(named: icon)
-        let forecastDays = forecastCurrent.forecast.forecastday
-        var willItRainValues: [Int] = []
-        for i in 0...1 {
-            for hour in forecastDays[i].hour {
-                let willItRainValue = hour.willItRain
-                willItRainValues.append(willItRainValue)
-                print("Day \(i + 1) - Will it rain: \(willItRainValue)")
-            }
-        }
-        if willItRainValues.count >= 2 {
-            let components = currentTime.text?.components(separatedBy: " ")
-            let currentTime = components?[1]
-            print("\(currentTime)")
-
-            let hourComponents = currentTime?.components(separatedBy: ":")
-            let hours = hourComponents?[0]
-            print("\(hours)")
-            let hour  = Int(hours ?? "") ?? 0
-            print(hour)
-            let firstValue = willItRainValues[hour]
-            let secondValue = willItRainValues[hour + 1]
-            print("\(firstValue)")
-            print("\(secondValue)")
-
-            if firstValue == 0 && secondValue == 0 {
-                currentWillRain.text = "Won't rain in 2 hours"
-            }else {
-                currentWillRain.text = "Will rain in 2 hours"
-            }
-        } else {
-            print("Not enough data")
-        }
-
+        currentFeelsLikeTemp.text = "\(Int(forecastCurrent.current.feelslikeC.rounded()))°C"
+        let imageName = ExtractImage.extractImageName(url: forecastCurrent.current.condition.icon)
+        currentWeatherIcon.image = UIImage(named: imageName)
+        let willItRain = WeatherCondition.willRain(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
+        currentWillRain.text = willItRain
+        let willItSnow = WeatherCondition.willSnow(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
+        currentWillSnow.text = willItSnow
+    }
+}
+extension CurrentWeatherTableViewCell {
+    func translateLangue(){
+        feelLikeLb.text = NSLocalizedString("Feel like: ", comment: "")
     }
 }

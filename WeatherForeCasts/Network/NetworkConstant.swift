@@ -1,105 +1,8 @@
-//
-//  NetworkConstant.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 29/10/2023.
-//
 
 import Foundation
 import Alamofire
 
-struct Weather {
-    let time: String
-    let temperature: Double
-    let rainChance: Int
-    let icon: String
-}
 
-class APIClient {
-    static let shared = APIClient()
-//    static let Location =
-
-    private init() {}
-
-    func getWeatherData(completion: @escaping (Result<WeatherData24h, Error>) -> Void) {
-        let apiKey = "29eecb9c4b7945d282190107232910"
-        let baseURL = "http://api.weatherapi.com/v1/forecast.json"
-
-        let parameters: [String: Any] = [
-            "key": apiKey,
-            "q": "Hanoi",
-            "days": 14,
-            "lang": "vn"
-        ]
-
-        AF.request(baseURL, method: .get, parameters: parameters).responseDecodable(of: WeatherData24h.self) { response in
-            switch response.result {
-            case .success(let weatherData):
-                completion(.success(weatherData))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-}
-class APIClient1 {
-    static let shared = APIClient1()
-
-    private init() {}
-
-    func getWeatherData(completion: @escaping (Result<Forecast, Error>) -> Void) {
-        let apiKey = "29eecb9c4b7945d282190107232910"
-        let baseURL = "http://api.weatherapi.com/v1/forecast.json"
-
-        let parameters: [String: Any] = [
-            "key": apiKey,
-            "q": "Hanoi",
-            "days": 14,
-            "aqi": "yes",
-            "lang": "vi"
-            
-        ]
-
-        AF.request(baseURL, method: .get, parameters: parameters).responseDecodable(of: Forecast.self) { response in
-            switch response.result {
-            case .success(let weatherData):
-                completion(.success(weatherData))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-}
-class APIClient2 {
-    static let shared = APIClient2()
-
-    private init() {}
-
-    func getWeatherData(completion: @escaping (Result<Forecastday, Error>) -> Void) {
-        let apiKey = "29eecb9c4b7945d282190107232910"
-        let baseURL = "http://api.weatherapi.com/v1/forecast.json"
-
-        let parameters: [String: Any] = [
-            "key": apiKey,
-            "q": "Hanoi",
-            "days": 1,
-            "aqi": "yes",
-            "lang": "vi"
-        ]
-
-        AF.request(baseURL, method: .get, parameters: parameters).responseDecodable(of: Forecastday.self) { response in
-            switch response.result {
-            case .success(let weatherData):
-                completion(.success(weatherData))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-}
 class APIManager {
     static let shared = APIManager()
 
@@ -108,9 +11,9 @@ class APIManager {
     func fetchWeatherData(completion: @escaping (WeatherData24h?) -> Void) {
         let url = "http://api.weatherapi.com/v1/forecast.json"
         let parameters: [String: Any] = [
-            "key": "29eecb9c4b7945d282190107232910",
+            "key": "13fd7475738b412884283147231311",
             "q": "Hanoi",
-            "days": 7,
+            "days": 14,
             "aqi": "yes"
         ]
 
@@ -128,7 +31,38 @@ class APIManager {
         }
     }
 }
+// Tạo một lớp mới để quản lý việc gọi API
+class WeatherAPIManager1 {
+    static let shared = WeatherAPIManager1()
+    
 
+    private init() {}
+    
+    func fetchWeatherData(latitude: Double, longitude: Double, completion: @escaping (WeatherData24h?) -> Void) {
+        let selectedLanguage = UserDefaults.standard.string(forKey: "AppleLanguages") ?? Locale.current.languageCode
+        print("selectedLanguage: \(selectedLanguage)")
+        let url = Constants.baseUrl
+        let parameters: [String: Any] = [
+            "key": Constants.key,
+            "q": "\(latitude),\(longitude)",
+            "days": 14,
+            "aqi": "yes",
+            "lang": selectedLanguage ?? "en"
+        ]
 
-
+        AF.request(url, parameters: parameters).response { response in
+            if let data = response.data {
+                let decoder = JSONDecoder()
+                do {
+                    let weatherData = try decoder.decode(WeatherData24h.self, from: data)
+                    print("Fetched weather data: \(weatherData.location.name)")
+                    completion(weatherData)
+                } catch {
+                    print("Error decoding: \(error)")
+                    completion(nil)
+                }
+            }
+        }
+    }
+}
 

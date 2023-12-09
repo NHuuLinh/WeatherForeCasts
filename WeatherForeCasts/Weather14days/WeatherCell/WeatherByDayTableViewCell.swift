@@ -16,6 +16,7 @@ class WeatherByDayTableViewCell: UITableViewCell {
     @IBOutlet weak var forecastDayMinTemp: UILabel!
     @IBOutlet weak var forecastDayWind: UILabel!
     @IBOutlet weak var forecastDayUV: UILabel!
+    @IBOutlet weak var forecastDayUvCondition: UILabel!
     @IBOutlet weak var forecastDayRainChance: UILabel!
     @IBOutlet weak var forecastDayHumidity: UILabel!
     @IBOutlet weak var forecastDayAirQly: UILabel!
@@ -25,35 +26,69 @@ class WeatherByDayTableViewCell: UITableViewCell {
     @IBOutlet weak var forecastDayMoonRise: UILabel!
     @IBOutlet weak var forecastDayMoonset: UILabel!
     @IBOutlet weak var forecastDayMoonPhase: UILabel!
+    @IBOutlet weak var test: UILabel!
+    
+    @IBOutlet weak var titleHighestTemp: UILabel!
+    @IBOutlet weak var titleLowestTemp: UILabel!
+    @IBOutlet weak var titleWindSpeed: UILabel!
+    @IBOutlet weak var titleUV: UILabel!
+    @IBOutlet weak var titleRainChain: UILabel!
+    @IBOutlet weak var titleHumidity: UILabel!
+    @IBOutlet weak var titleAirQty: UILabel!
+    @IBOutlet weak var titleSunAndMoon: UILabel!
+    @IBOutlet weak var titleSunrise: UILabel!
+    @IBOutlet weak var titleSunset: UILabel!
+    @IBOutlet weak var titleMoonrise: UILabel!
+    @IBOutlet weak var titleMoonset: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        translateLangue()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    func updateValue1231(datasForecast: Forecastday ) {
-        let icon = extractImageNameCell(url: "\(datasForecast.day.condition.icon)")
-        forecastDayIcone.image = UIImage(named: icon)
-        forecastDayAvgTemp.text = "\(datasForecast.day.avgtempC)"
-//        forecastDayConditionText.text = datasForecast.day.condition.text
-        forecastDayConditionText.text = datasForecast.date
-        forecastDayMaxTemp.text = "\(datasForecast.day.maxtempC)"
-        forecastDayMinTemp.text = "\(datasForecast.day.mintempC)"
-        forecastDayWind.text = "\(datasForecast.day.maxwindKph)"
-        forecastDayUV.text = "\(datasForecast.day.uv)"
+    func updateValue(datasForecast: Forecastday ) {
+        let imageName  = ExtractImage.extractImageName(url: "\(datasForecast.day.condition.icon)")
+        forecastDayIcone.image = UIImage(named: imageName)
+        forecastDayAvgTemp.text = "\(Int(datasForecast.day.avgtempC.rounded()))"
+        forecastDayConditionText.text = datasForecast.day.condition.text
+        forecastDayMaxTemp.text = "\(Int(datasForecast.day.maxtempC.rounded()))"
+        forecastDayMinTemp.text = "\(Int(datasForecast.day.mintempC.rounded()))"
+        forecastDayWind.text = "\(Int(datasForecast.day.maxwindKph.rounded()))"
+        let uvValue = Int(datasForecast.day.uv.rounded())
+        forecastDayUV.text = "\(uvValue)"
+        forecastDayUvCondition.text = NSLocalizedString(UVIndex.uvCondition(uvValue: uvValue), comment: "")
         forecastDayRainChance.text = "\(datasForecast.day.dailyChanceOfRain)"
-        forecastDayHumidity.text = "\(datasForecast.day.avghumidity)"
-//        forecastDayHumidity.text = "\(datasForecast.day.air_quality?.co ?? 0 )"
-
-        forecastDayAirQly.text = "\(datasForecast.day.air_quality?.usEpaIndex ?? 0)"
-        let AirQlyText = airQlyDataCell(numb: datasForecast.day.air_quality?.usEpaIndex ?? 0)
-        forecastDayAirQlyText.text = AirQlyText
+        forecastDayHumidity.text = "\(Int(datasForecast.day.avghumidity.rounded()))"
+        let aqiValue = datasForecast.day.airQuality.usEpaIndex ?? 0
+        forecastDayAirQly.text = "\(aqiValue)"
+        let AirQlyCondition = NSLocalizedString(AQIHandle.airQlyDataCondition(numb: aqiValue), comment: "")
+        forecastDayAirQlyText.text = NSLocalizedString(AirQlyCondition, comment: "")
         forecastDaySunRaise.text = datasForecast.astro.sunrise
         forecastDaySunSet.text = datasForecast.astro.sunset
         forecastDayMoonRise.text = datasForecast.astro.moonrise
         forecastDayMoonset.text = datasForecast.astro.moonset
-        forecastDayMoonPhase.text = "\(datasForecast.astro.moonPhase)"
+//        let moonPhase = "\(datasForecast.astro.moonPhase)"
+        forecastDayMoonPhase.text = NSLocalizedString(datasForecast.astro.moonPhase, comment: "")
+    }
+    func test1123(test1: WeatherData24h) {
+        test.text = "\(test1.forecast.forecastday[2].hour[3].humidity)"
+    }
+    func translateLangue(){
+        titleHighestTemp.text = NSLocalizedString(titleHighestTemp.text ?? "", comment: "")
+        titleLowestTemp.text = NSLocalizedString(titleLowestTemp.text ?? "", comment: "")
+        titleWindSpeed.text = NSLocalizedString(titleWindSpeed.text ?? "", comment: "")
+        titleUV.text = NSLocalizedString(titleUV.text ?? "", comment: "")
+        titleRainChain.text = NSLocalizedString(titleRainChain.text ?? "", comment: "")
+        titleHumidity.text = NSLocalizedString(titleHumidity.text ?? "", comment: "")
+        titleAirQty.text = NSLocalizedString(titleAirQty.text ?? "", comment: "")
+        titleSunrise.text = NSLocalizedString(titleSunrise.text ?? "", comment: "")
+        titleSunset.text = NSLocalizedString(titleSunset.text ?? "", comment: "")
+        titleMoonrise.text = NSLocalizedString(titleMoonrise.text ?? "", comment: "")
+        titleMoonset.text = NSLocalizedString(titleMoonset.text ?? "", comment: "")
+        titleSunAndMoon.text = NSLocalizedString(titleSunAndMoon.text ?? "", comment: "")
+
     }
 }
 

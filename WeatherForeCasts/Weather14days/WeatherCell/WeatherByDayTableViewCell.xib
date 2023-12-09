@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,6 +48,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°c" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxt-4E-WEd">
+                                <rect key="frame" x="263.33333333333331" y="73" width="21.666666666666686" height="28"/>
+                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày nắng, có mây, không mưa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U55-TY-Tzo">
                                 <rect key="frame" x="74.000000000000014" y="101" width="254.33333333333337" height="22.666666666666671"/>
                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
@@ -66,8 +73,8 @@
                                                     <constraint firstAttribute="width" constant="30" id="Qh0-fM-6M0"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nhiệt độ cao nhất" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbI-RT-46E">
-                                                <rect key="frame" x="45" y="3.6666666666666856" width="138.66666666666666" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Highest temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbI-RT-46E">
+                                                <rect key="frame" x="45.000000000000014" y="3.6666666666666856" width="166.33333333333337" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -108,8 +115,8 @@
                                                     <constraint firstAttribute="width" constant="30" id="OCa-BG-8Ks"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nhiệt độ thấp nhất" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVn-hO-qWl">
-                                                <rect key="frame" x="45" y="3.6666666666666856" width="143.66666666666666" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lowest temperature" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVn-hO-qWl">
+                                                <rect key="frame" x="45" y="3.6666666666666856" width="160.66666666666666" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -150,8 +157,8 @@
                                                     <constraint firstAttribute="width" constant="30" id="zlG-Fb-IHv"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vận tốc gió" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viy-Hs-fc6">
-                                                <rect key="frame" x="45" y="3.6666666666666856" width="88" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viy-Hs-fc6">
+                                                <rect key="frame" x="45" y="3.6666666666666856" width="95" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -192,20 +199,20 @@
                                                     <constraint firstAttribute="width" constant="30" id="b0f-cR-b17"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chỉ số UV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSE-rT-Sf7">
-                                                <rect key="frame" x="45.000000000000007" y="3.6666666666666288" width="74.666666666666686" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UV Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSE-rT-Sf7">
+                                                <rect key="frame" x="45.000000000000007" y="3.6666666666666288" width="68.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(trung bình)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahL-KB-vZ9">
-                                                <rect key="frame" x="284.66666666666669" y="3.6666666666666288" width="102.33333333333331" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(average)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahL-KB-vZ9">
+                                                <rect key="frame" x="302.33333333333331" y="3.6666666666666288" width="84.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yA3-d6-Lw7">
-                                                <rect key="frame" x="274" y="3.6666666666666288" width="10.666666666666686" height="22.666666666666668"/>
+                                                <rect key="frame" x="291.66666666666669" y="3.6666666666666288" width="10.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -234,8 +241,8 @@
                                                     <constraint firstAttribute="width" constant="30" id="yFP-d1-V6l"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Khả năng mưa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0S-6Q-01O">
-                                                <rect key="frame" x="45" y="3.6666666666666288" width="118" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rain chain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0S-6Q-01O">
+                                                <rect key="frame" x="45" y="3.6666666666666288" width="84" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -276,8 +283,8 @@
                                                     <constraint firstAttribute="height" constant="30" id="UJe-E8-W2o"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Độ ẩm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYk-99-QF9">
-                                                <rect key="frame" x="45" y="3.6666666666666288" width="50.333333333333343" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYk-99-QF9">
+                                                <rect key="frame" x="44.999999999999993" y="3.6666666666666288" width="71.333333333333314" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -318,20 +325,20 @@
                                                     <constraint firstAttribute="height" constant="30" id="zVL-VD-DmY"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chất lượng không khí" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4c-sR-97L">
-                                                <rect key="frame" x="45.000000000000014" y="3.6666666666666288" width="169.33333333333337" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Air quality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4c-sR-97L">
+                                                <rect key="frame" x="45.000000000000007" y="3.6666666666666288" width="79.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(trung bình)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVM-HG-dgT">
-                                                <rect key="frame" x="284.66666666666669" y="3.6666666666666288" width="102.33333333333331" height="22.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(average)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVM-HG-dgT">
+                                                <rect key="frame" x="302.33333333333331" y="3.6666666666666288" width="84.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="56" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zH-kd-POz">
-                                                <rect key="frame" x="264" y="3.6666666666666288" width="20.666666666666686" height="22.666666666666668"/>
+                                                <rect key="frame" x="281.66666666666669" y="3.6666666666666288" width="20.666666666666686" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -364,14 +371,16 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="Color Main Theme"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="410" id="65G-kh-bzq"/>
                             <constraint firstItem="2EL-aW-WT5" firstAttribute="leading" secondItem="3Og-94-JTC" secondAttribute="leading" constant="5" id="CMP-R7-fL0"/>
                             <constraint firstItem="S4n-yQ-b5J" firstAttribute="top" secondItem="3Og-94-JTC" secondAttribute="top" constant="8" id="HNl-gw-w1C"/>
                             <constraint firstItem="U55-TY-Tzo" firstAttribute="centerX" secondItem="3Og-94-JTC" secondAttribute="centerX" id="Jf1-wC-i1W"/>
+                            <constraint firstItem="dxt-4E-WEd" firstAttribute="leading" secondItem="26S-Ya-gLe" secondAttribute="trailing" id="KdE-1A-7G2"/>
                             <constraint firstItem="26S-Ya-gLe" firstAttribute="top" secondItem="S4n-yQ-b5J" secondAttribute="bottom" id="X1c-6q-L7T"/>
                             <constraint firstItem="2EL-aW-WT5" firstAttribute="top" secondItem="U55-TY-Tzo" secondAttribute="bottom" constant="5" id="XXP-LX-On1"/>
+                            <constraint firstItem="dxt-4E-WEd" firstAttribute="centerY" secondItem="26S-Ya-gLe" secondAttribute="centerY" id="dOr-P7-1gX"/>
                             <constraint firstItem="U55-TY-Tzo" firstAttribute="top" secondItem="26S-Ya-gLe" secondAttribute="bottom" id="f0W-7T-hhG"/>
                             <constraint firstItem="9yg-9y-tU2" firstAttribute="leading" secondItem="3Og-94-JTC" secondAttribute="leading" constant="10" id="laj-e1-diG"/>
                             <constraint firstItem="9yg-9y-tU2" firstAttribute="top" secondItem="3Og-94-JTC" secondAttribute="top" constant="10" id="q9F-zP-4NU"/>
@@ -388,8 +397,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqu-yg-Ssn">
                         <rect key="frame" x="0.0" y="430" width="402" height="270"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chu kì mặt trời &amp; mặt trăng" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sde-32-Jqg">
-                                <rect key="frame" x="75.333333333333329" y="4.9999999999999982" width="251.33333333333337" height="25.333333333333329"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun and moon cycle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sde-32-Jqg">
+                                <rect key="frame" x="107.33333333333333" y="4.9999999999999982" width="187.33333333333337" height="25.333333333333329"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -410,7 +419,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mặt trời mọc" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GY-9M-T77">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunrise" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GY-9M-T77">
                                         <rect key="frame" x="5" y="72.333333333333314" width="100" height="22.666666666666671"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="Mae-Oy-7YG"/>
@@ -425,7 +434,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mặt trời lặn" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxP-j7-zad">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunset" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uxP-j7-zad">
                                         <rect key="frame" x="287" y="72.333333333333314" width="100" height="22.666666666666671"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="bX2-Ys-DDn"/>
@@ -459,7 +468,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trăng lên" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8s-2O-XgW">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moonrise" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8s-2O-XgW">
                                         <rect key="frame" x="5" y="72.333333333333258" width="100" height="22.666666666666671"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="aWW-ys-V6d"/>
@@ -474,7 +483,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trăng lặn" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNS-4W-6U2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moonset" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNS-4W-6U2">
                                         <rect key="frame" x="287" y="72.333333333333258" width="100" height="22.666666666666671"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="1FY-gN-iiD"/>
@@ -513,7 +522,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="Color Main Theme"/>
                         <constraints>
                             <constraint firstItem="deZ-g5-L16" firstAttribute="centerX" secondItem="rLH-oo-WAD" secondAttribute="centerX" id="2n2-PI-63i"/>
                             <constraint firstItem="rLH-oo-WAD" firstAttribute="leading" secondItem="bqu-yg-Ssn" secondAttribute="leading" constant="5" id="8hF-rD-qGG"/>
@@ -563,7 +572,21 @@
                 <outlet property="forecastDaySunRaise" destination="u0M-3j-w1n" id="eXh-Lc-W1i"/>
                 <outlet property="forecastDaySunSet" destination="7aC-Ig-BQh" id="LYO-Ur-N5b"/>
                 <outlet property="forecastDayUV" destination="yA3-d6-Lw7" id="VOP-bn-sDF"/>
+                <outlet property="forecastDayUvCondition" destination="ahL-KB-vZ9" id="h5e-cD-0zN"/>
                 <outlet property="forecastDayWind" destination="yv7-10-GJQ" id="h85-4f-4EE"/>
+                <outlet property="test" destination="9yg-9y-tU2" id="Ere-fW-lWZ"/>
+                <outlet property="titleAirQty" destination="N4c-sR-97L" id="jbQ-e3-TUA"/>
+                <outlet property="titleHighestTemp" destination="XbI-RT-46E" id="Mtf-IJ-eZa"/>
+                <outlet property="titleHumidity" destination="CYk-99-QF9" id="Ctb-jF-klC"/>
+                <outlet property="titleLowestTemp" destination="BVn-hO-qWl" id="X5k-5Z-vn4"/>
+                <outlet property="titleMoonrise" destination="J8s-2O-XgW" id="1ZD-ka-eDr"/>
+                <outlet property="titleMoonset" destination="QNS-4W-6U2" id="bwo-Nb-YQ5"/>
+                <outlet property="titleRainChain" destination="Z0S-6Q-01O" id="XJ6-sd-fFO"/>
+                <outlet property="titleSunAndMoon" destination="Sde-32-Jqg" id="OMU-kO-65p"/>
+                <outlet property="titleSunrise" destination="7GY-9M-T77" id="8hU-1w-H7D"/>
+                <outlet property="titleSunset" destination="uxP-j7-zad" id="UbO-WC-BBp"/>
+                <outlet property="titleUV" destination="gSE-rT-Sf7" id="YxC-As-a8F"/>
+                <outlet property="titleWindSpeed" destination="viy-Hs-fc6" id="Kdm-xb-XgP"/>
             </connections>
             <point key="canvasLocation" x="54.961832061068698" y="-89.788732394366207"/>
         </tableViewCell>
@@ -578,5 +601,8 @@
         <image name="UVicone" width="27" height="25"/>
         <image name="Umbrela" width="25" height="25"/>
         <image name="day116" width="64" height="64"/>
+        <namedColor name="Color Main Theme">
+            <color red="0.54117647058823526" green="0.5490196078431373" blue="0.57647058823529407" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

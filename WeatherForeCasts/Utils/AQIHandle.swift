@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AQIHeper {
+class AQIHandle {
     static func airQlyLevel(width: Int) -> CGFloat {
         let level :CGFloat = 50.0
         switch width {
@@ -28,7 +28,7 @@ class AQIHeper {
             return 0.0
         }
     }
-    func airQlyColor(numb: Int) -> UIColor {
+    static func airQlyColor(numb: Int) -> UIColor {
         switch numb {
         case 1 :
             return .green
@@ -46,7 +46,7 @@ class AQIHeper {
             return .white
         }
     }
-    func airQlyDataCell(numb: Int) -> String {
+    static func airQlyDataCondition(numb: Int) -> String {
         switch numb {
         case 1 :
             return "(Good)"
@@ -54,6 +54,7 @@ class AQIHeper {
             return "(Moderate)"
         case 3 :
             return "(Unhealthy for sensitive group)"
+//            return "(Not Good)"
         case 4 :
             return "(Unhealthy)"
         case 5 :
@@ -64,4 +65,23 @@ class AQIHeper {
             return "(Unknow)"
         }
     }
+    static func airQualityDataAdvice(index: Int) -> String {
+        switch index {
+        case 1:
+            return "Great air quality, you don't need any protection."
+        case 2:
+            return "Good air quality, no significant health risk."
+        case 3:
+            return "Moderate air quality, sensitive individuals may experience respiratory issues. Consider reducing prolonged outdoor exertion."
+        case 4:
+            return "Poor air quality, everyone may begin to experience adverse health effects. Members of sensitive groups may experience more serious health effects."
+        case 5:
+            return "Very poor air quality, health alert: everyone may experience more serious health effects."
+        case 6:
+            return "Hazardous air quality, health warnings of emergency conditions. The entire population is likely to be affected."
+        default:
+            return "Data not available."
+        }
+    }
+
 }

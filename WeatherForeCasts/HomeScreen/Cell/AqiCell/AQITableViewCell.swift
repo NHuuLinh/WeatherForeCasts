@@ -12,9 +12,11 @@ class AQITableViewCell: UITableViewCell {
     @IBOutlet weak var currentAirCondition: UILabel!
     @IBOutlet weak var currentAirLevel: UIView!
     @IBOutlet weak var currentAirLevelWidth: NSLayoutConstraint!
+    @IBOutlet weak var airQtyTitle: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        airQtyTitle.text = NSLocalizedString(airQtyTitle.text ?? "", comment: "")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

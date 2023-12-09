@@ -1,8 +1,9 @@
-//
-//  UIStatusBarStyle.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 01/12/2023.
-//
 
 import Foundation
+import UIKit
+class LightContentNavigationController: UINavigationController {
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}

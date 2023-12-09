@@ -1,7 +1,132 @@
-/* 
-  Localizable.strings
-  WeatherForeCasts
+// MARK: - Màn hình đăng nhập
+"Don't have an account?" = "Chưa có tài khoản?";
+"Sign In" = "Đăng nhập";
+"Email" = "Email";
+"Password" = "Mật khẩu";
+"Email can't be empty." = "Email không thể trống.";
+"The email is in the wrong format." = "Email sai định dạng";
+"Password can't be empty." = "Mật khẩu không thể trông";
+"Password must be more than 6 digits." = "Mật khẩu cần dài hơn 6 kí tự";
+"Forgot password ?" = "Quên mật khẩu ?";
+"Don't have an account ?" = "Chưa có tài khoản ?";
+"Sign Up" = "Đăng kí";
+"or continue with" = "hoặc tiếp tục với";
+"Login" = "Đăng nhập";
+// MARK: - Màn hình đăng kí
+"Register" = "Đăng kí";
+"Already have an account ?" = "Đã có tài khoản";
+"Re enter password" = "Nhập lại mật khẩu";
+// MARK: - Màn hình quên mật khẩu
+"Forgot Password" = "Quên Mật Khẩu";
+"Send request" = "Gửi yêu cầu";
+// MARK: - Màn hình side menu
+"Profile" = "Tài Khoản";
+"Pin Location" = "Địa điểm yêu thích";
+"Settings" = "Cài đặt";
+"Notification" = "Thông báo";
+"About Us" = "Về chúng tôi";
+"Private Policy" = "Chính sách bảo mật";
+"Terms Of Use" = "Điều khoản sử dụng";
+"Logout" = "Đăng xuất";
+// MARK: - Màn hình Profile
+"Account" = "Tài Khoản";
+"Name" = "Tên";
+"Gender" = "Giới tính";
+"Date of birth" = "Ngày sinh";
+"Phone number" = "Số điện thoại";
+"Male" = "Name";
+"Female" = "Nữ";
+"None" = "Trống";
+"Edit profile" = "Sửa thông tin";
+"Clear edit" = "Hoàn tác thay đổi";
+"Save" = "Lưu";
+"Choose Image" = "Chọn ảnh";
+"Choose your option" = "Chọn tùy chọn của bạn";
+"Gallery" = "Thư viện";
+"Cancel" = "Hủy";
+"Error" = "Lỗi";
+"Divice not have camera" = "Thiết bị không có camera";
+// MARK: - Màn hình Maps
+"Warning" = "Cảnh báo";
+"Please select a location" = "Vui lòng chọn địa điểm";
+"Select Location" = "Chọn địa điểm";
+// MARK: - Màn hình nointernet
+"No internet connection" = "Không có kết nối mạng";
+"Please check internet connection and retry again" = "Vui lòng kiểm tra kêt nối mạng và thử lại";
+"Retry" = "Thử lại";
+// MARK: - Màn hình Main Start
 
-  Created by LinhMAC on 02/12/2023.
-  
-*/
+// MARK: - Màn hình CurrentWeatherTableViewCell
+"Feel like: " = "Cảm thấy như: ";
+"Unknown" = "Không rõ lỗi";
+"hours" = "giờ tới";
+"Won't snow in" = "Không có tuyết rơi trong";
+"Will snow in" = "Có tuyết rơi trong";
+"Won't rain in" = "Không có mưa trong";
+"Won't rain in" = "Có mưa trong";
+// MARK: - Màn hình DailyTableViewCell
+"Forecast 24h" = "Dự báo 24h";
+// MARK: - Màn hình WeeklyTableViewCell
+"Details" = "Chi tiết";
+"Forecast 14 days" = "Dự báo 14 ngày";
+// MARK: - Màn hình OtherInformTableViewCell
+"Cloud" = "Độ mây che phủ";
+"Avg temperature" = "Nhiệt độ trung bình";
+"Visibility" = "Tầm nhìn";
+"UV Index" = "Chỉ số UV";
+"(low)" = "(thấp)";
+"(moderate)" = "(trung bình)";
+"(high)" = "(cao)";
+"(very High)" = "(rất cao)";
+"(extrene)" = "(nguy hiểm)";
+"Wind speed" = "Tốc độ gió";
+"Humidity" = "Độ ẩm";
+// MARK: - Màn hình AQITableViewCell
+"Air quality" = "Chất lượng không khí";
+// MARK: - Màn hình AstroTableViewCell
+"Sun and moon cycle" = "Chu kì mặt trời và mặt trăng";
+"Sunrise" = "Bình minh";
+"Sunset" = "Hoàng hôn";
+"Moonrise" = "Trăng lên";
+"Moonset" = "Trăng lặn";
+"Waxing Crescent" = "Trăng lưỡi liềm";
+"First Quarter" = "Trăng bán nguyệt";
+"New Moon" = "Trăng non";
+"Waning Crescent" = "Trăng khuyết";
+"Last Quarter" = "Trăng bán nguyệt";
+"Waning Gibbous" = "Trăng khuyết";
+"Full Moon" = "Trăng tròn";
+"Waxing Gibbous" = "Trăng khuyết";
+// MARK: - Màn hình WeatherAdviceTableViewCell
+"Weather is great for outdoor active" = "Thời tiết thích hợp cho hoạt động ngoài trời";
+"Weather is bad for outdoor active" = "Thời tiết không thích hợp cho hoạt động ngoài trời";
+"Weather is great for outdoor exercise" = "Thời tiết phù hợp cho thể dục ngoài trời";
+"Weather is bad for outdoor exercise" = "Thời tiết không phù hợp cho thể dục ngoài trời";
+"Weather is good for driving" = "Thời tiết tốt để lái xe";
+"Weather is not good for driving" = "Thời tiết tệ để lái xe";
+"Low UV index. You don't need special protection." = "Chỉ số UV thấp. Bạn không cần phòng chống";
+"Average UV index. Wear protective clothing, a wide-brimmed hat, and UV-protective glasses" = "Chỉ số tia cực tím trung bình. Mặc quần áo bảo hộ, đội mũ rộng vành và đeo kính chống tia cực tím";
+"High UV index. Seek shade, wear protective clothing, a wide-brimmed hat, and UV-protective glasses." = "Chỉ số tia cực tím cao. Tìm bóng râm, mặc quần áo bảo hộ, đội mũ rộng vành và đeo kính chống tia cực tím.";
+"UV quality is very high. Seek shade, wear protective clothing, a wide-brimmed hat, UV-protective glasses, and use sunscreen" = "Chất lượng tia cực tím rất cao. Hãy tìm bóng râm, mặc quần áo bảo hộ, đội mũ rộng vành, đeo kính chống tia cực tím và sử dụng kem chống nắng";
+"UV quality is extremely dangerous. Avoid direct sun exposure, wear protective clothing, a wide-brimmed hat, UV-protective glasses and sunscreen." = "Chất lượng tia cực tím cực kỳ nguy hiểm. Tránh tiếp xúc trực tiếp với ánh nắng mặt trời, mặc quần áo bảo hộ, đội mũ rộng vành, đeo kính chống tia cực tím và bôi kem chống nắng.";
+"Great air quality, you don't need any protection." = "Chất lượng không khí tuyệt vời, bạn không cần bất kỳ sự bảo vệ nào.";
+"Good air quality, no significant health risk." = "Chất lượng không khí tốt, không có nguy cơ sức khoẻ đáng kể.";
+"Moderate air quality, sensitive individuals may experience respiratory issues. Consider reducing prolonged outdoor exertion." = "Chất lượng không khí vừa phải, những người nhạy cảm có thể gặp các vấn đề về hô hấp. Hãy cân nhắc giảm hoạt động ngoài trời kéo dài.";
+"Poor air quality, everyone may begin to experience adverse health effects. Members of sensitive groups may experience more serious health effects." = "Chất lượng không khí kém, mọi người có thể bắt đầu gặp những ảnh hưởng xấu đến sức khỏe. Thành viên của các nhóm nhạy cảm có thể bị ảnh hưởng sức khỏe nghiêm trọng hơn.";
+"Very poor air quality, health alert: everyone may experience more serious health effects." = "Chất lượng không khí kém, mọi người có thể bắt đầu gặp những ảnh hưởng xấu đến sức khỏe. Thành viên của các nhóm nhạy cảm có thể bị ảnh hưởng sức khỏe nghiêm trọng hơn.";
+"Hazardous air quality, health warnings of emergency conditions. The entire population is likely to be affected." = "Chất lượng không khí nguy hiểm, cảnh báo sức khỏe về tình trạng khẩn cấp. Toàn bộ dân số có thể bị ảnh hưởng.";
+"Data not available." = "Chưa có dữ liệu";
+// MARK: - Màn hình Main End
+// MARK: - Màn hình WeatherLongDayViewController Start
+"Highest temperature" = "Nhiệt độ cao nhất";
+"Lowest temperature" = "Nhiệt độ thấp nhất";
+"Rain chain" = "Tỉ lệ mưa";
+"(Good)" = "(tốt)";
+"(Moderate)" = "(trung bình)";
+"(Unhealthy for sensitive group)" = "(Không tốt cho nhóm nhạy cảm)";
+"(Unhealthy)" = "(Không khỏe mạnh)";
+"(Very Unhealthy)" = "(Rất không tốt cho sức khỏe)";
+"(Hazardous)" = "(Nguy hiểm)";
+"Feels like" = "Cảm thấy như";
+// MARK: - Màn hình DailyForecastViewController
+"24h Forecast" = "Dự báo 24h";

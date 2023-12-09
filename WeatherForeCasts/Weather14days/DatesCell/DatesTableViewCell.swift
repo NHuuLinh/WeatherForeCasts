@@ -11,13 +11,12 @@ class DatesTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
 
     
     @IBOutlet weak var datesForecastCollectionView: UICollectionView!
-    private var dates = [String]()
+    private var dates1 = [String]()
+    private var dates : [Forecastday] = []
     private var onClickDate : ((Int) -> Void)?
     private var selectedDateIndex: Int?
-    
     private var selectedIndexPath: IndexPath? // Thêm biến này để theo dõi ô được chọn
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCollectionView()
@@ -39,7 +38,7 @@ class DatesTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
         datesForecastCollectionView.delegate = self
     }
 
-    func bindData(dates: [String], selectedDateIndex: Int?, onClickDate: ((Int) -> Void)?) {
+    func bindData(dates: [Forecastday], selectedDateIndex: Int?, onClickDate: ((Int) -> Void)?) {
         self.dates = dates
         self.selectedDateIndex = selectedDateIndex
         self.onClickDate = onClickDate
@@ -52,12 +51,11 @@ class DatesTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DatesCollectionViewCell", for: indexPath) as! DatesCollectionViewCell
-        let date = dates[indexPath.row]
+        let date = dates[indexPath.item]
         let isSelected = indexPath.row == selectedDateIndex ?? 0
         cell.bindData(date: date, isSelected: isSelected)
         return cell
     }
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.onClickDate?(indexPath.row)
         collectionView.reloadData()

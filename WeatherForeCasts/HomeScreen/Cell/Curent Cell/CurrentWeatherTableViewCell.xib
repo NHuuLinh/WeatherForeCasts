@@ -21,7 +21,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="360" id="KGk-i7-Jjw" customClass="CurrentWeatherTableViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
+        <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="360" id="KGk-i7-Jjw" customClass="CurrentWeatherTableViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="394" height="360"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -31,47 +31,41 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ne-RC-cox">
                         <rect key="frame" x="0.0" y="0.0" width="394" height="310"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Th 3 19:21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-pJ-3B8">
-                                <rect key="frame" x="159" y="5" width="76" height="18.666666666666668"/>
-                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="day113" translatesAutoresizingMaskIntoConstraints="NO" id="lhf-bx-5Qr">
-                                <rect key="frame" x="229" y="80" width="150" height="150"/>
+                                <rect key="frame" x="229" y="60" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="NWM-NX-94S"/>
                                     <constraint firstAttribute="width" secondItem="lhf-bx-5Qr" secondAttribute="height" multiplier="1:1" id="ycE-W2-x9B"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hh1-6Q-iAN">
-                                <rect key="frame" x="0.0" y="80" width="174" height="150"/>
+                                <rect key="frame" x="0.0" y="60" width="174" height="150"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27c" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rro-E6-c9l">
-                                        <rect key="frame" x="37.666666666666657" y="0.0" width="99" height="70"/>
+                                        <rect key="frame" x="35.666666666666664" y="0.0" width="102.66666666666669" height="84"/>
                                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="60"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cloudy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eko-Jg-ZLb">
-                                        <rect key="frame" x="48.999999999999993" y="75" width="76.333333333333314" height="28"/>
+                                        <rect key="frame" x="43.999999999999993" y="89" width="86.333333333333314" height="33.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="24"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qqX-wk-Rbt">
-                                        <rect key="frame" x="43.666666666666657" y="113" width="87" height="19"/>
+                                        <rect key="frame" x="41.666666666666657" y="132.66666666666666" width="91" height="22.666666666666657"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feelike :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-g2-rS5">
-                                                <rect key="frame" x="0.0" y="0.0" width="60" height="19"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="61.666666666666664" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28c" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpK-Xc-Nhx">
-                                                <rect key="frame" x="60" y="0.0" width="27" height="19"/>
+                                                <rect key="frame" x="61.666666666666664" y="0.0" width="29.333333333333336" height="22.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -98,25 +92,39 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No rain for 120 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSf-Xq-lbe">
-                                <rect key="frame" x="113" y="281" width="168" height="19"/>
+                                <rect key="frame" x="106.66666666666667" y="277.33333333333331" width="180.66666666666663" height="22.666666666666686"/>
                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Th 3 19:21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-pJ-3B8">
+                                <rect key="frame" x="162" y="5.0000000000000018" width="70" height="22.666666666666671"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No rain for 120 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Waj-us-B7Z">
+                                <rect key="frame" x="106.66666666666667" y="240" width="180.66666666666663" height="22.666666666666686"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Hh1-6Q-iAN" firstAttribute="leading" secondItem="4Ne-RC-cox" secondAttribute="leading" id="5bB-xw-ZXm"/>
+                            <constraint firstItem="Waj-us-B7Z" firstAttribute="top" secondItem="Hh1-6Q-iAN" secondAttribute="bottom" constant="30" id="72s-ia-MMq"/>
                             <constraint firstAttribute="trailing" secondItem="Hh1-6Q-iAN" secondAttribute="trailing" constant="220" id="E8R-4U-FCS"/>
-                            <constraint firstItem="lhf-bx-5Qr" firstAttribute="centerY" secondItem="4Ne-RC-cox" secondAttribute="centerY" id="Tbm-L7-K4E"/>
                             <constraint firstItem="Hh1-6Q-iAN" firstAttribute="top" secondItem="lhf-bx-5Qr" secondAttribute="top" id="WtT-rO-fy8"/>
                             <constraint firstAttribute="height" constant="310" id="XDD-Lq-mOG"/>
                             <constraint firstAttribute="trailing" secondItem="lhf-bx-5Qr" secondAttribute="trailing" constant="15" id="bzb-KH-xYp"/>
                             <constraint firstItem="oSf-Xq-lbe" firstAttribute="centerX" secondItem="4Ne-RC-cox" secondAttribute="centerX" id="fJI-iO-nP6"/>
                             <constraint firstAttribute="bottom" secondItem="oSf-Xq-lbe" secondAttribute="bottom" constant="10" id="fV0-ru-vnF"/>
+                            <constraint firstItem="Waj-us-B7Z" firstAttribute="centerX" secondItem="4Ne-RC-cox" secondAttribute="centerX" id="j5b-dc-q8x"/>
                             <constraint firstItem="aOs-pJ-3B8" firstAttribute="top" secondItem="4Ne-RC-cox" secondAttribute="top" constant="5" id="mff-If-Dgm"/>
                             <constraint firstItem="Hh1-6Q-iAN" firstAttribute="centerY" secondItem="lhf-bx-5Qr" secondAttribute="centerY" id="pPj-1u-n5C"/>
                             <constraint firstItem="aOs-pJ-3B8" firstAttribute="centerX" secondItem="4Ne-RC-cox" secondAttribute="centerX" id="rgE-O4-rBY"/>
+                            <constraint firstItem="lhf-bx-5Qr" firstAttribute="top" secondItem="4Ne-RC-cox" secondAttribute="top" constant="60" id="yAG-yR-UkI"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -142,6 +150,8 @@
                 <outlet property="currentWeatherCondition" destination="eko-Jg-ZLb" id="G9U-8I-vKK"/>
                 <outlet property="currentWeatherIcon" destination="lhf-bx-5Qr" id="CjH-Kf-jid"/>
                 <outlet property="currentWillRain" destination="oSf-Xq-lbe" id="zPN-zc-khM"/>
+                <outlet property="currentWillSnow" destination="Waj-us-B7Z" id="xvN-Cy-mht"/>
+                <outlet property="feelLikeLb" destination="b2l-g2-rS5" id="MH1-SU-Gpu"/>
             </connections>
             <point key="canvasLocation" x="16.793893129770993" y="100"/>
         </tableViewCell>

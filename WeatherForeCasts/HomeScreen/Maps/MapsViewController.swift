@@ -9,6 +9,7 @@ protocol MapsViewControllerDelegate: AnyObject {
 class MapsViewController: UIViewController,UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapsView: MKMapView!
+    @IBOutlet weak var selectLocationBtn: UIButton!
     
     let geocoder = CLGeocoder()
     weak var delegate: MapsViewControllerDelegate?
@@ -19,6 +20,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
         searchBar.delegate = self
         mapsView.showsUserLocation = true
         mapsView.delegate = self
+        translateLangue()
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleMapTap(_:)))
         mapsView.addGestureRecognizer(tapRecognizer)
         let userLocationButton = MKUserTrackingBarButtonItem(mapView: mapsView)
@@ -64,12 +66,12 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapsView.setRegion(region, animated: true)
     }
-    
-    @IBAction func selectLocation(_ sender: Any) {
+    func selecLoacations(){
         if let selectedLocation = selectedLocation {
             print("Đã chọn điểm có tọa độ: Latitude \(selectedLocation.latitude), Longitude \(selectedLocation.longitude)")
             let location = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
             geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+                // lấy địa điểm để truyền sang main
                 if let placemark = placemarks?.first {
                     let province = placemark.administrativeArea ?? ""
                     let country = placemark.country ?? ""
@@ -80,8 +82,19 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
             }
             navigationController?.popViewController(animated: true)
         }
+        let warningTitle = NSLocalizedString("Warning", comment: "")
+        let warningMessage = NSLocalizedString("Please select a location", comment: "")
+
+        showAlert(title: warningTitle, message: warningMessage)
+    }
+    
+    @IBAction func selectLocation(_ sender: Any) {
+        selecLoacations()
     }
 
+    @IBAction func backBtn(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: true)
+    }
     
     @IBAction func currentLocation(_ sender: Any) {
         if let userLocation = mapsView.userLocation.location {
@@ -96,6 +109,11 @@ extension MapsViewController: MKMapViewDelegate {
         if let annotation = view.annotation {
             selectedLocation = annotation.coordinate
         }
+    }
+}
+extension MapsViewController {
+    func translateLangue(){
+        selectLocationBtn.setTitle(NSLocalizedString("Select Location", comment: ""), for: .normal)
     }
 }
 

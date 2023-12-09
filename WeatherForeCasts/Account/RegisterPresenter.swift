@@ -7,22 +7,24 @@
 
 import Foundation
 import FirebaseAuth
+import KeychainSwift
 
 protocol RegisterPresenter {
-    func register(by email: String, with password: String)
+    func register(email: String, password: String)
+    func loginBySocialNW()
 }
 
 class RegisterPresenterImpl: RegisterPresenter {
+    let keychain = KeychainSwift()
     let registerVC: RegisterDisplay
     
     init(registerVC: RegisterDisplay) {
         self.registerVC = registerVC
     }
     
-    func register(by email: String, with password: String) {
-        registerVC.loading(isLoading: true)
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, err in
-            self.registerVC.loading(isLoading: false)
+    func register(email: String,password: String) {
+        self.registerVC.showLoading(isShow: true)
+        Auth.auth().createUser(withEmail: email, password: password) { [self] authResult, err in
             guard err == nil else {
                 /// Cach xử lý custom error.
                 var message = ""
@@ -34,10 +36,17 @@ class RegisterPresenterImpl: RegisterPresenter {
                 default:
                     message = err?.localizedDescription ?? ""
                 }
-                self.registerVC.registerFailure(message: message)
+                self.registerVC.showLoading(isShow: false)
+                self.registerVC.showAlert(title: "error", message: message)
                 return
             }
-            self.registerVC.registerSuccess()
+            AppDelegate.scene?.goToMain()
+            self.keychain.set(email, forKey: "email")
+            self.keychain.set(password, forKey: "password")
         }
     }
+    func loginBySocialNW(){
+        self.registerVC.showAlert(title: "The feature is under development", message: "The feature is under development, please try again later.")
+    }
+
 }

@@ -1,29 +1,45 @@
-//
-//  NoInternetAccessViewController.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 29/11/2023.
-//
-
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 class NoInternetAccessViewController: UIViewController {
-
+    @IBOutlet weak var noInternetLb: UILabel!
+    @IBOutlet weak var InternetMessageLb: UILabel!
+    @IBOutlet weak var retryBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        translateLangue()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func retryBtnTapped(_ sender: UIButton) {
+        if NetworkMonitor.shared.isReachable {
+            print("internet connected")
+            //Kiểm tra xem người dùng đã hoàn thành Onboarding Screen và check đăng nhập
+            if UserDefaults.standard.hasOnboarded {
+                if Auth.auth().currentUser != nil {
+                    AppDelegate.scene?.goToMain()
+                    print("goToMain")
+                } else {
+                    AppDelegate.scene?.goToLogin()
+                    print("goToLogin")
+                }
+            } else {
+                AppDelegate.scene?.goToOnboard()
+                print("goToOnboard")
+            }
+        } else {
+            print("no internet")
+            return
+        }
     }
-    */
-
 }
+extension NoInternetAccessViewController {
+    func translateLangue(){
+        noInternetLb.text = NSLocalizedString("No internet connection", comment: "")
+        InternetMessageLb.text = NSLocalizedString("Please check internet connection and retry again", comment: "")
+        retryBtn.setTitle(NSLocalizedString("Retry", comment: ""), for: .normal)
+    }
+}
+
