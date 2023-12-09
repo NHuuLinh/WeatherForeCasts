@@ -9,6 +9,11 @@ target 'WeatherForeCasts' do
   pod 'FirebaseAuth'
   pod 'Alamofire', '5.8.0'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'Kingfisher'
+  pod 'Charts'
+  pod 'KeychainSwift'
+
+
 
 
   
@@ -16,6 +21,8 @@ target 'WeatherForeCasts' do
   pod 'FirebaseDatabase'
   pod 'FirebaseFirestore'
   pod 'MBProgressHUD', '~> 1.2.0'
+  pod 'Firebase/Storage'
+
 
   
 

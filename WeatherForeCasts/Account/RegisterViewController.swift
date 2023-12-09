@@ -1,123 +1,147 @@
 
 import UIKit
 import FirebaseAuth
+import KeychainSwift
 
-protocol RegisterDisplay {
-    func loading(isLoading: Bool)
-    func registerFailure(message: String)
-    func registerSuccess()
+protocol RegisterDisplay: UIViewController {
+
 }
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, RegisterDisplay {
 
     @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var emailErrorView: UIView!
+    @IBOutlet weak var emailerrorTF: UITextField!
+    @IBOutlet weak var emailTextView: UIView!
+    @IBOutlet weak var errorViewHieght: NSLayoutConstraint!
+    
     @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var passwordErrrorTF: UITextField!
+    @IBOutlet weak var passwordErorrView: UIView!
+    @IBOutlet weak var passwordTextView: UIView!
+    @IBOutlet weak var passwordErrorViewHieght: NSLayoutConstraint!
+    
+    @IBOutlet weak var rePassworđTF: UITextField!
+    @IBOutlet weak var rePasswordErrrorTF: UITextField!
+    @IBOutlet weak var rePasswordErorrView: UIView!
+    @IBOutlet weak var rePasswordTextView: UIView!
+    @IBOutlet weak var rePasswordErrorViewHieght: NSLayoutConstraint!
+    
+    @IBOutlet weak var clearBtn: UIButton!
+    @IBOutlet weak var securePasswordBtn: UIButton!
+    @IBOutlet weak var secureRePasswordBtn: UIButton!
+    @IBOutlet weak var forgotPasswordBtn: UIButton!
+    @IBOutlet weak var signInBtn: UIButton!
+    @IBOutlet weak var facebookBtn: UIButton!
+    @IBOutlet weak var googleBtn: UIButton!
     @IBOutlet weak var registerBtn: UIButton!
     
-    private var registerPresenter: RegisterPresenter!
+    @IBOutlet weak var registerLB: UILabel!
+    @IBOutlet weak var passwordLb: UILabel!
+    @IBOutlet weak var repasswordLb: UILabel!
+    @IBOutlet weak var dotHaveAcountLb: UILabel!
+    @IBOutlet weak var orContinueWith: UILabel!
     
+    
+    private var registerPresenter: RegisterPresenter!
+    let keychain = KeychainSwift()
+
     override func viewDidLoad() {
-        registerPresenter = RegisterPresenterImpl(registerVC: self)
         super.viewDidLoad()
+        setupView()
+        translateLangue()
+    }
+    private func setupView(){
+        clearBtn.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        emailTF.text = keychain.get("TemporaryEmail")
+        passwordTF.text = keychain.get("TemporaryPassword")
+        rePassworđTF.text = keychain.get("TemporaryPassword")
+        checkValidInput()
+        registerPresenter = RegisterPresenterImpl(registerVC: self)
     }
 
-
-    @IBAction func checkTextFieldChanged(_ sender: UITextField) {
-        print("value: \(sender.text ?? "")")
+    func goToForgotPassword() {
+        NavigationHelper.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController")
+        keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
     }
-    @IBAction func RegisterBtn(_ sender: UITextField) {
-        switch sender {
+    
+    @IBAction func textDidChange(_ sender: UITextField) {
+        clearBtn.isHidden = emailTF.text?.isEmpty ?? true
+        checkValidInput()
+    }
+    
+    @IBAction func handleBtn(_ button: UIButton) {
+        switch button {
+        case clearBtn :
+            emailTF.text = ""
+        case securePasswordBtn:
+            StandardForm.setupSecureButton(textFied: passwordTF, button: securePasswordBtn)
+        case secureRePasswordBtn:
+            StandardForm.setupSecureButton(textFied: rePassworđTF, button: secureRePasswordBtn)
+        case forgotPasswordBtn:
+            goToForgotPassword()
+        case signInBtn:
+            self.navigationController?.popToRootViewController(animated: true)
+        case facebookBtn:
+            registerPresenter.loginBySocialNW()
+        case googleBtn:
+            registerPresenter.loginBySocialNW()
         case registerBtn:
-            let email = emailTF.text ?? ""
-            let password = passwordTF.text ?? ""
-            if password.count < 6 {
-                let alert = UIAlertController(title: "Lỗi", message: "Password phải từ 6 kí tự trở lên", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .default)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-                return
-            }
-            registerPresenter.register(by: email, with: password)
+            registerPresenter.register(email: emailTF.text ?? "", password: passwordTF.text ?? "")
         default:
             break
         }
-        
-    }
-    private func handleRegister() {
-        let email = emailTF.text ?? ""
-        let password = passwordTF.text ?? ""
-        
-        if password.count < 6 {
-            let alert = UIAlertController(title: "Lỗi", message: "Password phải từ 6 kí tự trở lên", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ok", style: .default)
-            alert.addAction(okAction)
-            self.present(alert, animated: true)
-            return
-        }
-        registerBtn.isEnabled = false
-        registerBtn.setTitle("Loading...", for: .normal)
-        Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] authResult, err in
-            guard let self = self else { return }
-        })
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, err in
-            guard let self = self else { return }
-            self.registerBtn.isEnabled = true
-            self.registerBtn.setTitle("Register", for: .normal)
-            guard err == nil else {
-                var message = ""
-                switch AuthErrorCode.Code(rawValue: err!._code) {
-                case .emailAlreadyInUse:
-                    message = "Email đã tồn tại"
-                case .invalidEmail:
-                    message = "Email không hợp lệ"
-                default:
-                    message = err?.localizedDescription ?? ""
-                }
-                let alert = UIAlertController(title: "Lỗi", message: message, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .default)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
-                return
-            }
-            self.routeToMain()
-        }
-    }
-    @IBAction func goToLoginVC(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
-    private func routeToMain() {
-        if let uwWindow = (UIApplication.shared.delegate as? AppDelegate)?.window {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-            
-            let loginNavigation = UINavigationController(rootViewController: loginVC)
-            
-            uwWindow.rootViewController = loginNavigation// Đưa cho windown 1 viewcontroller
-            /// Make visible keywindown
-            uwWindow.makeKeyAndVisible()
-        } else {
-            print("LỖI")
-        }
     }
 }
-extension RegisterViewController: RegisterDisplay {
-    func loading(isLoading: Bool) {
-        if isLoading {
-            registerBtn.isEnabled = false
-            registerBtn.setTitle("Loading...", for: .normal)
-        } else {
-            self.registerBtn.isEnabled = true
-            self.registerBtn.setTitle("Register", for: .normal)
-        }
-    }
-    func registerFailure(message: String) {
-        let alert = UIAlertController(title: "Lỗi", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default)
-        alert.addAction(okAction)
-        self.present(alert, animated: true)
-    }
+
+extension RegisterViewController {
     
-    func registerSuccess() {
-        self.routeToMain()
+    func checkValidInput(){
+        let email = emailTF.text ?? ""
+        let emailResult = EmailValidater.emailValidator(email)
+        emailerrorTF.text = emailResult.message
+        StandardForm.handleInputTF(status: emailResult.valid,
+                                   errorView: emailErrorView,
+                                   errorViewHeight: errorViewHieght,
+                                   textView: emailTextView)
+        
+        let password = passwordTF.text ?? ""
+        let passwordResult = PasswordValidater.passwordValidator(password: password)
+        passwordErrrorTF.text = passwordResult.message
+        StandardForm.handleInputTF(status: passwordResult.valid,
+                                   errorView: passwordErorrView,
+                                   errorViewHeight: passwordErrorViewHieght,
+                                   textView: passwordTextView)
+        let ReEnterpasswordResult : Bool
+        if rePassworđTF.text == passwordTF.text {
+            rePasswordErrrorTF.text = "ok"
+            ReEnterpasswordResult = true
+            StandardForm.handleButton(button: registerBtn,
+                                      emailResult: emailResult.valid,
+                                      passwordResult: passwordResult.valid)
+            print("true")
+        } else {
+            rePasswordErrrorTF.text = "password don't match"
+            ReEnterpasswordResult = false
+//            registerBtn.isEnabled = false
+            StandardForm.handleButton(button: registerBtn,
+                                      emailResult: emailResult.valid,
+                                      passwordResult: ReEnterpasswordResult)
+        }
+        StandardForm.handleInputTF(status: ReEnterpasswordResult, errorView: rePasswordErorrView, errorViewHeight: rePasswordErrorViewHieght, textView: rePasswordTextView)
+    }
+}
+// MARK: - Dịch Thuật
+extension RegisterViewController {
+    func translateLangue(){
+        registerLB.text = NSLocalizedString("Register", comment: "")
+        passwordLb.text = NSLocalizedString("Password", comment: "")
+        repasswordLb.text = NSLocalizedString("Re enter password", comment: "")
+        forgotPasswordBtn.setTitle(NSLocalizedString("Forgot password ?", comment: ""), for: .normal)
+        dotHaveAcountLb.text = NSLocalizedString("Already have an account ?", comment: "")
+        signInBtn.setTitle(NSLocalizedString("Sign In", comment: ""), for: .normal)
+        orContinueWith.text = NSLocalizedString("or continue with", comment: "")
+        registerBtn.setTitle(NSLocalizedString("Register", comment: ""), for: .normal)
     }
 }

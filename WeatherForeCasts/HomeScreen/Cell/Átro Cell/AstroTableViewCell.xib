@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -147,7 +148,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fullmoon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDY-Mm-QVG">
-                                <rect key="frame" x="163.66666666666666" y="240.33333333333334" width="73.666666666666657" height="23.000000000000028"/>
+                                <rect key="frame" x="163.66666666666666" y="240.33333333333334" width="73.666666666666657" height="22.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -182,7 +183,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" name="Color Main Theme"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                     <real key="value" value="10"/>
@@ -190,9 +191,14 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="moonPhase" destination="jDY-Mm-QVG" id="LbP-D1-ubq"/>
+                <outlet property="moonriseLb" destination="9ni-aI-47Q" id="d09-UU-qnm"/>
                 <outlet property="moonriseTime" destination="Cd7-Cz-4zg" id="4Ls-9k-f2D"/>
+                <outlet property="moonsetLb" destination="CAh-JN-7Nx" id="hrb-uC-Ddf"/>
                 <outlet property="moonsetTime" destination="g9B-x7-it1" id="vhY-fO-gPU"/>
+                <outlet property="sunAndMoonTitle" destination="qTg-Eb-IQF" id="u23-Rb-VEU"/>
+                <outlet property="sunriseLb" destination="pfk-f6-pa7" id="EGC-Fd-LJF"/>
                 <outlet property="sunriseTime" destination="iK3-2G-yea" id="jRk-ZR-uq1"/>
+                <outlet property="sunsetLb" destination="Ect-te-tCu" id="2he-ES-C0A"/>
                 <outlet property="sunsetTime" destination="IRj-NO-ts4" id="B2U-xt-HOm"/>
             </connections>
             <point key="canvasLocation" x="11.450381679389313" y="75"/>
@@ -201,5 +207,8 @@
     <resources>
         <image name="MoonCycle" width="180" height="90"/>
         <image name="SunCycle" width="180" height="90"/>
+        <namedColor name="Color Main Theme">
+            <color red="0.54117647058823526" green="0.5490196078431373" blue="0.57647058823529407" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

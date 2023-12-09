@@ -18,4 +18,13 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         currentLocation = location.coordinate
     }
 }
+class WeatherDataManager {
+    static let shared = WeatherDataManager()
+
+    var weatherData: WeatherData24h?
+
+    private init() {}
+}
+
+
 

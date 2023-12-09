@@ -66,16 +66,19 @@ class OnboardingViewController: UIViewController {
         }
     }
     func gotoLoginVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-        let keyWindow = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .compactMap({$0 as? UIWindowScene})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first
-        keyWindow?.rootViewController = loginVC
+        if let uwWindow = (UIApplication.shared.delegate as? AppDelegate)?.window {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+            
+            let loginNavigation = UINavigationController(rootViewController: loginVC)
+            
+            uwWindow.rootViewController = loginNavigation// Đưa cho windown 1 viewcontroller
+            /// Make visible keywindown
+            uwWindow.makeKeyAndVisible()
+        } else {
+            print("LỖI")
+        }
     }
-    
 }
 
 extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

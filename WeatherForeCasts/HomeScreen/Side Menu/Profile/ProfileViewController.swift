@@ -1,9 +1,3 @@
-//
-//  ProfileViewController.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 17/11/2023.
-//
 
 import UIKit
 import FirebaseAuth
@@ -13,13 +7,11 @@ import MobileCoreServices
 import MBProgressHUD
 import Kingfisher
 
-
 enum Gender: String {
     case male
     case female
     case none
 }
-
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -34,8 +26,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var NameEditOff: UIImageView!
     @IBOutlet weak var DateOfBirthEditOff: UIImageView!
     @IBOutlet weak var PhoneEditOff: UIImageView!
-
-    
     @IBOutlet weak var dateOfBirthTF: UITextField!
     @IBOutlet weak var clearDateOfBirthBtn: UIButton!
     @IBOutlet weak var phoneNumberTF: UITextField!
@@ -44,6 +34,16 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var editProfileBtn: UIButton!
     @IBOutlet weak var clearEditBtn: UIButton!
     @IBOutlet weak var saveEditBtn: UIButton!
+    
+    @IBOutlet weak var accountLb: UILabel!
+    @IBOutlet weak var nameLb: UILabel!
+    @IBOutlet weak var genderLb: UILabel!
+    @IBOutlet weak var dateLb: UILabel!
+    @IBOutlet weak var phoneLb: UILabel!
+    @IBOutlet weak var maleLb: UILabel!
+    @IBOutlet weak var femaleLb: UILabel!
+    @IBOutlet weak var noneLb: UILabel!
+    
     var imagePicker = UIImagePickerController()
     let datePicker = UIDatePicker()
     var selectedGender: Gender = .none
@@ -61,14 +61,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         createDatePicker()
         phoneNumberTF.delegate = self
         phoneNumberTF.keyboardType = .phonePad
-
-    }
-    func showLoading(isShow: Bool) {
-        if isShow {
-            MBProgressHUD.showAdded(to: self.view, animated: true)
-        } else {
-            MBProgressHUD.hide(for: self.view, animated: true)
-        }
+        translateLangue()
     }
     func setEditingState(_ isEditing: Bool) {
         isEditingProfile = isEditing
@@ -101,21 +94,18 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         }
         editProfileBtn.setTitleColor(UIColor.black, for: .normal)
     }
-
     func setupView() {
         setEditingState(false)
         setButtonVisibility(false)
         setEditProfileBtnStyle(false)
         saveEditBtn.alpha = 1
     }
-
     func editProfileState() {
         setEditingState(true)
 //        setButtonVisibility(true)
         setEditProfileBtnStyle(true)
         saveEditBtn.alpha = 1
     }
-
     @IBAction func handleBtn(_ sender: UIButton) {
         switch sender {
         case backBtn:
@@ -174,7 +164,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     func updateGenderButtons() {
         let imageSelected = UIImage(named: "radioChecked")
         let imageDeselected = UIImage(named: "radioUnchecked")
-
         maleBtn.isSelected = selectedGender == .male
         femaleBtn.isSelected = selectedGender == .female
         noneGenderBtn.isSelected = selectedGender == .none
@@ -182,7 +171,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         femaleBtn.setImage(femaleBtn.isSelected ? imageSelected : imageDeselected, for: .normal)
         noneGenderBtn.setImage(noneGenderBtn.isSelected ? imageSelected : imageDeselected, for: .normal)
     }
-  
 }
 // MARK: - Fire base data handle
 extension ProfileViewController {
@@ -192,6 +180,7 @@ extension ProfileViewController {
             showLoading(isShow: false)
             return
         }
+        self.idTF.text = currentUserID
         let userRef = Database.database().reference().child("users").child(currentUserID)
         userRef.observeSingleEvent(of: .value) { (snapshot) in
             self.showLoading(isShow: false)
@@ -207,52 +196,10 @@ extension ProfileViewController {
                     // Update gender buttons after setting userGender
                     self.updateGenderButtons()
                 }
-
                 // Load image URL from Firebase Realtime Database
                 if let imageURLString = userData["avatar"] as? String,
                    let imageURL = URL(string: imageURLString) {
                     self.avatarImg.kf.setImage(with: imageURL)
-                }
-            }
-        }
-    }
-
-    
-    func updateDataToFireBase1() {
-        guard let currentUser = Auth.auth().currentUser?.uid else { return }
-        let userRef = databaseRef.child("users").child(currentUser)
-        userRef.observeSingleEvent(of: .value) { snapshot in
-            // Check if the snapshot has data
-            guard snapshot.childrenCount > 0 else {
-                return
-            }
-
-            if let userData = snapshot.value as? [String: Any] {
-                let id = userData["id"] as? String ?? ""
-                let name = userData["name"] as? String ?? ""
-                let gender = userData["gender"] as? String ?? ""
-                let dateOfBirth = userData["dateOfBirth"] as? String ?? ""
-                let phoneNumber = userData["phoneNumber"] as? String ?? ""
-                let avatar = userData["avatar"] as? String ?? ""
-
-                self.currentUser = UserProfile(id: id, name: name, gender: gender, dateOfBirth: dateOfBirth, phoneNumber: phoneNumber, avatar: avatar)
-
-                // Download image from URL and update the UIImageView on the main thread
-                if let imageURL = URL(string: avatar) {
-                    DispatchQueue.main.async {
-//                        self.avatarImg.kf.setImage(with: imageURL)
-                    }
-                }
-                // Update other UI elements on the main thread
-                DispatchQueue.main.async {
-                    self.idTF.text = id
-                    self.nameTF.text = name
-                    if let genderString = userData["gender"] as? String, let gender = Gender(rawValue: genderString) {
-                        self.userGender = gender
-                    }
-                    self.dateOfBirthTF.text = dateOfBirth
-                    self.phoneNumberTF.text = phoneNumber
-                    print("Image URL: \(avatar)")
                 }
             }
         }
@@ -268,7 +215,6 @@ extension ProfileViewController {
         // update ảnh lên firebase
         uploadImageToFirebaseStorage()
     }
-
 }
 // MARK: - date of birth text field
 extension ProfileViewController {
@@ -289,7 +235,6 @@ extension ProfileViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
         datePicker.maximumDate = Date()
-        datePicker.locale = Locale(identifier: "en_US")
         dateOfBirthTF.inputView = datePicker
         dateOfBirthTF.inputAccessoryView = createToolbar()
     }
@@ -297,7 +242,6 @@ extension ProfileViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "en_US")
         self.dateOfBirthTF.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }
@@ -316,25 +260,31 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
         picker.dismiss(animated: true, completion: nil)
     }
-
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-
     func pickImage() {
-        let alertViewController = UIAlertController(title: "Choose Image", message: "Choose your option", preferredStyle: .actionSheet)
-        let camera = UIAlertAction(title: "Camera", style: .default) { (_) in
+        let titleAlert = NSLocalizedString("Choose Image", comment: "")
+        let messageAlert = NSLocalizedString("Choose your option", comment: ""
+        )
+        let alertViewController = UIAlertController(title: titleAlert,
+                                                    message: messageAlert,
+                                                    preferredStyle: .actionSheet)
+        let camera = UIAlertAction(title: "Camera",
+                                   style: .default) { (_) in
             self.openCamera()
         }
-        let gallery = UIAlertAction(title: "Gallery", style: .default) { (_) in
+        let galleryText = NSLocalizedString("Gallery", comment: "")
+        let gallery = UIAlertAction(title: galleryText,
+                                    style: .default) { (_) in
             self.openGallary()
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+        let cancelText = NSLocalizedString("Cancel", comment: "")
+        let cancel = UIAlertAction(title: cancelText, style: .cancel) { (_) in
         }
         alertViewController.addAction(camera)
         alertViewController.addAction(gallery)
         alertViewController.addAction(cancel)
-
         present(alertViewController, animated: true, completion: nil)
     }
 }
@@ -348,8 +298,15 @@ extension ProfileViewController {
             imagePicker.allowsEditing = true
             present(imagePicker, animated: true, completion: nil)
         } else {
-            let alertWarning = UIAlertController(title: "Error", message: "Divice not have camera", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            let errorText = NSLocalizedString("Error", comment: "")
+            let errorMessage = NSLocalizedString("Divice not have camera", comment: "")
+            
+            let alertWarning = UIAlertController(title: errorText,
+                                                 message: errorMessage,
+                                                 preferredStyle: .alert)
+            let cancelText = NSLocalizedString("Cancel", comment: "")
+            let cancel = UIAlertAction(title: cancelText,
+                                       style: .cancel) { (_) in
                 print("Cancel")
             }
             alertWarning.addAction(cancel)
@@ -366,6 +323,7 @@ extension ProfileViewController {
         }
     }
 }
+// MARK: - Alert Upload image to Firebase
 extension ProfileViewController {
     func uploadImageToFirebaseStorage() {
         guard let pickedImage = avatarImg.image,
@@ -376,6 +334,7 @@ extension ProfileViewController {
         storage.child("user_images/\(Auth.auth().currentUser?.uid ?? "")/user_image.jpg").putData(imageData) { url, error in
             guard error == nil else {
                 print("Lỗi: \(error?.localizedDescription ?? "lỗi không xác đinh")")
+                self.showAlert(title: "Error", message: "Can't upload photo")
                 return
             }
             //Lấy URL của ảnh từ storage
@@ -390,9 +349,25 @@ extension ProfileViewController {
                 userRef.setValue(downloadURL.absoluteString)
                 print("Image URL: \(downloadURL.absoluteString)")
             }
+            self.showLoading(isShow: false)
+            self.showAlert(title: "Ok", message: "Update Complete")
         }
-        showLoading(isShow: false)
-
+    }
+}
+// MARK: - Alert Upload image to Firebase
+extension ProfileViewController {
+    func translateLangue(){
+        accountLb.text = NSLocalizedString("Account", comment: "")
+        nameLb.text = NSLocalizedString("Name", comment: "")
+        genderLb.text = NSLocalizedString("Gender", comment: "")
+        dateLb.text = NSLocalizedString("Date of birth", comment: "")
+        phoneLb.text = NSLocalizedString("Phone number", comment: "")
+        maleLb.text = NSLocalizedString("Male", comment: "")
+        femaleLb.text = NSLocalizedString("Female", comment: "")
+        noneLb.text = NSLocalizedString("None", comment: "")
+        editProfileBtn.setTitle(NSLocalizedString("Edit profile", comment: ""), for: .normal)
+        clearEditBtn.setTitle(NSLocalizedString("Clear edit", comment: ""), for: .normal)
+        saveEditBtn.setTitle(NSLocalizedString("Save", comment: ""), for: .normal)
     }
 }
 

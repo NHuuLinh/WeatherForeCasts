@@ -9,13 +9,18 @@ import UIKit
 
 class WeeklyTableViewCell: UITableViewCell {
     @IBOutlet weak var weeklyCollectionView: UICollectionView!
+    @IBOutlet weak var titleLb: UILabel!
+    @IBOutlet weak var extenLb: UILabel!
     var weeks : [Forecastday] = []
     var goToForecast14Days: (() -> Void)?
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
         registerCell()
         setupCollectionView()
+        titleLb.text = NSLocalizedString(titleLb.text ?? "", comment: "")
+        extenLb.text = NSLocalizedString(extenLb.text ?? "", comment: "")
     }
     func getWeeklyDatas(with forecastWeek: [Forecastday] ) {
         self.weeks = forecastWeek
@@ -27,7 +32,6 @@ class WeeklyTableViewCell: UITableViewCell {
             flowLayout.minimumLineSpacing = 10
             flowLayout.minimumInteritemSpacing = 10
             flowLayout.minimumInteritemSpacing = 10
-            
         }
     }
     private func registerCell() {
@@ -51,5 +55,9 @@ extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDele
         let week = weeks[indexPath.item]
         cell.getWeeklyDatas(with: week)
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        goToForecast14Days?()
+        print("Số thứ tự của row được click: \(indexPath.row)")
     }
 }

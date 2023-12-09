@@ -21,26 +21,44 @@ class DailyForecastTableViewCell: UITableViewCell {
     @IBOutlet weak var forecastHourAirQly: UILabel!
     @IBOutlet weak var forecastHourAirQlyText: UILabel!
     
+    @IBOutlet weak var titleFeelLike: UILabel!
+    @IBOutlet weak var titleSpeedWind: UILabel!
+    @IBOutlet weak var titleUvIndex: UILabel!
+    @IBOutlet weak var titleRainChain: UILabel!
+    @IBOutlet weak var titleHumidity: UILabel!
+    @IBOutlet weak var titleAirQty: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        translateLangue()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     func getHourData(hour: Hour ) {
         forecastHourTime.text = DateConvert.convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
-        forecastHourIcone.image = ExtractImage.extractImageName(url: "\(hour.condition.icon)")
+        let imageName = ExtractImage.extractImageName(url: "\(hour.condition.icon)")
+        forecastHourIcone.image = UIImage(named: imageName)
         forecastHourTemp.text = "\(Int(hour.tempC.rounded()))°C"
         forecastHourConditionText.text = hour.condition.text
         forecastHourFellTemp.text = "\(Int(hour.feelslikeC.rounded()))°C"
         forecastHourWind.text = "\(Int(hour.windMph.rounded()))"
         forecastHourUv.text = "\(Int(hour.uv))"
-        forecastHourRainChance.text = UVIndex.uvCondition(uvValue: Int(hour.uv))
+        forecastHourUvText.text = NSLocalizedString(UVIndex.uvCondition(uvValue: Int(hour.uv)), comment: "")
         forecastHourRainChance.text = "\(hour.chanceOfRain)"
         forecastHourHumidity.text = "\(hour.humidity)"
+        
         let AirQlyNumber = hour.airQuality.usEpaIndex ?? 0
         forecastHourAirQly.text = "\(AirQlyNumber)"
-        forecastHourAirQlyText.text = "\(AQIHandle.airQlyDataCondition(numb: AirQlyNumber))"
+        forecastHourAirQlyText.text = NSLocalizedString(AQIHandle.airQlyDataCondition(numb: AirQlyNumber), comment: "")
+    }
+    func translateLangue(){
+        titleFeelLike.text = NSLocalizedString(titleFeelLike.text ?? "", comment: "")
+        titleSpeedWind.text = NSLocalizedString(titleSpeedWind.text ?? "", comment: "")
+        titleUvIndex.text = NSLocalizedString(titleUvIndex.text ?? "", comment: "")
+        titleRainChain.text = NSLocalizedString(titleRainChain.text ?? "", comment: "")
+        titleHumidity.text = NSLocalizedString(titleHumidity.text ?? "", comment: "")
+        titleAirQty.text = NSLocalizedString(titleAirQty.text ?? "", comment: "")
     }
 }
 

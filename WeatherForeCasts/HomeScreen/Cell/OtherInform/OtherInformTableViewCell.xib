@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -54,7 +55,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstItem="94d-AE-4YM" firstAttribute="leading" secondItem="7ah-yY-7BR" secondAttribute="leading" constant="10" id="12S-vw-7Ab"/>
                                     <constraint firstAttribute="height" constant="75" id="89R-C5-eqL"/>
@@ -102,7 +103,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstItem="5U7-GP-e64" firstAttribute="top" secondItem="F4T-KE-OsL" secondAttribute="bottom" constant="5" id="4fp-YP-hNP"/>
                                     <constraint firstItem="F4T-KE-OsL" firstAttribute="centerY" secondItem="EEQ-qk-CRG" secondAttribute="centerY" id="6W0-nP-V55"/>
@@ -150,7 +151,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstItem="Ob0-ff-gDG" firstAttribute="top" secondItem="6JT-SH-oux" secondAttribute="bottom" constant="8" symbolic="YES" id="2ab-nd-vbV"/>
                                     <constraint firstItem="6JT-SH-oux" firstAttribute="leading" secondItem="eWa-vD-dtg" secondAttribute="trailing" constant="5" id="6vR-ns-X4H"/>
@@ -199,7 +200,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstItem="VGA-RA-dvt" firstAttribute="centerY" secondItem="zQ2-eP-nXA" secondAttribute="centerY" id="08Y-k7-DPO"/>
                                     <constraint firstItem="zQ2-eP-nXA" firstAttribute="top" secondItem="7FC-xg-5jz" secondAttribute="bottom" constant="5" id="6Iq-fe-Ro8"/>
@@ -247,7 +248,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="AEn-gz-90v"/>
                                     <constraint firstItem="vyX-nX-4rn" firstAttribute="centerY" secondItem="smk-iL-LHw" secondAttribute="centerY" id="OWt-h8-biI"/>
@@ -295,7 +296,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="Color Main Theme"/>
                                 <constraints>
                                     <constraint firstItem="W5L-Ao-52U" firstAttribute="centerY" secondItem="VM1-Xh-hVg" secondAttribute="centerY" id="8hi-BZ-TO8"/>
                                     <constraint firstItem="W5L-Ao-52U" firstAttribute="leading" secondItem="VM1-Xh-hVg" secondAttribute="trailing" constant="5" id="Aqg-iN-H3b"/>
@@ -350,12 +351,19 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="cloudLb" destination="mfs-HQ-epa" id="dby-00-Aaw"/>
                 <outlet property="currentCloud" destination="g7J-dB-jyC" id="nwK-1F-8cT"/>
                 <outlet property="currentHumidity" destination="gNp-kh-2MU" id="4kK-bm-OSz"/>
                 <outlet property="currentTemp" destination="hqI-Yd-lDx" id="aqU-0X-rtL"/>
+                <outlet property="currentUvCondition" destination="dnq-OP-MYa" id="CWI-Sn-b9H"/>
                 <outlet property="currentUvIndex" destination="5U7-GP-e64" id="2Ym-7z-2C1"/>
                 <outlet property="currentVisibility" destination="smk-iL-LHw" id="BGZ-Ac-uEm"/>
                 <outlet property="currentWindSpeed" destination="zQ2-eP-nXA" id="P50-Za-M0R"/>
+                <outlet property="humidity" destination="W5L-Ao-52U" id="pSr-sI-WA4"/>
+                <outlet property="tempLb" destination="6JT-SH-oux" id="sif-CP-UKR"/>
+                <outlet property="uvIndex" destination="F4T-KE-OsL" id="pWp-6H-Nd4"/>
+                <outlet property="visibilityLb" destination="hbl-FT-CPl" id="gZL-58-fcP"/>
+                <outlet property="windSpeed" destination="7FC-xg-5jz" id="Wke-NZ-jf0"/>
             </connections>
             <point key="canvasLocation" x="-79.389312977099237" y="101.7605633802817"/>
         </tableViewCell>
@@ -367,5 +375,8 @@
         <image name="Thermometer" width="25" height="25"/>
         <image name="UVicone" width="27" height="25"/>
         <image name="Vision" width="23" height="17"/>
+        <namedColor name="Color Main Theme">
+            <color red="0.54117647058823526" green="0.5490196078431373" blue="0.57647058823529407" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -18,15 +18,13 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     func getWeeklyDatas(with week: Forecastday ) {
-        weeklyDate.text = week.date
-        let icon = extractImageNameCollect(url: "\(week.day.condition.icon)")
-        weeklyImage.image = UIImage(named: icon)
+        weeklyDate.text = DateConvert.convertDate(date: week.date, inputFormat: "yyyy-MM-dd", outputFormat: "EEE dd/MM")
+        let imageName = ExtractImage.extractImageName(url: "\(week.day.condition.icon)")
+        weeklyImage.image = UIImage(named: imageName)
         weeklyConditionText.text = week.day.condition.text
-        minTemp.text = "\(week.day.mintempC)"
-        maxTemp.text = "\(week.day.maxtempC)"
+        minTemp.text = "\(Int(week.day.mintempC.rounded()))"
+        maxTemp.text = "\(Int(week.day.maxtempC.rounded()))"
     }
-
 }

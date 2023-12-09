@@ -14,18 +14,14 @@ class DailyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var weatherIconImageView: UIImageView!
     static let identifier = String(describing: DailyCollectionViewCell.self)
 
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    func getData24h(with hour: Hour ) {
-        timeLabel.text = hour.time
-//        print(timeLabel.text)
-        temperatureLabel.text = "\(hour.tempC)"
+    func getData24h(with hour: Hour) {
+        timeLabel.text = DateConvert.convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
+        temperatureLabel.text = "\(Int(hour.tempC.rounded()))°C"
         precipitationLabel.text = "\(hour.chanceOfRain)"
-        let weatherIcon = extractImageNameCollect(url: "\(hour.condition.icon)")
-//        print(weatherIcon)
+        let weatherIcon = ExtractImage.extractImageName(url: "\(hour.condition.icon)")
         weatherIconImageView.image = UIImage(named: weatherIcon)
     }
 }
