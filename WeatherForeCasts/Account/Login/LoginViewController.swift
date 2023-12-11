@@ -135,14 +135,13 @@ extension LoginViewController {
 // MARK: - Dịch thuật
 extension LoginViewController {
     func translateLangue(){
-        SignInLb.text = NSLocalizedString("Sign In", comment: "")
-        emailLb.text = NSLocalizedString("Email", comment: "")
-        passwordLb.text = NSLocalizedString("Password", comment: "")
-        forgotPasswordBtn.setTitle(NSLocalizedString("Forgot password ?", comment: ""), for: .normal)
-        dontHaveAcountLb.text = NSLocalizedString("Don't have an account ?", comment: "")
+        SignInLb.text = NSLocalizedString(SignInLb.text ?? "", comment: "")
+        emailLb.text = NSLocalizedString(emailLb.text ?? "", comment: "")
+        passwordLb.text = NSLocalizedString(emailLb.text ?? "", comment: "")
+        forgotPasswordBtn.setTitle(NSLocalizedString(forgotPasswordBtn.currentTitle ?? "", comment: ""), for: .normal)
+        dontHaveAcountLb.text = NSLocalizedString(dontHaveAcountLb.text ?? "", comment: "")
         signUpBtn.setTitle(NSLocalizedString(signUpBtn.currentTitle ?? "", comment: ""), for: .normal)
-        orContinueWith.text = NSLocalizedString("or continue with", comment: "")
-//        loginBtn.titleLabel?.font =  UIFont(name: "Poppins-Bold", size: 16)
+        orContinueWith.text = NSLocalizedString(orContinueWith.text ?? "", comment: "")
         loginBtn.setTitle(NSLocalizedString(loginBtn.currentTitle ?? "", comment: ""), for: .normal)
     }
 }
