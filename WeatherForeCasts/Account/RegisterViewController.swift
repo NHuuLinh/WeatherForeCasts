@@ -124,7 +124,6 @@ extension RegisterViewController {
         } else {
             rePasswordErrrorTF.text = "password don't match"
             ReEnterpasswordResult = false
-//            registerBtn.isEnabled = false
             StandardForm.handleButton(button: registerBtn,
                                       emailResult: emailResult.valid,
                                       passwordResult: ReEnterpasswordResult)
@@ -135,13 +134,13 @@ extension RegisterViewController {
 // MARK: - Dịch Thuật
 extension RegisterViewController {
     func translateLangue(){
-        registerLB.text = NSLocalizedString("Register", comment: "")
-        passwordLb.text = NSLocalizedString("Password", comment: "")
-        repasswordLb.text = NSLocalizedString("Re enter password", comment: "")
-        forgotPasswordBtn.setTitle(NSLocalizedString("Forgot password ?", comment: ""), for: .normal)
-        dotHaveAcountLb.text = NSLocalizedString("Already have an account ?", comment: "")
-        signInBtn.setTitle(NSLocalizedString("Sign In", comment: ""), for: .normal)
-        orContinueWith.text = NSLocalizedString("or continue with", comment: "")
-        registerBtn.setTitle(NSLocalizedString("Register", comment: ""), for: .normal)
+        registerLB.text = NSLocalizedString(registerLB.text ?? "", comment: "")
+        passwordLb.text = NSLocalizedString(passwordLb.text ?? "", comment: "")
+        repasswordLb.text = NSLocalizedString(repasswordLb.text ?? "", comment: "")
+        forgotPasswordBtn.setTitle(NSLocalizedString(forgotPasswordBtn.currentTitle ?? "", comment: ""), for: .normal)
+        dotHaveAcountLb.text = NSLocalizedString(dotHaveAcountLb.text ?? "", comment: "")
+        signInBtn.setTitle(NSLocalizedString(signInBtn.currentTitle ?? "", comment: ""), for: .normal)
+        orContinueWith.text = NSLocalizedString(orContinueWith.text ?? "", comment: "")
+        registerBtn.setTitle(NSLocalizedString(registerBtn.currentTitle ?? "", comment: ""), for: .normal)
     }
 }
