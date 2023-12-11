@@ -63,7 +63,9 @@ class LoginPresenterImpl: LoginPresenter {
         }
     }
     func loginBySocialNW(){
-        self.loginVC.showAlert(title: "The feature is under development", message: "The feature is under development, please try again later.")
+        let title = NSLocalizedString("The feature is under development", comment: "")
+        let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")
+        self.loginVC.showAlert(title: title, message: message)
     }
 }
 

@@ -12,6 +12,8 @@
 "Sign Up" = "Đăng kí";
 "or continue with" = "hoặc tiếp tục với";
 "Login" = "Đăng nhập";
+"The feature is under development" = "Tính năng đang phát triển";
+"The feature is under development, please try again later." = "Tính năng đang phát triển, vui lòng thử lại sau";
 // MARK: - Màn hình đăng kí
 "Register" = "Đăng kí";
 "Already have an account ?" = "Đã có tài khoản";
