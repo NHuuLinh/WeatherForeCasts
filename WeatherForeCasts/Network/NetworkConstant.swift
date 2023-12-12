@@ -2,35 +2,6 @@
 import Foundation
 import Alamofire
 
-
-class APIManager {
-    static let shared = APIManager()
-
-    private init() {}
-
-    func fetchWeatherData(completion: @escaping (WeatherData24h?) -> Void) {
-        let url = "http://api.weatherapi.com/v1/forecast.json"
-        let parameters: [String: Any] = [
-            "key": "13fd7475738b412884283147231311",
-            "q": "Hanoi",
-            "days": 14,
-            "aqi": "yes"
-        ]
-
-        AF.request(url, parameters: parameters).response { response in
-            if let data = response.data {
-                let decoder = JSONDecoder()
-                do {
-                    let weatherData = try decoder.decode(WeatherData24h.self, from: data)
-                    completion(weatherData)
-                } catch {
-                    print("Error decoding: \(error)")
-                    completion(nil)
-                }
-            }
-        }
-    }
-}
 // Tạo một lớp mới để quản lý việc gọi API
 class WeatherAPIManager1 {
     static let shared = WeatherAPIManager1()

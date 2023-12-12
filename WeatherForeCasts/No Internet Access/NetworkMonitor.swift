@@ -19,6 +19,7 @@ final class NetworkMonitor {
                 print("No connection.")
                 DispatchQueue.main.async {
                     AppDelegate.scene?.routeToNoInternetAccess()
+                    
                 }
             }
         }
