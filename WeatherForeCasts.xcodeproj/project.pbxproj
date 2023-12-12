@@ -32,7 +32,6 @@
 		A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41ADF852AE524CB0020A1BE /* OnbroadingSlide.swift */; };
 		A41ADF882AE52EE30020A1BE /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41ADF872AE52EE30020A1BE /* OnboardingCollectionViewCell.swift */; };
 		A4304EC22B16511B0015C2CC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4304EC12B16511B0015C2CC /* Constants.swift */; };
-		A4319DC92B1B23B30006643E /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4319DC82B1B23B30006643E /* TranslationManager.swift */; };
 		A431B4972AFD29FB0047878F /* DateFormate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A431B4962AFD29FB0047878F /* DateFormate.swift */; };
 		A431B49B2AFD49E60047878F /* CurrentWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A431B4992AFD49E50047878F /* CurrentWeatherTableViewCell.swift */; };
 		A431B49C2AFD49E60047878F /* CurrentWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A431B49A2AFD49E50047878F /* CurrentWeatherTableViewCell.xib */; };
@@ -129,7 +128,6 @@
 		A41ADF852AE524CB0020A1BE /* OnbroadingSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnbroadingSlide.swift; sourceTree = "<group>"; };
 		A41ADF872AE52EE30020A1BE /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		A4304EC12B16511B0015C2CC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		A4319DC82B1B23B30006643E /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
 		A431B4962AFD29FB0047878F /* DateFormate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormate.swift; sourceTree = "<group>"; };
 		A431B4992AFD49E50047878F /* CurrentWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		A431B49A2AFD49E50047878F /* CurrentWeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentWeatherTableViewCell.xib; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 				A4304EC12B16511B0015C2CC /* Constants.swift */,
 				A4A626732B13C41000D154B0 /* Showloading and Aleart.swift */,
 				A486A68C2B1987E500E73521 /* UIStatusBarStyle.swift */,
-				A4319DC82B1B23B30006643E /* TranslationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -774,7 +771,6 @@
 				A41355A32AF637E80084E440 /* WeeklyTableViewCell.swift in Sources */,
 				A4304EC22B16511B0015C2CC /* Constants.swift in Sources */,
 				A4EBDD712AEE41B900446C7B /* NetworkConstant.swift in Sources */,
-				A4319DC92B1B23B30006643E /* TranslationManager.swift in Sources */,
 				A4EBDD7F2AEEB5B900446C7B /* DatesCollectionViewCell.swift in Sources */,
 				A44B54732AF57D330096354A /* DailyCollectionViewCell.swift in Sources */,
 				A47111052B1A4ED00074167B /* ThemeSetting.swift in Sources */,

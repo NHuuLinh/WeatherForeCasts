@@ -13,11 +13,12 @@ class MainViewController: UIViewController {
     @IBOutlet weak var locationNameLb: UILabel!
     @IBOutlet weak var menuImage: UIImageView!
     private var isMenuOpen = false
+    private var loadingTimer: Timer?
+    private var isDataLoaded = false
     private var sections = [HomeNewsSection]()
     var weatherData: WeatherData24h?
     let locationManager = CLLocationManager()
 
-    
     enum HomeNewsSection: Int {
         case currentCell = 0
         case dailyCell
@@ -27,25 +28,127 @@ class MainViewController: UIViewController {
         case astroCell
         case adviceCell
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        fetchWeatherDataForCurrentLocation()
+        checkLocationAuthorizationStatus()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setUpSideMenu()
-        locationManager.delegate = self
+        addSideMenuViewController()
+        tapGestureSetup()
         requestLocation()
-        checkLocationAuthorizationStatus()
+        locationManager.delegate = self
         navigationController?.isNavigationBarHidden = true
-//        fetchWeatherDataForCurrentLocation()
     }
+
+    @IBAction func MenuBtnHandle(_ sender: Any) {
+        displayMenu()
+    }
+    @IBAction func locationBtn(_ sender: Any) {
+        requestLocation()
+        fetchWeatherDataForCurrentLocation()
+        mainTableView.reloadData()
+        print("requestLocation")
+    }
+    @IBAction func mapBtn(_ sender: Any) {
+        goToMapsVC()
+    }
+}
+// MARK: - Các hàm liên quan side Menu
+extension MainViewController {
+    // thêm tapGestureSetup cho blurview
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if isMenuOpen {
-            setUpSideMenu()
+            displayMenu()
+        }
+        print(isMenuOpen)
+    }
+    func tapGestureSetup(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        blurMenuView.addGestureRecognizer(tapGesture)
+    }
+    
+    // thêm subview
+    private func addSideMenuViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let menuController = storyboard.instantiateViewController(identifier: "SideMenuViewController") as? SideMenuViewController else {
+            return
+        }
+        menuController.onMenuItemSelected = { [weak self] menuItem in
+            self?.handleMenuItemSelection(menuItem)
+        }
+        configureSideMenuView(menuController)
+    }
+    
+    // cấu hình sidemenu
+    private func configureSideMenuView(_ menuController: SideMenuViewController) {
+        //Thiết lập kích thước và vị trí của Side Menu:
+        menuController.view.frame = menuView.bounds
+        //Thêm Side Menu vào menuView
+        menuView.addSubview(menuController.view)
+        //Thêm Side Menu vào Child View Controller:
+        addChild(menuController)
+        //Gọi để thông báo rằng side menu đã được thêm vào main view controller như là một child view controller.
+        menuController.didMove(toParent: self)
+        //setup vị trí
+        menuViewLocation.constant = -250
+        blurMenuView.isHidden = true
+        isMenuOpen = false
+    }
+    // xử lí khi nhấn vào có ô trên menu
+    private func handleMenuItemSelection(_ menuItem: MenuItem) {
+        switch menuItem.screen {
+            case .profile :
+                print("profile")
+                goToProfileVC()
+            case .location :
+                print("Location")
+            case .settings :
+                print("settings")
+                goToSettingVC()
+            case .notification :
+                print("notification")
+            case .aboutUs :
+                print("aboutUs")
+            case .privatePolicy :
+                print("privatePolicy")
+            case .termsOfUse :
+                print("termsOfUse")
+            case .logout :
+                logoutHandle()
+                print("logout")
+            }
+        }
+    //logout firebase
+    private func logoutHandle() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            if firebaseAuth.currentUser == nil {
+                print("Error: User nil")
+                AppDelegate.scene?.goToLogin()
+            } else {
+                print("Error: User is still signed in")
+            }
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
+    // display menu
+    private func displayMenu() {
+        isMenuOpen.toggle()
+        blurMenuView.alpha = isMenuOpen ? 0.5 : 0
+        blurMenuView.isHidden = !isMenuOpen
+        UIView.animate(withDuration: 0.2, animations: {
+            self.menuViewLocation.constant = self.isMenuOpen ? 0 : -250
+            self.view.layoutIfNeeded()
+        })
+    }
+}
+// MARK: - Các hàm liên quan TableVC
+extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     private func setupTableView() {
         mainTableView.dataSource = self
         mainTableView.delegate = self
@@ -65,92 +168,6 @@ class MainViewController: UIViewController {
         let adviceCell = UINib(nibName: "WeatherAdviceTableViewCell", bundle: nil)
         mainTableView.register(adviceCell, forCellReuseIdentifier: "WeatherAdviceTableViewCell")
     }
-    private func setUpSideMenu() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let menuController = storyboard.instantiateViewController(identifier: "SideMenuViewController") as? SideMenuViewController else {
-            return
-        }
-        menuController.onMenuItemSelected = { [weak self] menuItem in
-            switch menuItem.screen {
-            case .profile :
-                print("profile")
-                self?.goToProfileVC()
-            case .location :
-                print("Location")
-            case .settings :
-                print("settings")
-                self?.goToSettingVC()
-            case .notification :
-                print("notification")
-            case .aboutUs :
-                print("aboutUs")
-            case .privatePolicy :
-                print("privatePolicy")
-            case .termsOfUse :
-                print("termsOfUse")
-            case .logout :
-                self?.logoutHandle()
-                print("logout")
-            }
-        }
-        menuController.view.frame = menuView.bounds
-        menuView.addSubview(menuController.view)
-        addChild(menuController)
-        menuController.didMove(toParent: self)
-        menuViewLocation.constant = -250
-        blurMenuView.isHidden = true
-        isMenuOpen = false
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        blurMenuView.addGestureRecognizer(tapGesture)
-    }
-
-    
-    func logoutHandle() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            if firebaseAuth.currentUser == nil {
-                print("Error: User nil")
-                AppDelegate.scene?.goToLogin()
-            } else {
-                print("Error: User is still signed in")
-            }
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
-    }
-    private func goToProfileVC() {
-        showLoading(isShow: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileVC: ProfileViewController = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        showLoading(isShow: false)
-        navigationController?.pushViewController(profileVC, animated: true )
-    }
-    func displayMenu() {
-        isMenuOpen.toggle()
-        blurMenuView.alpha = isMenuOpen ? 0.5 : 0
-        blurMenuView.isHidden = !isMenuOpen
-        UIView.animate(withDuration: 0.2, animations: {
-            // toán tử 3 ngôi
-            self.menuViewLocation.constant = self.isMenuOpen ? 0 : -250
-            self.view.layoutIfNeeded()
-        })
-    }
-
-    @IBAction func MenuBtnHandle(_ sender: Any) {
-        displayMenu()
-    }
-    @IBAction func locationBtn(_ sender: Any) {
-        fetchWeatherDataForCurrentLocation()
-        requestLocation()
-        mainTableView.reloadData()
-        print("requestLocation")
-    }
-    @IBAction func mapBtn(_ sender: Any) {
-        goToMapsVC()
-    }
-}
-extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.frame.size.width, height: 10))
         headerView.backgroundColor = .green
@@ -199,12 +216,12 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DailyTableViewCell", for: indexPath) as! DailyTableViewCell
             if let forecastDay1 = weatherData?.forecast.forecastday[indexPath.row],
                let forecastDay2 = weatherData?.forecast.forecastday[indexPath.row + 1] {
-               let forecastHours = forecastDay1.hour + forecastDay2.hour
+                let forecastHours = forecastDay1.hour + forecastDay2.hour
                 let currentTime = weatherData?.location.localtime
                 cell.getData24h(from: currentTime, with: forecastHours)
-//                cell.goTodailyForecastVC = { [weak self] in
-//                        self?.goTodailyForecastVC()
-//                    }
+                //                cell.goTodailyForecastVC = { [weak self] in
+                //                        self?.goTodailyForecastVC()
+                //                    }
             }
             return cell
         case.weeklyCell:
@@ -212,8 +229,8 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
             if let forecastWeek = weatherData?.forecast.forecastday {
                 cell.getWeeklyDatas(with: forecastWeek)
                 cell.goToForecast14Days = { [weak self] in
-                        self?.goToForCast14DaysVC()
-                    }
+                    self?.goToForecast14DaysVC()
+                }
             }
             return cell
         case.otherCell:
@@ -253,28 +270,34 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
             return
         }
     }
-
-    func goToForCast14DaysVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let weatherLongDayVC: WeatherLongDayViewController = storyboard.instantiateViewController(withIdentifier: "WeatherLongDayViewController") as! WeatherLongDayViewController
-        weatherLongDayVC.weatherData = weatherData
-        navigationController?.pushViewController(weatherLongDayVC, animated: true )
+}
+// MARK: - Các hàm chuyển màn hình
+extension MainViewController {
+    private func goToProfileVC() {
+        NavigationHelper.navigateToViewController(from: self, withIdentifier: "ProfileViewController")
     }
-    func goToMapsVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mapsVC: MapsViewController = storyboard.instantiateViewController(withIdentifier: "MapsViewController") as! MapsViewController
-        mapsVC.delegate = self
-        navigationController?.pushViewController(mapsVC, animated: true)
+    private func goToForecast14DaysVC() {
+        NavigationHelper.navigateToViewController(from: self, withIdentifier: "WeatherLongDayViewController") { viewcontroller in
+            if let weatherLongDayVC = viewcontroller as? WeatherLongDayViewController {
+                weatherLongDayVC.weatherData = self.weatherData
+            }
+        }
     }
-    func goTodailyForecastVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let dailyForecastVC: DailyForecastViewController = storyboard.instantiateViewController(withIdentifier: "DailyForecastViewController") as! DailyForecastViewController
-        navigationController?.pushViewController(dailyForecastVC, animated: true )
+    private func goToMapsVC() {
+        NavigationHelper.navigateToViewController(from: self, withIdentifier: "MapsViewController") { viewcontroller in
+            if let mapsVC = viewcontroller as? MapsViewController {
+                mapsVC.delegate = self
+            }
+        }
     }
-    func goToSettingVC(){
+    private func goTodailyForecastVC() {
+        NavigationHelper.navigateToViewController(from: self, withIdentifier: "DailyForecastViewController")
+    }
+    private func goToSettingVC(){
         NavigationHelper.navigateToViewController(from: self, withIdentifier: "SetingViewController")
     }
 }
+// MARK: - Các hàm liên quan vị trí
 extension MainViewController : CLLocationManagerDelegate {
     func checkLocationAuthorizationStatus() {
         switch locationManager.authorizationStatus {
@@ -285,8 +308,9 @@ extension MainViewController : CLLocationManagerDelegate {
             showAlert(title: "Ok", message: "Please allow to use location")
             break
         case .authorizedWhenInUse, .authorizedAlways:
-            // Bắt đầu cập nhật vị trí
+            // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
             locationManager.startUpdatingLocation()
+            fetchWeatherDataForCurrentLocation()
         @unknown default:
             break
         }
@@ -296,29 +320,39 @@ extension MainViewController : CLLocationManagerDelegate {
         checkLocationAuthorizationStatus()
     }
     func requestLocation() {
+        // đưa nó vào một luồng khác để tránh làm màn hình người dùng đơ
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
+                // khai báo delegate để nhận thông tin thay đổi trạng thái vị trí
                 self.locationManager.delegate = self
+                // yêu cầu độ chính xác khi dò vi trí
                 self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                // update vị trí cho các hàm của CLLocationManager
                 self.locationManager.startUpdatingLocation()
             }
         }
     }
     
     private func fetchWeatherDataForCurrentLocation() {
+        // Bắt đầu hẹn giờ 20 giây
+        loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
         showLoading(isShow: true)
+        // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
         guard let currentLocation = locationManager.location else {
             print("Current location not available.")
+            handleLoadingError()
             return
         }
-        let geocoder = CLGeocoder()
 
-        // Reverse geocode the current location to get placemark
+        let geocoder = CLGeocoder()
+        // lấy placemark
         geocoder.reverseGeocodeLocation(currentLocation) { [weak self] (placemarks, error) in
             if let error = error {
                 print("Reverse geocoding failed: \(error.localizedDescription)")
+                self?.handleLoadingError()
                 return
             }
+
             // lấy tên thành phố, đất nước
             if let placemark = placemarks?.first {
                 let province = placemark.administrativeArea ?? ""
@@ -329,26 +363,49 @@ extension MainViewController : CLLocationManagerDelegate {
 
                 // Fetch weather data using the current location
                 WeatherAPIManager1.shared.fetchWeatherData(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude) { [weak self] weatherData in
+                    //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
                     guard let self = self else { return }
+
+                    // Hủy hẹn giờ vì đã có dữ liệu
+                    self.loadingTimer?.invalidate()
+                    self.loadingTimer = nil
+                    // chạy các tác vụ ưu tiên trên luồng chính, tránh lag  giao diện
                     DispatchQueue.main.async {
                         guard let weatherData = weatherData else {
                             print("Failed to fetch weather data")
+                            self.handleLoadingError()
                             return
                         }
                         DispatchQueue.main.async {
                             self.weatherData = weatherData
                             self.mainTableView.reloadData()
                         }
+                        self.isDataLoaded = true
                         self.showLoading(isShow: false)
                     }
                 }
             }
         }
     }
+    @objc private func handleLoadingTimeout() {
+        // Hủy hẹn giờ và hiển thị cảnh báo khi lấy dữ liệu quá thời gian
+        loadingTimer?.invalidate()
+        loadingTimer = nil
+        showAlert(title: "Error", message: "Failed to fetch weather data. Please try again.")
+        showLoading(isShow: false)
+    }
 
+    private func handleLoadingError() {
+        // Hủy hẹn giờ và hiển thị cảnh báo khi có lỗi trong quá trình lấy dữ liệu
+        loadingTimer?.invalidate()
+        loadingTimer = nil
+        showAlert(title: "Error", message: "Please allow to use location")
+        showLoading(isShow: false)
+    }
 }
+// MARK: - Call API sau khi chọn địa điểm
 extension MainViewController: MapsViewControllerDelegate {
-    func didPickLocation(_ location: CLLocationCoordinate2D, address: String) {
+     func didPickLocation(_ location: CLLocationCoordinate2D, address: String) {
         showLoading(isShow: true)
         WeatherAPIManager1.shared.fetchWeatherData(latitude: location.latitude, longitude: location.longitude) { [weak self] weatherData in
                 guard let self = self else { return }
@@ -360,7 +417,6 @@ extension MainViewController: MapsViewControllerDelegate {
                         DispatchQueue.main.async {
                             self.weatherData = weatherData
                             self.locationNameLb.text = address
-                            //                        self?.mainTableView.reloadSections(IndexSet(integer: HomeNewsSection.dailyCell.rawValue), with: .automatic)
                             self.mainTableView.reloadData()
                         }
                     }

@@ -41,6 +41,7 @@ class SideMenuViewController: UIViewController {
         let menuCell = UINib(nibName: "MenuTableViewCell", bundle: nil)
         menuTableView.register(menuCell, forCellReuseIdentifier: "MenuTableViewCell")
         menuTableView.rowHeight = 70
+        menuTableView.separatorStyle = .none
     }
     func tableMenu() {
         menuItems = [
@@ -73,7 +74,6 @@ class SideMenuViewController: UIViewController {
 }
 extension SideMenuViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("menuItems: \(menuItems.count)")
         return menuItems.count
     }
     
@@ -90,14 +90,14 @@ extension SideMenuViewController : UITableViewDelegate, UITableViewDataSource {
     
 }
 extension SideMenuViewController {
-     func loadDataFromFirebase() {
-        showLoading(isShow: true)
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            showLoading(isShow: false)
-            return
-        }
-        self.userEmail.text = Auth.auth().currentUser?.email
-        let userRef = Database.database().reference().child("users").child(currentUserID)
+    func loadDataFromFirebase() {
+       showLoading(isShow: true)
+       guard let currentUserID = Auth.auth().currentUser?.uid else {
+           showLoading(isShow: false)
+           return
+       }
+       self.userEmail.text = Auth.auth().currentUser?.email
+       let userRef = Database.database().reference().child("users").child(currentUserID)
         userRef.observeSingleEvent(of: .value) { (snapshot) in
             self.showLoading(isShow: false)
             if let userData = snapshot.value as? [String: Any] {
@@ -106,10 +106,11 @@ extension SideMenuViewController {
                    let imageURL = URL(string: imageURLString) {
                     self.userAvatar.kf.setImage(with: imageURL)
                 }
-                self.showLoading(isShow: false)
+                print("Dữ liệu tải thành công")
+            } else {
+                print("Không thể lấy dữ liệu từ Firebase")
             }
         }
-        print("loadDataFromFirebase Done")
-    }
+   }
 }
 
