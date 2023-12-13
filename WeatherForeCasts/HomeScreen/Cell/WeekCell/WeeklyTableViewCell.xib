@@ -29,7 +29,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="515" id="llm-jE-2Zb"/>
-                            <constraint firstAttribute="width" constant="394" id="sCN-Pa-OGA"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KEh-6K-D6q">
                             <size key="itemSize" width="394" height="65"/>

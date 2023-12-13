@@ -8,13 +8,17 @@ class SetingViewController: UIViewController {
     @IBOutlet weak var systemBtn: UIButton!
     @IBOutlet weak var engBtn: UIButton!
     @IBOutlet weak var vnBtn: UIButton!
-//    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+    
+    @IBOutlet weak var mainTitle: UILabel!
+    @IBOutlet weak var selectThemeTitle: UILabel!
+    @IBOutlet weak var slectLanguage: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         themeBtnColor()
         let selectedLanguage = UserDefaults.standard.string(forKey: "AppleLanguages") ?? Locale.current.languageCode
         languageBtnColor(selectedLanguage:selectedLanguage)
+        translateLangue()
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -49,13 +53,13 @@ class SetingViewController: UIViewController {
             return
         }
         languageBtnColor(selectedLanguage:selectedLanguage)
-        // Lưu ngôn ngữ đã chọn
-//        UserDefaults.standard.set(selectedLanguage, forKey: "AppleLanguages")
+        
         UserDefaults.standard.set([selectedLanguage], forKey: "AppleLanguages")
         print("selectedLanguage: \(selectedLanguage)")
-
         UserDefaults.standard.synchronize()
-        showAlert(title: "Warning", message: "Please reset app to apllied new language")
+        let aleartTitle = NSLocalizedString("Warning", comment: "")
+        let aleartMessage = NSLocalizedString("Please reset app to apllied new language", comment: "")
+        showAlert(title: aleartTitle, message: aleartMessage)
         // Khởi động lại ứng dụng để áp dụng ngay lập tức
 //        exit(EXIT_SUCCESS)
     }
@@ -63,12 +67,20 @@ class SetingViewController: UIViewController {
         engBtn.backgroundColor = (selectedLanguage == "en") ? .yellow : .white
         vnBtn.backgroundColor = (selectedLanguage == "vi") ? .yellow : .white
     }
-    //123
     func themeBtnColor(){
         let theme = ThemeManager.shared.currentTheme
         darkBtn.backgroundColor = theme == .dark ? .yellow : .white
         lightBtn.backgroundColor = theme == .light ? .yellow : .white
         systemBtn.backgroundColor = theme == .system ? .yellow : .white
+    }
+    func translateLangue(){
+        mainTitle.text = NSLocalizedString(mainTitle.text ?? "", comment: "")
+        selectThemeTitle.text = NSLocalizedString(selectThemeTitle.text ?? "", comment: "")
+        darkBtn.setTitle(NSLocalizedString(darkBtn.currentTitle ?? "", comment: ""), for: .normal)
+        lightBtn.setTitle(NSLocalizedString(lightBtn.currentTitle ?? "", comment: ""), for: .normal)
+        systemBtn.setTitle(NSLocalizedString(systemBtn.currentTitle ?? "", comment: ""), for: .normal)
+        engBtn.setTitle(NSLocalizedString(engBtn.currentTitle ?? "", comment: ""), for: .normal)
+        vnBtn.setTitle(NSLocalizedString(vnBtn.currentTitle ?? "", comment: ""), for: .normal)
     }
     
 }

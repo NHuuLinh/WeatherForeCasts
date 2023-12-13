@@ -13,6 +13,7 @@ class WeeklyTableViewCell: UITableViewCell {
     @IBOutlet weak var extenLb: UILabel!
     var weeks : [Forecastday] = []
     var goToForecast14Days: (() -> Void)?
+//    let qw = WeeklyTableViewCell.frame.width
     
 
     override func awakeFromNib() {
@@ -21,6 +22,8 @@ class WeeklyTableViewCell: UITableViewCell {
         setupCollectionView()
         titleLb.text = NSLocalizedString(titleLb.text ?? "", comment: "")
         extenLb.text = NSLocalizedString(extenLb.text ?? "", comment: "")
+        print("cell bounds width: \(bounds.width)")
+//        print("weeklyCollectionView: \(weeklyCollectionView.frame.width)")
     }
     func getWeeklyDatas(with forecastWeek: [Forecastday] ) {
         self.weeks = forecastWeek
@@ -46,7 +49,10 @@ class WeeklyTableViewCell: UITableViewCell {
         goToForecast14Days?()
     }
 }
-extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDelegate {
+extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 2
+//    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return weeks.count
     }
@@ -59,5 +65,8 @@ extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         goToForecast14Days?()
         print("Số thứ tự của row được click: \(indexPath.row)")
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 300, height: 65)
     }
 }

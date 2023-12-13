@@ -57,7 +57,8 @@
 "Please check internet connection and retry again" = "Vui lòng kiểm tra kêt nối mạng và thử lại";
 "Retry" = "Thử lại";
 // MARK: - Màn hình Main Start
-
+"Failed to fetch weather data. Please try again." = "Không thể lấy dữ liệu thời tiết, vui lòng thử lại sau";
+"Please allow to use location." = "Xin vui lòng cho phép lấy dữ liệu vị trí";
 // MARK: - Màn hình CurrentWeatherTableViewCell
 "Feel like: " = "Cảm thấy như: ";
 "Unknown" = "Không rõ lỗi";

@@ -33,6 +33,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         checkLocationAuthorizationStatus()
+        print("view : \(view.frame.width)")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -391,7 +392,9 @@ extension MainViewController : CLLocationManagerDelegate {
         // Hủy hẹn giờ và hiển thị cảnh báo khi lấy dữ liệu quá thời gian
         loadingTimer?.invalidate()
         loadingTimer = nil
-        showAlert(title: "Error", message: "Failed to fetch weather data. Please try again.")
+        let title = NSLocalizedString("Error", comment: "")
+        let message = NSLocalizedString("Failed to fetch weather data. Please try again.", comment: "")
+        showAlert(title: title, message: message )
         showLoading(isShow: false)
     }
 
@@ -399,13 +402,16 @@ extension MainViewController : CLLocationManagerDelegate {
         // Hủy hẹn giờ và hiển thị cảnh báo khi có lỗi trong quá trình lấy dữ liệu
         loadingTimer?.invalidate()
         loadingTimer = nil
-        showAlert(title: "Error", message: "Please allow to use location")
+        let title = NSLocalizedString("Error", comment: "")
+        let message = NSLocalizedString("Please allow to use location.", comment: "")
+        showAlert(title: title, message: message)
         showLoading(isShow: false)
     }
 }
 // MARK: - Call API sau khi chọn địa điểm
 extension MainViewController: MapsViewControllerDelegate {
-     func didPickLocation(_ location: CLLocationCoordinate2D, address: String) {
+     func didPickLocation(_ location: CLLocationCoordinate2D,
+                          address: String) {
         showLoading(isShow: true)
         WeatherAPIManager1.shared.fetchWeatherData(latitude: location.latitude, longitude: location.longitude) { [weak self] weatherData in
                 guard let self = self else { return }
