@@ -30,6 +30,18 @@
 "Private Policy" = "Chính sách bảo mật";
 "Terms Of Use" = "Điều khoản sử dụng";
 "Logout" = "Đăng xuất";
+// MARK: - Màn hình Settings
+"Select theme" = "Chọn chế độ";
+"Dark" = "Tối";
+"Light" = "Sáng";
+"System" = "Hệ thống";
+"Select language" = "Chọn ngôn nghữ";
+"English" = "Tiếng anh";
+"Vietnamese" = "Tiếng Việt";
+"Please reset app to apllied new language" = "Vui lòng khởi động lại ứng dụng để thay
+ đổi ngôn ngữ mới";
+"Restart now" = "Khởi động lại ngay";
+"Restart later" = "Khởi động lại sau";
 // MARK: - Màn hình Profile
 "Account" = "Tài Khoản";
 "Name" = "Tên";

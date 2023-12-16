@@ -50,9 +50,7 @@ class WeeklyTableViewCell: UITableViewCell {
     }
 }
 extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 2
-//    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return weeks.count
     }
@@ -67,6 +65,11 @@ extension WeeklyTableViewCell : UICollectionViewDataSource, UICollectionViewDele
         print("Số thứ tự của row được click: \(indexPath.row)")
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 65)
+        let screenWidth = bounds.width
+        if screenWidth >= 700 {
+            return CGSize(width: ((bounds.width)/2)-10, height: 65)
+        } else {
+            return CGSize(width: bounds.width, height: 65)
+        }
     }
 }

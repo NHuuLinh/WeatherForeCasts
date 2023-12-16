@@ -56,9 +56,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDataFromFirebase()
     }
     override func viewWillAppear(_ animated: Bool) {
-        loadDataFromFirebase()
+//        loadDataFromFirebase()
         setupView()
         createDatePicker()
         phoneNumberTF.delegate = self

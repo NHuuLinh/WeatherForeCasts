@@ -31,6 +31,15 @@ class StandardForm {
             button.layer.opacity = 0.7
         }
     }
+    static func handleButton1(button: UIButton , _ emailResult: Bool, _ passwordResult: Bool ){
+        if emailResult && passwordResult{
+            button.isEnabled = true
+            button.layer.opacity = 1
+        } else {
+            button.isEnabled = false
+            button.layer.opacity = 0.7
+        }
+    }
 }
 class NavigationHelper {
     static func navigateToViewController(from sourceVC: UIViewController, withIdentifier identifier: String, setup: ((UIViewController) -> Void)? = nil) {

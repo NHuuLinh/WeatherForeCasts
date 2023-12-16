@@ -40,17 +40,6 @@ class ThemeManager {
         UserDefaults.standard.selectedTheme = theme
     }
 }
-//class ThemeManager {
-//    static let shared = ThemeManager()
-//    var currentTheme: Theme = .system
-//
-//    private init() {}
-//
-//    func applyTheme(_ theme: Theme, to window: UIWindow?) {
-//        currentTheme = theme
-//        window?.overrideUserInterfaceStyle = theme.uiInterfaceStyle
-//        UserDefaults.standard.selectedTheme = theme
-//    }
-//}
+
 
 
