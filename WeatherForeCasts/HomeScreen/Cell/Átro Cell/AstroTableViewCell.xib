@@ -88,7 +88,9 @@
                                     <constraint firstItem="pfk-f6-pa7" firstAttribute="top" secondItem="iK3-2G-yea" secondAttribute="bottom" constant="5" id="OtF-5t-agn"/>
                                     <constraint firstItem="hjz-Zd-R0o" firstAttribute="leading" secondItem="pfk-f6-pa7" secondAttribute="trailing" constant="10" id="SVb-mL-mOh"/>
                                     <constraint firstItem="Ect-te-tCu" firstAttribute="top" secondItem="IRj-NO-ts4" secondAttribute="bottom" constant="5" id="XoR-0h-Rfl"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ect-te-tCu" secondAttribute="trailing" constant="5" id="Ybt-5R-eoF"/>
                                     <constraint firstAttribute="bottom" secondItem="pfk-f6-pa7" secondAttribute="bottom" constant="5" id="q47-39-61I"/>
+                                    <constraint firstItem="pfk-f6-pa7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xq1-83-U4e" secondAttribute="leading" constant="5" id="yVA-YB-zXe"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AaC-da-TWs">
@@ -140,7 +142,9 @@
                                     <constraint firstItem="Cd7-Cz-4zg" firstAttribute="centerX" secondItem="9ni-aI-47Q" secondAttribute="centerX" id="Lrq-Vk-7wC"/>
                                     <constraint firstItem="g9B-x7-it1" firstAttribute="centerX" secondItem="CAh-JN-7Nx" secondAttribute="centerX" id="MEu-Jn-Stk"/>
                                     <constraint firstAttribute="bottom" secondItem="WQX-Pn-m0N" secondAttribute="bottom" constant="5" id="SCz-LR-EzP"/>
+                                    <constraint firstItem="9ni-aI-47Q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AaC-da-TWs" secondAttribute="leading" constant="5" id="VJU-6R-K3Z"/>
                                     <constraint firstItem="CAh-JN-7Nx" firstAttribute="leading" secondItem="WQX-Pn-m0N" secondAttribute="trailing" constant="10" id="VKa-wv-p47"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CAh-JN-7Nx" secondAttribute="trailing" constant="5" id="cew-qF-kX5"/>
                                     <constraint firstItem="WQX-Pn-m0N" firstAttribute="centerX" secondItem="AaC-da-TWs" secondAttribute="centerX" id="f6H-Fb-Tet"/>
                                     <constraint firstItem="CAh-JN-7Nx" firstAttribute="top" secondItem="g9B-x7-it1" secondAttribute="bottom" constant="5" id="fwI-3H-76p"/>
                                     <constraint firstItem="CAh-JN-7Nx" firstAttribute="bottom" secondItem="9ni-aI-47Q" secondAttribute="bottom" id="yiY-Db-wVd"/>

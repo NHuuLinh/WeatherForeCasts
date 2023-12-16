@@ -1,6 +1,7 @@
-
-
 import UIKit
+
+// Set tag for buttons
+
 
 class SetingViewController: UIViewController {
     @IBOutlet weak var darkBtn: UIButton!
@@ -19,6 +20,7 @@ class SetingViewController: UIViewController {
         let selectedLanguage = UserDefaults.standard.string(forKey: "AppleLanguages") ?? Locale.current.languageCode
         languageBtnColor(selectedLanguage:selectedLanguage)
         translateLangue()
+        
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -41,6 +43,7 @@ class SetingViewController: UIViewController {
         themeBtnColor()
     }
     @IBAction func langBtnHandle(_ sender: UIButton) {
+
         var selectedLanguage: String
         switch sender {
         case engBtn:
@@ -52,16 +55,29 @@ class SetingViewController: UIViewController {
         default:
             return
         }
-        languageBtnColor(selectedLanguage:selectedLanguage)
         
+        languageBtnColor(selectedLanguage:selectedLanguage)
+
         UserDefaults.standard.set([selectedLanguage], forKey: "AppleLanguages")
         print("selectedLanguage: \(selectedLanguage)")
         UserDefaults.standard.synchronize()
+
         let aleartTitle = NSLocalizedString("Warning", comment: "")
         let aleartMessage = NSLocalizedString("Please reset app to apllied new language", comment: "")
-        showAlert(title: aleartTitle, message: aleartMessage)
-        // Khởi động lại ứng dụng để áp dụng ngay lập tức
-//        exit(EXIT_SUCCESS)
+        let alert = UIAlertController(title: aleartTitle, message: aleartMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("Restart now", comment: ""), style: .destructive) { name in
+//            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+            // Khởi động lại ứng dụng để áp dụng ngay lập tức
+            exit(EXIT_SUCCESS)
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Restart later", comment: ""), style: .cancel) {_ in
+            print("cancel")
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+
+        self.present(alert, animated: true)
+
     }
         func languageBtnColor(selectedLanguage:String?){
         engBtn.backgroundColor = (selectedLanguage == "en") ? .yellow : .white

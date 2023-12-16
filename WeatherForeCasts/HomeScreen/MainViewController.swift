@@ -410,10 +410,12 @@ extension MainViewController : CLLocationManagerDelegate {
 }
 // MARK: - Call API sau khi chọn địa điểm
 extension MainViewController: MapsViewControllerDelegate {
-     func didPickLocation(_ location: CLLocationCoordinate2D,
+     func didPickLocation(_ location: CLLocation,
                           address: String) {
+         print("user selected :\(address)")
+         // xử lí sau khi người dùng chọn 1 địa điểm bên phía MapsViewController
         showLoading(isShow: true)
-        WeatherAPIManager1.shared.fetchWeatherData(latitude: location.latitude, longitude: location.longitude) { [weak self] weatherData in
+         WeatherAPIManager1.shared.fetchWeatherData(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { [weak self] weatherData in
                 guard let self = self else { return }
                     DispatchQueue.main.async {
                         guard let weatherData = weatherData else {
