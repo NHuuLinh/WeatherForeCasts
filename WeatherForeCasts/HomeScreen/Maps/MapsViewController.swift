@@ -32,12 +32,8 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
     @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
         // lấy tọa độ trên màn hinh
         let locationInView = sender.location(in: mapsView)
-        print("tọa độ trên màn hình : \(locationInView)")
         // chuyển đổi tọa độ trên màn hình sang tọa độ bản đồ
         let tappedCoordinate = mapsView.convert(locationInView, toCoordinateFrom: mapsView)
-        print("tọa độ trên bản đồ : \(tappedCoordinate)")
-        // Cập nhật selectedLocation
-//        selectedLocation = tappedCoordinate
         // Thêm một pin vào bản đồ tại tọa độ được nhấn
         addPinToMapView(at: tappedCoordinate)
         //chuyển đổi giá trị CLLocationCoordinate2D sang CLLocation
@@ -49,8 +45,6 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
             } else {
                 if let placemarks = placemarks?.first {
                     self?.searchBar.text = placemarks.administrativeArea
-                    print("huyện : \(placemarks.administrativeArea)")
-                    print("Quốc gia :\(placemarks.country)")
                 }
             }
         }
@@ -85,8 +79,12 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
     }
     
     func zoomToLocation(at coordinate: CLLocationCoordinate2D) {
-//        let region =MK
         let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        mapsView.setRegion(region, animated: true)
+    }
+    func zoomToLocation1(at coordinate: CLLocation) {
+//        let region =MK
+        let region = MKCoordinateRegion(center: coordinate.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapsView.setRegion(region, animated: true)
     }
     func selecLoacations(){
@@ -103,7 +101,6 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
                     let province = placemark.administrativeArea ?? ""
                     let country = placemark.country ?? ""
                     let address = "\(province), \(country)"
-                    print("Đã chọn địa điểm: \(address)")
                     if !province.isEmpty {
                         self?.delegate?.didPickLocation(selectedLocation, address: address)
                         self?.navigationController?.popViewController(animated: true)
@@ -137,8 +134,9 @@ extension MapsViewController: MKMapViewDelegate {
     // xử lí nếu người dùng nhấn vào pin
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let annotation = view.annotation {
-            selectedLocation = annotation as? CLLocation
-            zoomToLocation(at: selectedLocation?.coordinate ?? mapsView.userLocation.coordinate)
+            zoomToLocation(at: annotation.coordinate)
+        } else {
+            print("lỗi zoomToLocation khi người dùng nhấn vào pin ")
         }
     }
 }
