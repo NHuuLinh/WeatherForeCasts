@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 class Constants {
     static let baseUrl = "http://api.weatherapi.com/v1/forecast.json"
     static let key = "55c20eb0914e49058ed81009231112"

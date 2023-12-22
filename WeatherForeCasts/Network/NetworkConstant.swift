@@ -20,7 +20,6 @@ class WeatherAPIManager1 {
             "aqi": "yes",
             "lang": selectedLanguage ?? "en"
         ]
-
         AF.request(url, parameters: parameters).response { response in
             if let data = response.data {
                 let decoder = JSONDecoder()
