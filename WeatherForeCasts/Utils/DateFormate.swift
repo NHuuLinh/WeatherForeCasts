@@ -1,21 +1,89 @@
 
 import Foundation
+import UIKit
 class DateConvert {
+    
     static func convertDate(date: String, inputFormat: String, outputFormat: String) -> String {
         let dateFormatter = DateFormatter()
-        // dũ liệu input
+        
         dateFormatter.dateFormat = inputFormat
-        if let date = dateFormatter.date(from: date) {
-            // ngôn ngữ tiếng anh
-//            dateFormatter.locale = Locale(identifier: "en_US")
-            // dữ liêu output
+        if let inputDate = dateFormatter.date(from: date) {
+            // Định dạng thời gian đầu ra
             dateFormatter.dateFormat = outputFormat
-            //chuyển về String
-            let formattedDateString = dateFormatter.string(from: date)
+            // Chuyển đổi thành chuỗi
+            let formattedDateString = dateFormatter.string(from: inputDate)
             return formattedDateString
         } else {
             return "date error"
         }
+    }
+    
+    static func convertDate24h(date: String, inputFormat: String, outputFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Set locale here
+        dateFormatter.dateFormat = inputFormat
+        if let inputDate = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = outputFormat
+            let formattedDateString = dateFormatter.string(from: inputDate)
+            return formattedDateString
+        } else {
+            return "date error"
+        }
+    }
+    
+    static func hourToMinutes(hours: String) -> (Float){
+        print("hourToMinuest:\(hours)")
+
+        let hourToMinuest = (Float(DateConvert.convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "HH")) ?? 0)*60
+        let minutes = (Float(DateConvert.convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "mm")) ?? 0)
+        let minutesValue = hourToMinuest + minutes
+        return minutesValue
+    }
+    
+    static func hourToAngle(riseHours: String ,setHours: String, currentHours: String) -> (CGFloat){
+        let startHour = DateConvert.hourToMinutes(hours: riseHours)
+        let endHour = DateConvert.hourToMinutes(hours: setHours)
+        let currentHour = DateConvert.hourToMinutes(hours: currentHours)
+        // + giá trị 24h khi thời gian kết thúc chu kì là ngày hôm sau
+        var endValue: Float = 1
+        if endHour < startHour {
+            endValue = endHour + 24*60
+        } else {
+            endValue = endHour
+        }
+        
+        var currentValue: Float = 1
+        if currentHour < startHour {
+            currentValue = currentHour + 24*60
+        } else {
+            currentValue = currentHour
+        }
+        
+        let bottomVaule = endValue - startHour + 1
+        let headValue = currentValue-startHour + 1
+        
+        let currentValuePercen = headValue/bottomVaule
+        // tham khảo tài liệu về đường tròn https://vi.wikipedia.org/wiki/Đường_tròn_đơn_vị#/media/Tập_tin:Unit_circle_angles.svg
+        // trong trường hợp giờ hiện tại lớn hơn giờ chu kì kết thúc, góc sẽ bằng 0 rad- góc bên phải màn hình
+        var anggle: CGFloat = 0
+
+        if endValue < currentValue {
+             anggle = 1
+        } else if startHour > currentValue {
+            // trong trường hợp giờ hiện tại lớn hơn giờ chu kì kết thúc, góc sẽ bằng 1 rad - góc bên trái màn hình
+             anggle = 0
+        } else {
+            anggle = CGFloat(1 - currentValuePercen)
+        }
+//        let anggle = CGFloat(1 - currentValuePercen)
+        print("endValue:\(endValue)")
+        print("startHour:\(startHour)")
+        print("currentValue:\(currentValue)")
+        print("anggle:\(anggle)")
+//        print("endValue:\(endValue)")
+//        print("endValue:\(endValue)")
+
+        return (CGFloat)(anggle)
     }
 }
 /*
@@ -34,4 +102,6 @@ kiểu dữ liệu thời gian  `dateFormat`:
  - **EEE**: Tên viết tắt của ngày trong tuần. Ví dụ: Mon
  - **a**: Chỉ số AM/PM trong ngày. Ví dụ: AM
  "yyyy-MM-dd HH:mm:ss.SSS"
+ "hh:mm a"
+
  */

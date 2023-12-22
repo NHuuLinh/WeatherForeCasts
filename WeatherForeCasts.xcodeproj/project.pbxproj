@@ -36,6 +36,7 @@
 		A431B49B2AFD49E60047878F /* CurrentWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A431B4992AFD49E50047878F /* CurrentWeatherTableViewCell.swift */; };
 		A431B49C2AFD49E60047878F /* CurrentWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A431B49A2AFD49E50047878F /* CurrentWeatherTableViewCell.xib */; };
 		A43904D92B1B37C8006930B5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A43904DB2B1B37C8006930B5 /* Localizable.strings */; };
+		A43D70A32B2FE9D700E6FE5F /* WeatherDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43D70A22B2FE9D700E6FE5F /* WeatherDataResponse.swift */; };
 		A448D03E2B173B5B000A70BF /* NoInternetAccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448D03D2B173B5B000A70BF /* NoInternetAccessViewController.swift */; };
 		A448D0402B173BF2000A70BF /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448D03F2B173BF2000A70BF /* NetworkMonitor.swift */; };
 		A448D0412B17446A000A70BF /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0C2AECB78000E3FD3B /* Poppins-Light.ttf */; };
@@ -53,6 +54,7 @@
 		A4694EB02B0CE86A00FBCA73 /* DailyForecastTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4694EAE2B0CE86A00FBCA73 /* DailyForecastTableViewCell.xib */; };
 		A4694EB32B0CEA5900FBCA73 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED182AECB78A00E3FD3B /* Poppins-Medium.ttf */; };
 		A47111052B1A4ED00074167B /* ThemeSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47111042B1A4ED00074167B /* ThemeSetting.swift */; };
+		A47472CA2B3492A100629349 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47472C92B3492A100629349 /* Animation.swift */; };
 		A474ED1D2AECB78D00E3FD3B /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0A2AECB77F00E3FD3B /* Poppins-SemiBold.ttf */; };
 		A474ED1E2AECB78D00E3FD3B /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0B2AECB78000E3FD3B /* Poppins-Thin.ttf */; };
 		A474ED232AECB78D00E3FD3B /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED102AECB78300E3FD3B /* Poppins-ExtraBold.ttf */; };
@@ -134,6 +136,7 @@
 		A43904D62B1B36BD006930B5 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
 		A43904DA2B1B37C8006930B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A43904DC2B1B37CC006930B5 /* vi */ = {isa = PBXFileReference; indentWidth = 10; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; tabWidth = 10; usesTabs = 0; };
+		A43D70A22B2FE9D700E6FE5F /* WeatherDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataResponse.swift; sourceTree = "<group>"; };
 		A448D03D2B173B5B000A70BF /* NoInternetAccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetAccessViewController.swift; sourceTree = "<group>"; };
 		A448D03F2B173BF2000A70BF /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		A448D0472B17A9E2000A70BF /* WeatherAdviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAdviceTableViewCell.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 		A4694EAD2B0CE86A00FBCA73 /* DailyForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastTableViewCell.swift; sourceTree = "<group>"; };
 		A4694EAE2B0CE86A00FBCA73 /* DailyForecastTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyForecastTableViewCell.xib; sourceTree = "<group>"; };
 		A47111042B1A4ED00074167B /* ThemeSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSetting.swift; sourceTree = "<group>"; };
+		A47472C92B3492A100629349 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		A474ED0A2AECB77F00E3FD3B /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		A474ED0B2AECB78000E3FD3B /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		A474ED0C2AECB78000E3FD3B /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				A4A876BA2AE3738600ADD832 /* UserDefaults.swift */,
+				A47472C92B3492A100629349 /* Animation.swift */,
 				A47111042B1A4ED00074167B /* ThemeSetting.swift */,
 				A431B4962AFD29FB0047878F /* DateFormate.swift */,
 				A41309DC2AFF8FBA00884FF6 /* AQIHandle.swift */,
@@ -583,6 +588,7 @@
 				A4EBDD702AEE41B900446C7B /* NetworkConstant.swift */,
 				A4833BDF2B0E7117006525EC /* locationDelegate.swift */,
 				A4B5119C2AE97B8200FB1AAB /* DailyResponse.swift */,
+				A43D70A22B2FE9D700E6FE5F /* WeatherDataResponse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -781,11 +787,13 @@
 				A41355A02AF633F50084E440 /* MainViewController.swift in Sources */,
 				A4A876BB2AE3738600ADD832 /* UserDefaults.swift in Sources */,
 				A41936B62ADE7A5900ED58BE /* LoginPresenter.swift in Sources */,
+				A47472CA2B3492A100629349 /* Animation.swift in Sources */,
 				A448D0492B17A9E2000A70BF /* WeatherAdviceTableViewCell.swift in Sources */,
 				A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */,
 				A465087F2B19DC8100E7FE0E /* SetingViewController.swift in Sources */,
 				A41355AF2AF661A00084E440 /* OtherInformTableViewCell.swift in Sources */,
 				A4A876BF2AE4CAAA00ADD832 /* OnboardingViewController.swift in Sources */,
+				A43D70A32B2FE9D700E6FE5F /* WeatherDataResponse.swift in Sources */,
 				A407C6562B125B7E00D0EA98 /* StandardForm.swift in Sources */,
 				A41355A72AF638A80084E440 /* DailyTableViewCell.swift in Sources */,
 				A448D0402B173BF2000A70BF /* NetworkMonitor.swift in Sources */,

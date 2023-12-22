@@ -94,11 +94,11 @@ extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelega
             return cell
         case.datasForecast:
             let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherByDayTableViewCell", for: indexPath) as! WeatherByDayTableViewCell
-            if let datasForecast = weatherData?.forecast.forecastday {
-                cell.updateValue(datasForecast: datasForecast[indexPath.row])
-            }
             if let test1 = weatherData{
                 cell.test1123(test1: test1)
+            }
+            if let datasForecast = weatherData?.forecast.forecastday {
+                cell.updateValue(datasForecast: datasForecast[indexPath.row])
             }
             return cell
         default:

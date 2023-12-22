@@ -61,6 +61,8 @@ class MainViewController: UIViewController {
 extension MainViewController {
     // thêm tapGestureSetup cho blurview
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        let locationInView = sender.location(in: view)
+        print("\(locationInView)")
         if isMenuOpen {
             displayMenu()
         }
@@ -248,8 +250,8 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
             return cell
         case.astroCell:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AstroTableViewCell", for: indexPath) as! AstroTableViewCell
-            if let forecastAstro = weatherData?.forecast.forecastday[indexPath.row] {
-                cell.getAstroData(with: forecastAstro)
+            if let currentTime = weatherData?.location.localtime, let forecastAstro = weatherData?.forecast.forecastday[indexPath.row] {
+                cell.getAstroData(with: forecastAstro, with: currentTime)
             }
             return cell
         case.adviceCell:

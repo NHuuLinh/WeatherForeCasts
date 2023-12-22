@@ -126,6 +126,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
         if let userLocation = mapsView.userLocation.location {
             zoomToLocation(at: userLocation.coordinate)
             addPinToMapView(at: userLocation.coordinate)
+            self.selectedLocation = userLocation
         }
     }
 }
