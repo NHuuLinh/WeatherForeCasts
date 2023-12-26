@@ -84,7 +84,7 @@ extension SideMenuViewController : UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         onMenuItemSelected?(menuItems[indexPath.row])
-        print("onMenuItemSelected:1")
+        print("onMenuItemSelected:\(indexPath.row)")
     }
     
     

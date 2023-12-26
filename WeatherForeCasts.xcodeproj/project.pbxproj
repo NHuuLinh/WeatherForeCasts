@@ -68,9 +68,13 @@
 		A474ED2D2AECB78D00E3FD3B /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1A2AECB78C00E3FD3B /* Poppins-ThinItalic.ttf */; };
 		A474ED2E2AECB78D00E3FD3B /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED1B2AECB78C00E3FD3B /* Poppins-SemiBoldItalic.ttf */; };
 		A4833BE02B0E7118006525EC /* locationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4833BDF2B0E7117006525EC /* locationDelegate.swift */; };
-		A483B9102B108CB900A70AF0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0D2AECB78100E3FD3B /* Poppins-Bold.ttf */; };
 		A486A68D2B1987E500E73521 /* UIStatusBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486A68C2B1987E500E73521 /* UIStatusBarStyle.swift */; };
 		A497C3012B0A6A5C00629827 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A497C3002B0A6A5C00629827 /* UserProfile.swift */; };
+		A4A27A092B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A27A072B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.swift */; };
+		A4A27A0A2B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4A27A082B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.xib */; };
+		A4A27A0D2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A27A0B2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift */; };
+		A4A27A0E2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4A27A0C2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.xib */; };
+		A4A27A0F2B39FCE600C15AD6 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A474ED0D2AECB78100E3FD3B /* Poppins-Bold.ttf */; };
 		A4A4C0D02B01326100CA2137 /* SldeMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A4C0CF2B01326100CA2137 /* SldeMenuViewController.swift */; };
 		A4A4C0D32B013ADF00CA2137 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A4C0D12B013ADF00CA2137 /* MenuTableViewCell.swift */; };
 		A4A4C0D42B013ADF00CA2137 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4A4C0D22B013ADF00CA2137 /* MenuTableViewCell.xib */; };
@@ -176,6 +180,10 @@
 		A4833BDF2B0E7117006525EC /* locationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationDelegate.swift; sourceTree = "<group>"; };
 		A486A68C2B1987E500E73521 /* UIStatusBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStatusBarStyle.swift; sourceTree = "<group>"; };
 		A497C3002B0A6A5C00629827 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		A4A27A072B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedLocationsHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		A4A27A082B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectedLocationsHistoryTableViewCell.xib; sourceTree = "<group>"; };
+		A4A27A0B2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryTitleTableViewCell.swift; sourceTree = "<group>"; };
+		A4A27A0C2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationHistoryTitleTableViewCell.xib; sourceTree = "<group>"; };
 		A4A4C0CF2B01326100CA2137 /* SldeMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SldeMenuViewController.swift; sourceTree = "<group>"; };
 		A4A4C0D12B013ADF00CA2137 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		A4A4C0D22B013ADF00CA2137 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
@@ -457,8 +465,20 @@
 			isa = PBXGroup;
 			children = (
 				A4CA575A2B0F0146004D78C4 /* MapsViewController.swift */,
+				A4A27A062B39DCB200C15AD6 /* HistoryCell */,
 			);
 			path = Maps;
+			sourceTree = "<group>";
+		};
+		A4A27A062B39DCB200C15AD6 /* HistoryCell */ = {
+			isa = PBXGroup;
+			children = (
+				A4A27A072B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.swift */,
+				A4A27A082B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.xib */,
+				A4A27A0B2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift */,
+				A4A27A0C2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.xib */,
+			);
+			path = HistoryCell;
 			sourceTree = "<group>";
 		};
 		A4A5BD862AF0243000046884 /* DatesCell */ = {
@@ -663,11 +683,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4A27A0A2B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.xib in Resources */,
 				A4A4C0D42B013ADF00CA2137 /* MenuTableViewCell.xib in Resources */,
 				A474ED272AECB78D00E3FD3B /* Poppins-ExtraLightItalic.ttf in Resources */,
 				A44B54742AF57D330096354A /* DailyCollectionViewCell.xib in Resources */,
 				A41355B42AF663E80084E440 /* AQITableViewCell.xib in Resources */,
 				A474ED2D2AECB78D00E3FD3B /* Poppins-ThinItalic.ttf in Resources */,
+				A4A27A0E2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.xib in Resources */,
 				A4E0498D2AF5442B0088434B /* WeeklyWeatherCollectionViewCell.xib in Resources */,
 				A474ED2A2AECB78D00E3FD3B /* Poppins-Italic.ttf in Resources */,
 				A4A5BD852AF022C500046884 /* WeatherByDayTableViewCell.xib in Resources */,
@@ -682,13 +704,13 @@
 				A4D09F2D2B2367C4002BCF7A /* Poppins-BlackItalic.ttf in Resources */,
 				A4EBDD802AEEB5B900446C7B /* DatesCollectionViewCell.xib in Resources */,
 				A46351EF2AE132A100F8D65A /* GoogleService-Info.plist in Resources */,
-				A483B9102B108CB900A70AF0 /* Poppins-Bold.ttf in Resources */,
 				A448D0412B17446A000A70BF /* Poppins-Light.ttf in Resources */,
 				A474ED1D2AECB78D00E3FD3B /* Poppins-SemiBold.ttf in Resources */,
 				A4EBDD842AEEB94E00446C7B /* DatesTableViewCell.xib in Resources */,
 				A474ED242AECB78D00E3FD3B /* OFL.txt in Resources */,
 				A474ED262AECB78D00E3FD3B /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				A474ED292AECB78D00E3FD3B /* Poppins-ExtraLight.ttf in Resources */,
+				A4A27A0F2B39FCE600C15AD6 /* Poppins-Bold.ttf in Resources */,
 				A474ED252AECB78D00E3FD3B /* Poppins-LightItalic.ttf in Resources */,
 				A448D04A2B17A9E2000A70BF /* WeatherAdviceTableViewCell.xib in Resources */,
 				A41936A92ADE6F7000ED58BE /* Assets.xcassets in Resources */,
@@ -755,6 +777,7 @@
 			files = (
 				A4CA575B2B0F0146004D78C4 /* MapsViewController.swift in Sources */,
 				A4C4C6D92B0BC5D400E1E84C /* Validator.swift in Sources */,
+				A4A27A0D2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift in Sources */,
 				A4B5119D2AE97B8400FB1AAB /* DailyResponse.swift in Sources */,
 				A41ADF882AE52EE30020A1BE /* OnboardingCollectionViewCell.swift in Sources */,
 				A4E0498C2AF5442B0088434B /* WeeklyWeatherCollectionViewCell.swift in Sources */,
@@ -791,6 +814,7 @@
 				A448D0492B17A9E2000A70BF /* WeatherAdviceTableViewCell.swift in Sources */,
 				A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */,
 				A465087F2B19DC8100E7FE0E /* SetingViewController.swift in Sources */,
+				A4A27A092B39DD0200C15AD6 /* SelectedLocationsHistoryTableViewCell.swift in Sources */,
 				A41355AF2AF661A00084E440 /* OtherInformTableViewCell.swift in Sources */,
 				A4A876BF2AE4CAAA00ADD832 /* OnboardingViewController.swift in Sources */,
 				A43D70A32B2FE9D700E6FE5F /* WeatherDataResponse.swift in Sources */,

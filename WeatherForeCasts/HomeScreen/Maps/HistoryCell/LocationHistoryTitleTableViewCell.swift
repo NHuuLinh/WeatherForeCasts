@@ -8,9 +8,11 @@
 import UIKit
 
 class LocationHistoryTitleTableViewCell: UITableViewCell {
+    var onDataUpdate: (() -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
 
@@ -20,4 +22,8 @@ class LocationHistoryTitleTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func clearBtn(_ sender: Any) {
+//        UserDefaults.standard.removeObject(forKey: "searchHistory")
+        onDataUpdate?()
+    }
 }

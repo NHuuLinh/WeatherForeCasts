@@ -8,10 +8,12 @@
 import UIKit
 
 class SelectedLocationsHistoryTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var historyLocationsLb: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+//        historyLocationsLb.text = UserDefaults.standard.string(forKey: "test")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -19,5 +21,10 @@ class SelectedLocationsHistoryTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func getHistoryLocation(with location :String?){
+//        print("location: \(location)")
+        historyLocationsLb.text = location //as? String
+    }
+    
     
 }

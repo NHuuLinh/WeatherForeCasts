@@ -7,37 +7,6 @@
 
 import Foundation
 class WeatherCondition {
-    static func willSnow1(localTime: String, forecastDays: [Forecastday] ) -> String{
-        var willItSnowValues: [Int] = []
-        for i in 0...1 {
-           for hour in forecastDays[i].hour {
-               let willItSnowValue = hour.willItSnow
-               willItSnowValues.append(willItSnowValue)
-              print("Day \(i + 1) - Will it snow: \(willItSnowValue)")
-           }
-        }
-        if willItSnowValues.count >= 2 {
-           let components = localTime.components(separatedBy: " ")
-           let currentTime = components[1]
-           print("\(currentTime)")
-           let hourComponents = currentTime.components(separatedBy: ":")
-           let hours = hourComponents[0]
-           print("\(hours)")
-           let hour  = Int(hours) ?? 0
-           print("hour : \(hour)")
-           let firstValue = willItSnowValues[hour]
-           print("firstValue : \(firstValue)")
-           let secondValue = willItSnowValues[hour + 1]
-           print("secondValue : \(secondValue)")
-           if firstValue == 0 && secondValue == 0 {
-              return "Won't snow in 2 hours"
-           }else {
-              return "Will snow in 2 hours"
-           }
-        } else {
-           return "Unknow"
-        }
-     }
     static func willSnow(localTime: String, forecastDays: [Forecastday]) -> String {
         var willItSnowValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
@@ -70,7 +39,7 @@ class WeatherCondition {
         var willItRainValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
         let resultText = NSLocalizedString("Won't rain in", comment: "")
-        let failText = NSLocalizedString("Will snow in", comment: "")
+        let failText = NSLocalizedString("Will rain in", comment: "")
         
         for i in 0...1 {
             for hour in forecastDays[i].hour {

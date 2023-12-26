@@ -108,16 +108,21 @@ extension MainViewController {
                 goToProfileVC()
             case .location :
                 print("Location")
+            self.underDevelopment()
             case .settings :
                 print("settings")
                 goToSettingVC()
             case .notification :
+            self.underDevelopment()
                 print("notification")
             case .aboutUs :
+            self.underDevelopment()
                 print("aboutUs")
             case .privatePolicy :
+            self.underDevelopment()
                 print("privatePolicy")
             case .termsOfUse :
+            self.underDevelopment()
                 print("termsOfUse")
             case .logout :
                 logoutHandle()
@@ -299,6 +304,11 @@ extension MainViewController {
     private func goToSettingVC(){
         NavigationHelper.navigateToViewController(from: self, withIdentifier: "SetingViewController")
     }
+    private func underDevelopment(){
+        let title = NSLocalizedString("The feature is under development", comment: "")
+        let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")
+        showAlert(title: title, message: message)
+    }
 }
 // MARK: - Các hàm liên quan vị trí
 extension MainViewController : CLLocationManagerDelegate {
@@ -313,7 +323,7 @@ extension MainViewController : CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
             locationManager.startUpdatingLocation()
-            fetchWeatherDataForCurrentLocation()
+            fetchWeatherData()
         @unknown default:
             break
         }
@@ -335,7 +345,6 @@ extension MainViewController : CLLocationManagerDelegate {
             }
         }
     }
-    
     private func fetchWeatherDataForCurrentLocation() {
         // Bắt đầu hẹn giờ 20 giây
         loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
@@ -365,7 +374,7 @@ extension MainViewController : CLLocationManagerDelegate {
                 self?.locationNameLb.text = address
 
                 // Fetch weather data using the current location
-                WeatherAPIManager1.shared.fetchWeatherData(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude) { [weak self] weatherData in
+                WeatherAPIManager.shared.fetchWeatherData(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude) { [weak self] weatherData in
                     //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
                     guard let self = self else { return }
 
@@ -390,6 +399,8 @@ extension MainViewController : CLLocationManagerDelegate {
             }
         }
     }
+    
+
     @objc private func handleLoadingTimeout() {
         // Hủy hẹn giờ và hiển thị cảnh báo khi lấy dữ liệu quá thời gian
         loadingTimer?.invalidate()
@@ -412,25 +423,66 @@ extension MainViewController : CLLocationManagerDelegate {
 }
 // MARK: - Call API sau khi chọn địa điểm
 extension MainViewController: MapsViewControllerDelegate {
-     func didPickLocation(_ location: CLLocation,
-                          address: String) {
-         print("user selected :\(address)")
-         // xử lí sau khi người dùng chọn 1 địa điểm bên phía MapsViewController
+     func fetchWeatherData() {
+        // Bắt đầu hẹn giờ 20 giây
+        loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
         showLoading(isShow: true)
-         WeatherAPIManager1.shared.fetchWeatherData(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { [weak self] weatherData in
-                guard let self = self else { return }
+        // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
+        guard let currentLocation = locationManager.location else {
+            print("Current location not available.")
+            handleLoadingError()
+            return
+        }
+        let geocoder = CLGeocoder()
+        // lấy placemark
+        geocoder.reverseGeocodeLocation(currentLocation) { [weak self] (placemarks, error) in
+            if let error = error {
+                print("Reverse geocoding failed: \(error.localizedDescription)")
+                self?.handleLoadingError()
+                return
+            }
+
+            // lấy tên thành phố, đất nước
+            if let placemark = placemarks?.first {
+                let province = placemark.administrativeArea ?? ""
+                let country = placemark.country ?? ""
+                let address = "\(province), \(country)"
+                print("Đã chọn địa điểm: \(address)")
+                
+                self?.locationNameLb.text = UserDefaults.standard.string(forKey: "locationAddress") ?? address
+                var latitude = UserDefaults.standard.double(forKey: "locationLatitude")
+                var longitude = UserDefaults.standard.double(forKey: "locationLongitude")
+                if latitude == 0.0 || longitude == 0.0 {
+                     latitude = currentLocation.coordinate.latitude
+                     longitude = currentLocation.coordinate.longitude
+                }
+
+                // Fetch weather data using the current location
+                WeatherAPIManager.shared.fetchWeatherData(latitude: latitude , longitude: longitude ) { [weak self] weatherData in
+                    print("longitude: \(longitude)")
+                    print("latitude: \(latitude)")
+                    //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
+                    guard let self = self else { return }
+
+                    // Hủy hẹn giờ vì đã có dữ liệu
+                    self.loadingTimer?.invalidate()
+                    self.loadingTimer = nil
+                    // chạy các tác vụ ưu tiên trên luồng chính, tránh lag  giao diện
                     DispatchQueue.main.async {
                         guard let weatherData = weatherData else {
                             print("Failed to fetch weather data")
+                            self.handleLoadingError()
                             return
                         }
                         DispatchQueue.main.async {
                             self.weatherData = weatherData
-                            self.locationNameLb.text = address
                             self.mainTableView.reloadData()
                         }
+                        self.isDataLoaded = true
+                        self.showLoading(isShow: false)
                     }
-                    self.showLoading(isShow: false)
                 }
             }
         }
+    }
+}
