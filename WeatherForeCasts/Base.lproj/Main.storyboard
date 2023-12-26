@@ -1452,13 +1452,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
-                            <searchBar contentMode="redraw" text="q" translatesAutoresizingMaskIntoConstraints="NO" id="6uf-oR-Bn8">
-                                <rect key="frame" x="55" y="59" width="375" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="6uf-oR-Bn8">
+                                <rect key="frame" x="50" y="59" width="380" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hUs-U7-ax9"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -1482,7 +1482,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5R-Bm-grK">
-                                <rect key="frame" x="5" y="59" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="59" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="20h-Vr-8dD"/>
@@ -1515,26 +1515,38 @@
                                     <action selector="selectLocation:" destination="h9z-w2-56F" eventType="touchUpInside" id="IF5-cT-Zlh"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Bg7-9i-p2E">
+                                <rect key="frame" x="0.0" y="109" width="430" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0Ia-pD-mLV"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KHh-FT-7eJ"/>
                         <color key="backgroundColor" name="Color Back Ground"/>
                         <constraints>
                             <constraint firstItem="llv-pZ-yhn" firstAttribute="centerY" secondItem="1ei-w2-L4n" secondAttribute="centerY" id="0gU-sP-Ry1"/>
+                            <constraint firstItem="KHh-FT-7eJ" firstAttribute="trailing" secondItem="Bg7-9i-p2E" secondAttribute="trailing" id="2KA-bM-uhu"/>
                             <constraint firstItem="tTY-WB-4QS" firstAttribute="top" secondItem="PRP-ik-rAv" secondAttribute="top" id="3lm-z1-WS6"/>
                             <constraint firstItem="6uf-oR-Bn8" firstAttribute="leading" secondItem="P5R-Bm-grK" secondAttribute="trailing" id="4sX-D2-XBy"/>
                             <constraint firstItem="P5R-Bm-grK" firstAttribute="centerY" secondItem="6uf-oR-Bn8" secondAttribute="centerY" id="AX1-nd-HSR"/>
-                            <constraint firstItem="P5R-Bm-grK" firstAttribute="leading" secondItem="PRP-ik-rAv" secondAttribute="leading" constant="5" id="GTr-Pb-NM5"/>
+                            <constraint firstItem="P5R-Bm-grK" firstAttribute="leading" secondItem="PRP-ik-rAv" secondAttribute="leading" id="GTr-Pb-NM5"/>
                             <constraint firstAttribute="trailing" secondItem="6uf-oR-Bn8" secondAttribute="trailing" id="JFo-bb-jeM"/>
                             <constraint firstItem="tTY-WB-4QS" firstAttribute="leading" secondItem="KHh-FT-7eJ" secondAttribute="leading" id="JpQ-DP-DaY"/>
                             <constraint firstItem="KHh-FT-7eJ" firstAttribute="bottom" secondItem="1ei-w2-L4n" secondAttribute="bottom" constant="20" id="KlZ-3O-3n6"/>
                             <constraint firstItem="KHh-FT-7eJ" firstAttribute="trailing" secondItem="tTY-WB-4QS" secondAttribute="trailing" id="N7y-uI-0AM"/>
+                            <constraint firstItem="Bg7-9i-p2E" firstAttribute="top" secondItem="6uf-oR-Bn8" secondAttribute="bottom" id="QJe-ba-l5H"/>
                             <constraint firstItem="llv-pZ-yhn" firstAttribute="centerX" secondItem="KHh-FT-7eJ" secondAttribute="centerX" id="Rda-6G-jyt"/>
+                            <constraint firstItem="Bg7-9i-p2E" firstAttribute="leading" secondItem="KHh-FT-7eJ" secondAttribute="leading" id="b43-Dx-j2j"/>
                             <constraint firstItem="KHh-FT-7eJ" firstAttribute="trailing" secondItem="1ei-w2-L4n" secondAttribute="trailing" constant="20" id="cN5-ik-BeK"/>
                             <constraint firstAttribute="bottom" secondItem="tTY-WB-4QS" secondAttribute="bottom" id="k6J-DZ-YDV"/>
                             <constraint firstItem="6uf-oR-Bn8" firstAttribute="top" secondItem="KHh-FT-7eJ" secondAttribute="top" id="zmg-uW-zMe"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="LocationsHistoryTableView" destination="Bg7-9i-p2E" id="hEh-Ry-0RK"/>
+                        <outlet property="LocationsHistoryTableViewHieght" destination="0Ia-pD-mLV" id="s7m-KT-4ym"/>
                         <outlet property="mapsView" destination="tTY-WB-4QS" id="6HK-j4-Bf6"/>
                         <outlet property="searchBar" destination="6uf-oR-Bn8" id="DhU-df-aQG"/>
                         <outlet property="selectLocationBtn" destination="llv-pZ-yhn" id="fKC-7M-fcg"/>

@@ -3,33 +3,63 @@ import UIKit
 import MapKit
 
 protocol MapsViewControllerDelegate: AnyObject {
-    func didPickLocation(_ location: CLLocation, address: String)
+    func fetchWeatherData()
 }
+//func didPickLocation(_ location: CLLocation, address: String)
+//}
 
-class MapsViewController: UIViewController,UISearchBarDelegate {
+class MapsViewController: UIViewController,UISearchBarDelegate  {
+
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapsView: MKMapView!
     @IBOutlet weak var selectLocationBtn: UIButton!
+    @IBOutlet weak var LocationsHistoryTableView: UITableView!
+    @IBOutlet weak var LocationsHistoryTableViewHieght: NSLayoutConstraint!
     
     let geocoder = CLGeocoder()
     weak var delegate: MapsViewControllerDelegate?
 //    var selectedLocation: CLLocationCoordinate2D?CLLocation
     var selectedLocation: CLLocation?
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var selectedLocationHistory = UserDefaults.standard.stringArray(forKey: "searchHistory") ?? []
+    private var sections = [Sections]()
+    enum Sections:Int {
+        case HistoryTitle = 0
+        case LocationsHistory
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        translateLangue()
         searchBar.delegate = self
         mapsView.showsUserLocation = true
         mapsView.delegate = self
-        translateLangue()
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleMapTap(_:)))
         mapsView.addGestureRecognizer(tapRecognizer)
         let userLocationButton = MKUserTrackingBarButtonItem(mapView: mapsView)
         self.navigationItem.rightBarButtonItem = userLocationButton
+        LocationsHistoryTableView.isHidden = true
+        registerCell()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+    }
+    func registerCell(){
+        LocationsHistoryTableView.dataSource = self
+        LocationsHistoryTableView.delegate = self
+        let searchHistoryCell = UINib(nibName: "LocationHistoryTitleTableViewCell", bundle: nil)
+        LocationsHistoryTableView.register(searchHistoryCell, forCellReuseIdentifier: "LocationHistoryTitleTableViewCell")
+        let locationCell = UINib(nibName: "SelectedLocationsHistoryTableViewCell", bundle: nil)
+        LocationsHistoryTableView.register(locationCell, forCellReuseIdentifier: "SelectedLocationsHistoryTableViewCell")
+        tableViewHeight()
+    }
+    func tableViewHeight(){
+        LocationsHistoryTableViewHieght.constant = CGFloat(40 + 30 * (selectedLocationHistory.count))
     }
     // xử lí khi người dùng click vào maps
     @objc func handleMapTap(_ sender: UITapGestureRecognizer) {
+        LocationsHistoryTableView.isHidden = true
+
         // lấy tọa độ trên màn hinh
         let locationInView = sender.location(in: mapsView)
         // chuyển đổi tọa độ trên màn hình sang tọa độ bản đồ
@@ -50,10 +80,28 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
         }
     }
     // xử lí khi người dùng thao tác với searchBar
+    @objc func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        LocationsHistoryTableView.isHidden = false
+    }
+    @objc func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        LocationsHistoryTableView.isHidden = false
+
+    }
+    @objc func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        LocationsHistoryTableView.isHidden = true
+    }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //ẩn bàn phím
         searchBar.resignFirstResponder()
         if let locationString = searchBar.text {
-            geocoder.geocodeAddressString(locationString) { [weak self] (placemarks, error) in
+            getCoordinateFromString(location: locationString)
+        }
+    }
+    func getCoordinateFromString(location: String?) {
+        guard let location = location else { return  }
+//        if let location != nil {
+            geocoder.geocodeAddressString(location) { [weak self] (placemarks, error) in
                 if let error = error {
                     print("Geocode failed: \(error.localizedDescription)")
                 } else if let placemarks = placemarks, let location = placemarks.first?.location {
@@ -66,7 +114,6 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
                 }
             }
         }
-    }
     
     func addPinToMapView(at coordinate: CLLocationCoordinate2D) {
         // Xóa tất cả các điểm hiện có
@@ -101,8 +148,26 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
                     let province = placemark.administrativeArea ?? ""
                     let country = placemark.country ?? ""
                     let address = "\(province), \(country)"
+                    print("province:\(province)")
+
+                    DispatchQueue.main.async {
+                        //tìm giá trị trong index, nếu có thì xóa nó đi
+                        if let index = self?.selectedLocationHistory.firstIndex(of: province) {
+                            self?.selectedLocationHistory.remove(at: index)
+                        }
+                        // chèn giá trị vào vị trí đầu sau khi xóa
+                        self?.selectedLocationHistory.insert(province, at: 0)
+                        // câp nhật UserDefault
+                        UserDefaults.standard.set(self?.selectedLocationHistory, forKey: "searchHistory")
+                        // cập nhật lại chiều cao do mới thêm giá trị vào mảng
+                        self?.tableViewHeight()
+                        self?.LocationsHistoryTableView.reloadData()
+                    }
                     if !province.isEmpty {
-                        self?.delegate?.didPickLocation(selectedLocation, address: address)
+                        self?.delegate?.fetchWeatherData()
+                        UserDefaults.standard.set(selectedLocation.coordinate.latitude, forKey: "locationLatitude")
+                        UserDefaults.standard.set(selectedLocation.coordinate.longitude, forKey: "locationLongitude")
+                        UserDefaults.standard.set(address, forKey: "locationAddress")
                         self?.navigationController?.popViewController(animated: true)
                     } else {
                         let warningTitle = NSLocalizedString("Warning", comment: "")
@@ -116,6 +181,8 @@ class MapsViewController: UIViewController,UISearchBarDelegate {
     
     @IBAction func selectLocation(_ sender: Any) {
         selecLoacations()
+        print("selectLocationBtn: \(selectedLocationHistory.count)")
+        LocationsHistoryTableView.reloadData()
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -144,6 +211,59 @@ extension MapsViewController: MKMapViewDelegate {
 extension MapsViewController {
     func translateLangue(){
         selectLocationBtn.setTitle(NSLocalizedString("Select Location", comment: ""), for: .normal)
+    }
+}
+extension MapsViewController:UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        let mapsSection = Sections(rawValue: section)
+        switch mapsSection {
+        case .HistoryTitle:
+            return 1
+        case .LocationsHistory:
+            return selectedLocationHistory.count
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let mapsSection = Sections(rawValue: indexPath.section)
+        switch mapsSection {
+        case .HistoryTitle :
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LocationHistoryTitleTableViewCell", for: indexPath) as! LocationHistoryTitleTableViewCell
+            cell.onDataUpdate = { [weak self] in
+                UserDefaults.standard.removeObject(forKey: "searchHistory")
+                self?.selectedLocationHistory = []
+                self?.tableViewHeight()
+                self?.LocationsHistoryTableView.reloadData()
+            }
+            return cell
+        case .LocationsHistory:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SelectedLocationsHistoryTableViewCell", for: indexPath) as! SelectedLocationsHistoryTableViewCell
+            cell.getHistoryLocation(with: selectedLocationHistory[indexPath.row])
+//            self.LocationsHistoryTableView.reloadData()
+            return cell
+        default:
+            return UITableViewCell()
+        }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let mapsSection = Sections(rawValue: indexPath.section)
+        switch mapsSection {
+        case .HistoryTitle :
+            return
+        case .LocationsHistory:
+            print("\(indexPath.row)")
+            let historyLocation = selectedLocationHistory[indexPath.row]
+            self.searchBar.text = historyLocation
+            getCoordinateFromString(location: historyLocation)
+        default:
+            return
+        }
     }
 }
 
