@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x5S-YY-oU3">
-    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
@@ -2707,7 +2707,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Xe-1p-zVq">
-                                        <rect key="frame" x="0.0" y="802" width="430" height="130"/>
+                                        <rect key="frame" x="0.0" y="817" width="430" height="115"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R32-ug-9WS">
                                                 <rect key="frame" x="115" y="0.0" width="200" height="50"/>
@@ -2729,17 +2729,17 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="tintColor" red="0.28235294117647058" green="0.29411764705882354" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="130" id="AD0-ga-4LS"/>
+                                            <constraint firstAttribute="height" constant="115" id="AD0-ga-4LS"/>
+                                            <constraint firstItem="R32-ug-9WS" firstAttribute="top" secondItem="7Xe-1p-zVq" secondAttribute="top" id="Eys-gp-oXI"/>
                                             <constraint firstItem="R32-ug-9WS" firstAttribute="centerX" secondItem="7Xe-1p-zVq" secondAttribute="centerX" id="cQ6-Yh-iTi"/>
-                                            <constraint firstAttribute="bottom" secondItem="R32-ug-9WS" secondAttribute="bottom" constant="80" id="kKR-tx-55J"/>
                                         </constraints>
                                     </view>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5Tj-F7-X5K">
-                                        <rect key="frame" x="0.0" y="59" width="430" height="743"/>
-                                        <color key="backgroundColor" red="0.25098039215686274" green="0.25882352941176467" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5Tj-F7-X5K">
+                                        <rect key="frame" x="0.0" y="59" width="430" height="758"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nwm-uO-4z3">
                                             <size key="itemSize" width="430" height="738"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -2748,84 +2748,29 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OnboardingCollectionViewCell" id="cHA-Ng-3ZI" customClass="OnboardingCollectionViewCell" customModule="WeatherForeCasts" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="3" width="430" height="738"/>
+                                                <rect key="frame" x="0.0" y="10" width="430" height="738"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jhn-Sd-Ucv">
                                                     <rect key="frame" x="0.0" y="0.0" width="430" height="738"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9mt-5k-u6Z">
-                                                            <rect key="frame" x="0.0" y="88" width="430" height="562"/>
-                                                        </imageView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOv-5D-FG3">
-                                                            <rect key="frame" x="0.0" y="608" width="430" height="130"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dự báo chi tiết 24h" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-Nv-qlh">
-                                                                    <rect key="frame" x="93.333333333333329" y="39.666666666666629" width="243.33333333333337" height="38.333333333333343"/>
-                                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="28"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" text="1123123" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fc2-cN-N5B">
-                                                                    <rect key="frame" x="183.66666666666666" y="78" width="62.666666666666657" height="32"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="32" id="O3t-d4-Xiw"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.62745098039215685" green="0.63921568627450975" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
-                                                                </label>
-                                                            </subviews>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            <constraints>
-                                                                <constraint firstItem="Fc2-cN-N5B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hOv-5D-FG3" secondAttribute="leading" id="141-GC-PaS"/>
-                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HWz-Nv-qlh" secondAttribute="trailing" id="6SR-bG-QoK"/>
-                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fc2-cN-N5B" secondAttribute="trailing" id="Vwd-w6-DiE"/>
-                                                                <constraint firstItem="Fc2-cN-N5B" firstAttribute="centerX" secondItem="hOv-5D-FG3" secondAttribute="centerX" id="ZLB-zS-UNe"/>
-                                                                <constraint firstItem="HWz-Nv-qlh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hOv-5D-FG3" secondAttribute="leading" id="arf-2S-k3p"/>
-                                                                <constraint firstAttribute="height" constant="130" id="esl-7D-Qg0"/>
-                                                                <constraint firstItem="HWz-Nv-qlh" firstAttribute="centerX" secondItem="hOv-5D-FG3" secondAttribute="centerX" id="nrS-IZ-c7I"/>
-                                                                <constraint firstItem="Fc2-cN-N5B" firstAttribute="top" secondItem="HWz-Nv-qlh" secondAttribute="bottom" id="oYd-z5-Wjh"/>
-                                                                <constraint firstAttribute="bottom" secondItem="Fc2-cN-N5B" secondAttribute="bottom" constant="20" id="rHK-7U-dLi"/>
-                                                            </constraints>
-                                                        </view>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="9mt-5k-u6Z" firstAttribute="leading" secondItem="jhn-Sd-Ucv" secondAttribute="leading" id="4h1-Ts-Sbz"/>
-                                                        <constraint firstItem="9mt-5k-u6Z" firstAttribute="centerX" secondItem="jhn-Sd-Ucv" secondAttribute="centerX" id="7gG-xs-n9n"/>
-                                                        <constraint firstItem="9mt-5k-u6Z" firstAttribute="top" secondItem="jhn-Sd-Ucv" secondAttribute="top" constant="88" id="G2r-HS-XBG"/>
-                                                        <constraint firstAttribute="trailing" secondItem="9mt-5k-u6Z" secondAttribute="trailing" id="PML-wU-WJk"/>
-                                                        <constraint firstAttribute="bottom" secondItem="hOv-5D-FG3" secondAttribute="bottom" id="VAU-Ac-kyW"/>
-                                                        <constraint firstAttribute="trailing" secondItem="hOv-5D-FG3" secondAttribute="trailing" id="b0B-ko-L9Y"/>
-                                                        <constraint firstItem="hOv-5D-FG3" firstAttribute="leading" secondItem="jhn-Sd-Ucv" secondAttribute="leading" id="qrJ-eP-pXn"/>
-                                                        <constraint firstItem="9mt-5k-u6Z" firstAttribute="centerY" secondItem="jhn-Sd-Ucv" secondAttribute="centerY" id="zw8-PU-ati"/>
-                                                    </constraints>
                                                 </collectionViewCellContentView>
-                                                <connections>
-                                                    <outlet property="slideDescriptionLb" destination="Fc2-cN-N5B" id="7pg-BH-zew"/>
-                                                    <outlet property="slideImageView" destination="9mt-5k-u6Z" id="RuS-Ue-Q23"/>
-                                                    <outlet property="slideTilteLb" destination="HWz-Nv-qlh" id="cSh-YK-HMf"/>
-                                                </connections>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </collectionViewCell>
                                         </cells>
-                                        <connections>
-                                            <outlet property="dataSource" destination="XAT-gH-bkj" id="B41-Cq-bFv"/>
-                                            <outlet property="delegate" destination="XAT-gH-bkj" id="CTW-dZ-WQL"/>
-                                        </connections>
                                     </collectionView>
                                     <pageControl opaque="NO" userInteractionEnabled="NO" tag="-3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="I56-HM-nK9">
-                                        <rect key="frame" x="140" y="682" width="150" height="20"/>
+                                        <rect key="frame" x="140" y="697" width="150" height="20"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="smq-Ea-ULQ"/>
                                             <constraint firstAttribute="width" constant="150" id="uwX-5j-iMJ"/>
                                         </constraints>
-                                        <color key="pageIndicatorTintColor" red="0.62745098039215685" green="0.63921568627450975" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="currentPageIndicatorTintColor" red="0.25098039215686274" green="0.25882352941176467" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </pageControl>
                                 </subviews>
-                                <color key="backgroundColor" red="0.25098039215686274" green="0.25882352941176467" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="7Xe-1p-zVq" firstAttribute="leading" secondItem="E8O-Ao-HmC" secondAttribute="leading" id="4uT-md-LHo"/>
                                     <constraint firstAttribute="bottom" secondItem="7Xe-1p-zVq" secondAttribute="bottom" id="CtS-f5-pal"/>
@@ -2839,8 +2784,8 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y5c-q9-zb1"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" systemColor="systemGrayColor"/>
+                        <color key="backgroundColor" name="Color Back Ground"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="E8O-Ao-HmC" firstAttribute="top" secondItem="Iqi-4y-SeT" secondAttribute="top" id="6PH-2v-9Hb"/>
                             <constraint firstItem="Y5c-q9-zb1" firstAttribute="trailing" secondItem="E8O-Ao-HmC" secondAttribute="trailing" id="Ihe-JM-r1q"/>
@@ -3264,9 +3209,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

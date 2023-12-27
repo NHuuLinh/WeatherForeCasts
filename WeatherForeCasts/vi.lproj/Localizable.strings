@@ -1,3 +1,12 @@
+// MARK: - Màn hình Onbroading
+"Get Started" = "Bắt đầu";
+"Next" = "Tiếp theo";
+"Detailed 24-hour forecast" = "Dự báo chi tiết 24h";
+"Update with the latest weather information." = "Cập nhật thông tin thời tiết mới nhất.";
+"Global Weather" = "Thời tiết toàn cầu";
+"Add any position you want and easy to change." = "Thêm bất kỳ vị trí nào bạn muốn và dễ dàng để thay đổi.";
+"Various location forecasts" = "Dự báo vị trí khác nhau";
+"Easily grasp the weather of desired locations." = "Dễ dàng nắm bắt thời tiết các địa diểm mong muốn.";
 // MARK: - Màn hình đăng nhập
 "Don't have an account?" = "Chưa có tài khoản?";
 "Sign In" = "Đăng nhập";
@@ -78,7 +87,7 @@
 "Won't snow in" = "Không có tuyết rơi trong";
 "Will snow in" = "Có tuyết rơi trong";
 "Won't rain in" = "Không có mưa trong";
-"Won't rain in" = "Có mưa trong";
+"Will rain in" = "Có mưa trong";
 // MARK: - Màn hình DailyTableViewCell
 "Forecast 24h" = "Dự báo 24h";
 // MARK: - Màn hình WeeklyTableViewCell

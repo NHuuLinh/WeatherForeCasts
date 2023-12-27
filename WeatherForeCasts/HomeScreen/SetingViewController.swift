@@ -92,6 +92,7 @@ class SetingViewController: UIViewController {
     func translateLangue(){
         mainTitle.text = NSLocalizedString(mainTitle.text ?? "", comment: "")
         selectThemeTitle.text = NSLocalizedString(selectThemeTitle.text ?? "", comment: "")
+        slectLanguage.text = NSLocalizedString(slectLanguage.text ?? "", comment: "")
         darkBtn.setTitle(NSLocalizedString(darkBtn.currentTitle ?? "", comment: ""), for: .normal)
         lightBtn.setTitle(NSLocalizedString(lightBtn.currentTitle ?? "", comment: ""), for: .normal)
         systemBtn.setTitle(NSLocalizedString(systemBtn.currentTitle ?? "", comment: ""), for: .normal)

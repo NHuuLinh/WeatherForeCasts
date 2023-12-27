@@ -2,6 +2,9 @@ import UIKit
 import CoreLocation
 import Alamofire
 import FirebaseAuth
+protocol MainViewVC: UIViewController {
+//    func Up
+}
 
 class MainViewController: UIViewController {
     @IBOutlet weak var mainTableView: UITableView!
@@ -227,9 +230,6 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
                 let forecastHours = forecastDay1.hour + forecastDay2.hour
                 let currentTime = weatherData?.location.localtime
                 cell.getData24h(from: currentTime, with: forecastHours)
-                //                cell.goTodailyForecastVC = { [weak self] in
-                //                        self?.goTodailyForecastVC()
-                //                    }
             }
             return cell
         case.weeklyCell:
@@ -372,6 +372,11 @@ extension MainViewController : CLLocationManagerDelegate {
                 let address = "\(province), \(country)"
                 print("Đã chọn địa điểm: \(address)")
                 self?.locationNameLb.text = address
+                UserDefaults.standard.set(address, forKey: "locationAddress")
+                UserDefaults.standard.set(currentLocation.coordinate.latitude, forKey: "locationLatitude")
+                UserDefaults.standard.set(currentLocation.coordinate.longitude, forKey: "locationLongitude")
+                print("currentLocation.coordinate.latitude: \(currentLocation.coordinate.latitude)")
+                print("currentLocation.coordinate.longitude: \(currentLocation.coordinate.longitude)")
 
                 // Fetch weather data using the current location
                 WeatherAPIManager.shared.fetchWeatherData(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude) { [weak self] weatherData in

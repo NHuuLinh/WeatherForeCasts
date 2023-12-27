@@ -4,10 +4,15 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -17,17 +22,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LauchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="SjT-m2-RBJ">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sun cloud angled rain" translatesAutoresizingMaskIntoConstraints="NO" id="G3Z-Vp-KK4">
+                                <rect key="frame" x="46.666666666666657" y="263.66666666666669" width="300" height="250.00000000000006"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="O4j-BY-Xna"/>
+                                    <constraint firstAttribute="width" secondItem="G3Z-Vp-KK4" secondAttribute="height" multiplier="1.2:1" id="oP1-CN-nYJ"/>
+                                </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPc-0R-tA3">
+                                <rect key="frame" x="111" y="513.66666666666663" width="171" height="56"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="40"/>
+                                <color key="textColor" name="Color Font"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forecast" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAT-jK-5vj">
+                                <rect key="frame" x="136.33333333333334" y="569.66666666666663" width="120.66666666666666" height="39.333333333333371"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="28"/>
+                                <color key="textColor" name="Color Font"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Color Back Ground"/>
                         <constraints>
-                            <constraint firstItem="SjT-m2-RBJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Hkf-Th-sA6"/>
-                            <constraint firstAttribute="bottom" secondItem="SjT-m2-RBJ" secondAttribute="bottom" id="c3r-yl-Yh4"/>
-                            <constraint firstItem="SjT-m2-RBJ" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="jHe-Cl-lEh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SjT-m2-RBJ" secondAttribute="trailing" id="z6U-y6-bjS"/>
+                            <constraint firstItem="wAT-jK-5vj" firstAttribute="centerX" secondItem="nPc-0R-tA3" secondAttribute="centerX" id="A0W-D3-eEx"/>
+                            <constraint firstItem="nPc-0R-tA3" firstAttribute="centerX" secondItem="G3Z-Vp-KK4" secondAttribute="centerX" id="L6I-5S-05P"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nPc-0R-tA3" secondAttribute="trailing" id="ahi-Fv-2Zy"/>
+                            <constraint firstItem="nPc-0R-tA3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bK8-VR-Y1x"/>
+                            <constraint firstItem="wAT-jK-5vj" firstAttribute="top" secondItem="nPc-0R-tA3" secondAttribute="bottom" id="kOx-ec-vg0"/>
+                            <constraint firstItem="nPc-0R-tA3" firstAttribute="top" secondItem="G3Z-Vp-KK4" secondAttribute="bottom" id="mbv-4G-vH8"/>
+                            <constraint firstItem="G3Z-Vp-KK4" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-50" id="s3a-ez-Vka"/>
+                            <constraint firstItem="G3Z-Vp-KK4" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ycC-KQ-QiV"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -37,9 +62,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LauchScreen" width="430" height="932"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="Sun cloud angled rain" width="430" height="324"/>
+        <namedColor name="Color Back Ground">
+            <color red="0.28627450980392155" green="0.59607843137254901" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Color Font">
+            <color red="0.28235294117647058" green="0.29411764705882354" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

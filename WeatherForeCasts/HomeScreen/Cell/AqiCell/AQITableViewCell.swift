@@ -28,7 +28,7 @@ class AQITableViewCell: UITableViewCell {
         let AirQlyNumber = forecastAqi.usEpaIndex ?? 0
         currentAirQuality.text = "\(AirQlyNumber)"
         let airCondition = AQIHandle.airQlyDataCondition(numb: AirQlyNumber)
-        currentAirCondition.text = airCondition
+        currentAirCondition.text = NSLocalizedString(airCondition, comment: "")
         let airLevel = AQIHandle.airQlyLevel(width: AirQlyNumber)
         currentAirLevelWidth.constant = airLevel
         let airQlyColor = AQIHandle.airQlyColor(numb: AirQlyNumber)
