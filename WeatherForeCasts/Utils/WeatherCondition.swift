@@ -10,8 +10,8 @@ class WeatherCondition {
     static func willSnow(localTime: String, forecastDays: [Forecastday]) -> String {
         var willItSnowValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
-        let resultText = NSLocalizedString("Won't snow in", comment: "")
-        let failText = NSLocalizedString("Will snow in", comment: "")
+        let wontText = NSLocalizedString("Won't snow in", comment: "")
+        let willText = NSLocalizedString("Will snow in", comment: "")
         let errorText = NSLocalizedString("Unknown", comment: "")
         for i in 0...1 {
             for hour in forecastDays[i].hour {
@@ -30,16 +30,16 @@ class WeatherCondition {
         print("\(values)")
         switch values {
         case let arr where arr.allSatisfy({ $0 == 0 }):
-            return "\(resultText) \(hourForcast) \(hourText)"
+            return "\(wontText) \(hourForcast) \(hourText)"
         default:
-            return "\(failText) \(hourForcast) \(hourText)"
+            return "\(willText) \(hourForcast) \(hourText)"
         }
     }
     static func willRain(localTime: String, forecastDays: [Forecastday]) -> String {
         var willItRainValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
-        let resultText = NSLocalizedString("Won't rain in", comment: "")
-        let failText = NSLocalizedString("Will rain in", comment: "")
+        let wontText = NSLocalizedString("Won't rain in", comment: "")
+        let willText = NSLocalizedString("Will rain in", comment: "")
         
         for i in 0...1 {
             for hour in forecastDays[i].hour {
@@ -59,9 +59,9 @@ class WeatherCondition {
         print("\(values)")
         switch values {
         case let arr where arr.allSatisfy({ $0 == 0 }):
-            return "\(resultText) \(hourForcast) \(hourText)"
+            return "\(wontText) \(hourForcast) \(hourText)"
         default:
-            return "\(failText) \(hourForcast) \(hourText)"
+            return "\(willText) \(hourForcast) \(hourText)"
         }
     }
 

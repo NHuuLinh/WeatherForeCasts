@@ -2,7 +2,7 @@
 //  OnboardingCollectionViewCell.swift
 //  WeatherForeCasts
 //
-//  Created by LinhMAC on 22/10/2023.
+//  Created by LinhMAC on 26/12/2023.
 //
 
 import UIKit
@@ -14,9 +14,14 @@ class OnboardingCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var slideTilteLb: UILabel!
     @IBOutlet weak var slideDescriptionLb: UILabel!
     
-    func setup(_ slide: OnboardingSlide) {
-        slideImageView.image = slide.image
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    func setup(with slide: OnboardingSlide) {
+        slideImageView.image = UIImage(named: slide.image ?? "Onbroad3")
         slideTilteLb.text = slide.title
         slideDescriptionLb.text = slide.description
     }
+
 }

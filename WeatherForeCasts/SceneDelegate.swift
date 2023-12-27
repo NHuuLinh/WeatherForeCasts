@@ -43,7 +43,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         if UserDefaults.standard.hasOnboarded {
             if Auth.auth().currentUser != nil {
-                goToMain()
+                goToOnboard()
+
+//                goToMain()
                 print("goToMain")
             } else {
                 goToLogin()
