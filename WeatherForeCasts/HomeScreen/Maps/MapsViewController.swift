@@ -2,15 +2,14 @@
 import UIKit
 import MapKit
 
-protocol MapsViewControllerDelegate: AnyObject {
-    func fetchWeatherData()
+protocol MapsViewControllerDelegate:AnyObject {
+    func checkLocationAuthorizationStatus()
 }
 //func didPickLocation(_ location: CLLocation, address: String)
 //}
 
-class MapsViewController: UIViewController,UISearchBarDelegate  {
-
-    
+class MapsViewController: UIViewController,UISearchBarDelegate//, MapsViewControllerDelegate{
+{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapsView: MKMapView!
     @IBOutlet weak var selectLocationBtn: UIButton!
@@ -19,7 +18,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate  {
     
     let geocoder = CLGeocoder()
     weak var delegate: MapsViewControllerDelegate?
-//    var selectedLocation: CLLocationCoordinate2D?CLLocation
+    private var mainPresenter: MainPresenter?
     var selectedLocation: CLLocation?
     var selectedLocationHistory = UserDefaults.standard.stringArray(forKey: "searchHistory") ?? []
     private var sections = [Sections]()
@@ -42,7 +41,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        mainPresenter = MainPresenterImpl(mapsVC: self)
     }
     func registerCell(){
         LocationsHistoryTableView.dataSource = self
@@ -164,10 +163,12 @@ class MapsViewController: UIViewController,UISearchBarDelegate  {
                         self?.LocationsHistoryTableView.reloadData()
                     }
                     if !province.isEmpty {
-                        self?.delegate?.fetchWeatherData()
                         UserDefaults.standard.set(selectedLocation.coordinate.latitude, forKey: "locationLatitude")
                         UserDefaults.standard.set(selectedLocation.coordinate.longitude, forKey: "locationLongitude")
                         UserDefaults.standard.set(address, forKey: "locationAddress")
+                        self?.delegate?.checkLocationAuthorizationStatus()
+//                        self?.mainPresenter?.fetchWeatherData()
+                        print("self?.mapsDelegate?.fetchWeatherData()")
                         self?.navigationController?.popViewController(animated: true)
                     } else {
                         let warningTitle = NSLocalizedString("Warning", comment: "")
@@ -180,6 +181,13 @@ class MapsViewController: UIViewController,UISearchBarDelegate  {
     }
     
     @IBAction func selectLocation(_ sender: Any) {
+//        guard let mainPresenter = mainPresenter else {
+//            print("mainPresenter is nil")
+//            return
+//        }
+//
+//        mainPresenter.test()
+////
         selecLoacations()
         print("selectLocationBtn: \(selectedLocationHistory.count)")
         LocationsHistoryTableView.reloadData()
