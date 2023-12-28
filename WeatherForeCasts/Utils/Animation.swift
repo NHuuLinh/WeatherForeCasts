@@ -13,13 +13,13 @@ class AnimationHandle {
     static func astroAnimetion(endAngle: CGFloat, rootImage:UIImageView, animationImage: UIImageView ) {
         let path = UIBezierPath()
         let xcordate = rootImage.frame.minX + 25
-        print("xcordate: \(xcordate)")
+//        print("xcordate: \(xcordate)")
         let ycordate = rootImage.frame.maxY - 15
-        print("ycordate: \(ycordate)")
+//        print("ycordate: \(ycordate)")
         let value: CGFloat = 110
         path.move(to: CGPoint(x: xcordate, y: ycordate))
         let startAngle = CGFloat.pi  // Bắt đầu từ phía trên
-        print("\(startAngle)")
+//        print("\(startAngle)")
         path.addArc(withCenter: CGPoint(x: xcordate + value/2, y: ycordate),
                     radius: value/2,
                     startAngle: CGFloat.pi,
