@@ -24,10 +24,10 @@ class WeatherCondition {
             return errorText
         }
         let hours = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
-        print("\(hours)")
+//        print("\(hours)")
         let hour  = Int(hours) ?? 0
         let values = Array(willItSnowValues[hour..<hour+hourForcast])
-        print("\(values)")
+//        print("\(values)")
         switch values {
         case let arr where arr.allSatisfy({ $0 == 0 }):
             return "\(wontText) \(hourForcast) \(hourText)"
@@ -53,10 +53,10 @@ class WeatherCondition {
             return errorText
         }
         let hours = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
-        print("\(hours)")
+//        print("\(hours)")
         let hour  = Int(hours) ?? 0
         let values = Array(willItRainValues[hour..<hour+hourForcast])
-        print("\(values)")
+//        print("\(values)")
         switch values {
         case let arr where arr.allSatisfy({ $0 == 0 }):
             return "\(wontText) \(hourForcast) \(hourText)"

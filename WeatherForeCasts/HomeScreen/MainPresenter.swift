@@ -7,6 +7,8 @@
 
 import Foundation
 import CoreLocation
+import UIKit
+import CoreData
 
 protocol MainPresenter:AnyObject {
     func fetchWeatherDataForCurrentLocation()
@@ -48,22 +50,19 @@ class MainPresenterImpl: MainPresenter{
                 self?.handleLoadingError()
                 return
             }
-
+            let longitude = currentLocation.coordinate.longitude
+            let latitude = currentLocation.coordinate.latitude
+            
             // lấy tên thành phố, đất nước
             if let placemark = placemarks?.first {
                 let province = placemark.administrativeArea ?? ""
                 let country = placemark.country ?? ""
                 let address = "\(province), \(country)"
                 print("Đã chọn địa điểm: \(address)")
-//                self?.mainVC.locationNameLb.text = address
-                UserDefaults.standard.set(address, forKey: "locationAddress")
-                UserDefaults.standard.set(currentLocation.coordinate.latitude, forKey: "locationLatitude")
-                UserDefaults.standard.set(currentLocation.coordinate.longitude, forKey: "locationLongitude")
-                print("currentLocation.coordinate.latitude: \(currentLocation.coordinate.latitude)")
-                print("currentLocation.coordinate.longitude: \(currentLocation.coordinate.longitude)")
-
                 // Fetch weather data using the current location
-                WeatherAPIManager.shared.fetchWeatherData(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude) { [weak self] weatherData in
+                CoreDataHelper.saveValueToCoreData(address: address, longitude: longitude, latitude: latitude)
+                UserDefaults.standard.didOnMain = true
+                WeatherAPIManager.shared.fetchWeatherData(latitude: latitude, longitude: longitude) { [weak self] weatherData in
                     //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
                     guard let self = self else { return }
 
@@ -79,8 +78,7 @@ class MainPresenterImpl: MainPresenter{
                         }
                         DispatchQueue.main.async {
                             self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
-//                            self.weatherData = weatherData
-//                            self.mainVC.mainTableView.reloadData()
+                            CoreDataHelper.saveWeatherData(weatherData)
                         }
                         self.isDataLoaded = true
                         self.mainVC?.showLoading(isShow: false)
@@ -110,8 +108,6 @@ class MainPresenterImpl: MainPresenter{
     }
 
      func fetchWeatherData() {
-         print("fetchWeatherDataHead")
-
         // Bắt đầu hẹn giờ 20 giây
         loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
          mainVC?.showLoading(isShow: true)
@@ -134,19 +130,38 @@ class MainPresenterImpl: MainPresenter{
                 let province = placemark.administrativeArea ?? ""
                 let country = placemark.country ?? ""
                 var address: String?
-                if UserDefaults.standard.string(forKey: "locationAddress") == "" {
+                if CoreDataHelper.getValueFromCoreData(key: "address") as? String == "" {
                     address = "\(province), \(country)"
+                    print("a")
                 } else {
-                    address = UserDefaults.standard.string(forKey: "locationAddress")
+                    address = CoreDataHelper.getValueFromCoreData(key: "address") as? String
+                    print("b")
                 }
-                print("Đã chọn địa điểm: \(address)")
-                var latitude = UserDefaults.standard.double(forKey: "locationLatitude")
-                var longitude = UserDefaults.standard.double(forKey: "locationLongitude")
-                if latitude == 0.0 || longitude == 0.0 {
-                     latitude = currentLocation.coordinate.latitude
-                     longitude = currentLocation.coordinate.longitude
+                print("Đã chọn địa điểm: \(address ?? "")")
+                
+                var latitude: Double
+                if CoreDataHelper.getValueFromCoreData(key: "latitude") as? Double == 0.0 {
+                    latitude = currentLocation.coordinate.latitude
+                } else {
+                    latitude = CoreDataHelper.getValueFromCoreData(key: "latitude") as? Double ?? 0.0
+                    print("latitude ok")
                 }
 
+                var longitude: Double
+                if let savedLongitude = CoreDataHelper.getValueFromCoreData(key: "longitude") as? Double {
+                    longitude = savedLongitude
+                    print("longitude:\(longitude)")
+
+                    print("a")
+                } else {
+                    longitude = currentLocation.coordinate.longitude
+                    print("b")
+
+                }
+                print("savedLatitude: \(latitude),\(longitude)")
+                print("Đã chọn địa điểm: qwsdasd")
+
+                
                 // Fetch weather data using the current location
                 WeatherAPIManager.shared.fetchWeatherData(latitude: latitude , longitude: longitude ) { [weak self] weatherData in
                     print("longitude: \(longitude)")
@@ -166,7 +181,7 @@ class MainPresenterImpl: MainPresenter{
                         }
                         DispatchQueue.main.async {
                             self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
-                            print("fetchWeatherDataTail")
+                            CoreDataHelper.saveWeatherData(weatherData)
                         }
                         self.isDataLoaded = true
                         self.mainVC?.showLoading(isShow: false)

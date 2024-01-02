@@ -163,12 +163,10 @@ class MapsViewController: UIViewController,UISearchBarDelegate//, MapsViewContro
                         self?.LocationsHistoryTableView.reloadData()
                     }
                     if !province.isEmpty {
-                        UserDefaults.standard.set(selectedLocation.coordinate.latitude, forKey: "locationLatitude")
-                        UserDefaults.standard.set(selectedLocation.coordinate.longitude, forKey: "locationLongitude")
-                        UserDefaults.standard.set(address, forKey: "locationAddress")
+                        let longitude = selectedLocation.coordinate.longitude
+                        let latitude = selectedLocation.coordinate.latitude
+                        CoreDataHelper.saveValueToCoreData(address: address, longitude: longitude, latitude: latitude)
                         self?.delegate?.checkLocationAuthorizationStatus()
-//                        self?.mainPresenter?.fetchWeatherData()
-                        print("self?.mapsDelegate?.fetchWeatherData()")
                         self?.navigationController?.popViewController(animated: true)
                     } else {
                         let warningTitle = NSLocalizedString("Warning", comment: "")
@@ -181,13 +179,6 @@ class MapsViewController: UIViewController,UISearchBarDelegate//, MapsViewContro
     }
     
     @IBAction func selectLocation(_ sender: Any) {
-//        guard let mainPresenter = mainPresenter else {
-//            print("mainPresenter is nil")
-//            return
-//        }
-//
-//        mainPresenter.test()
-////
         selecLoacations()
         print("selectLocationBtn: \(selectedLocationHistory.count)")
         LocationsHistoryTableView.reloadData()

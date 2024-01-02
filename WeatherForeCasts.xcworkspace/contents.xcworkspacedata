@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:WeatherForeCasts.xcodeproj">
    </FileRef>
    <FileRef

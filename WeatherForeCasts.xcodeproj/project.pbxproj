@@ -105,6 +105,12 @@
 		A4EBDD802AEEB5B900446C7B /* DatesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EBDD7E2AEEB5B900446C7B /* DatesCollectionViewCell.xib */; };
 		A4EBDD832AEEB94E00446C7B /* DatesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBDD812AEEB94E00446C7B /* DatesTableViewCell.swift */; };
 		A4EBDD842AEEB94E00446C7B /* DatesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4EBDD822AEEB94E00446C7B /* DatesTableViewCell.xib */; };
+		A4FBDB8A2B42AEDF00702946 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDB882B42AEDF00702946 /* CoreData.xcdatamodeld */; };
+		A4FBDB8C2B42B4C500702946 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDB8B2B42B4C500702946 /* CoreDataHelper.swift */; };
+		A4FBDBA92B445D9300702946 /* WeatherDataEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDBA62B445D9300702946 /* WeatherDataEntity+CoreDataClass.swift */; };
+		A4FBDBAA2B445D9300702946 /* LocationEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDBA52B445D9200702946 /* LocationEntity+CoreDataClass.swift */; };
+		A4FBDBAB2B445D9300702946 /* WeatherDataEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDBA82B445D9300702946 /* WeatherDataEntity+CoreDataProperties.swift */; };
+		A4FBDBAC2B445D9300702946 /* LocationEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FBDBA72B445D9300702946 /* LocationEntity+CoreDataProperties.swift */; };
 		FE8A95F6A29C75A3848A5C23 /* Pods_WeatherForeCasts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8814337DCD6E84096BA6CA61 /* Pods_WeatherForeCasts.framework */; };
 /* End PBXBuildFile section */
 
@@ -213,6 +219,12 @@
 		A4EBDD7E2AEEB5B900446C7B /* DatesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatesCollectionViewCell.xib; sourceTree = "<group>"; };
 		A4EBDD812AEEB94E00446C7B /* DatesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesTableViewCell.swift; sourceTree = "<group>"; };
 		A4EBDD822AEEB94E00446C7B /* DatesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatesTableViewCell.xib; sourceTree = "<group>"; };
+		A4FBDB892B42AEDF00702946 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		A4FBDB8B2B42B4C500702946 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		A4FBDBA52B445D9200702946 /* LocationEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocationEntity+CoreDataClass.swift"; path = "/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		A4FBDBA62B445D9300702946 /* WeatherDataEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WeatherDataEntity+CoreDataClass.swift"; path = "/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		A4FBDBA72B445D9300702946 /* LocationEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocationEntity+CoreDataProperties.swift"; path = "/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		A4FBDBA82B445D9300702946 /* WeatherDataEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "WeatherDataEntity+CoreDataProperties.swift"; path = "/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		B43CFDDC8B4A34837CD729F6 /* Pods-WeatherForeCasts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForeCasts.release.xcconfig"; path = "Target Support Files/Pods-WeatherForeCasts/Pods-WeatherForeCasts.release.xcconfig"; sourceTree = "<group>"; };
 		BBAA93D3623753DA40B2F7E4 /* Pods-WeatherForeCasts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherForeCasts.debug.xcconfig"; path = "Target Support Files/Pods-WeatherForeCasts/Pods-WeatherForeCasts.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -335,6 +347,7 @@
 			children = (
 				A4648AB82B1D6E9800434590 /* WeatherForeCasts.entitlements */,
 				A41309DE2AFF939700884FF6 /* Utils */,
+				A4FBDB872B42AE7500702946 /* CoreData */,
 				A4EBDD6F2AEE417900446C7B /* Network */,
 				A474ED092AECB74D00E3FD3B /* Poppins Font */,
 				A4A876C02AE51AB000ADD832 /* Extension */,
@@ -619,6 +632,19 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		A4FBDB872B42AE7500702946 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A4FBDB8B2B42B4C500702946 /* CoreDataHelper.swift */,
+				A4FBDB882B42AEDF00702946 /* CoreData.xcdatamodeld */,
+				A4FBDBA52B445D9200702946 /* LocationEntity+CoreDataClass.swift */,
+				A4FBDBA72B445D9300702946 /* LocationEntity+CoreDataProperties.swift */,
+				A4FBDBA62B445D9300702946 /* WeatherDataEntity+CoreDataClass.swift */,
+				A4FBDBA82B445D9300702946 /* WeatherDataEntity+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		C791A713062B7E3319046BE8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +809,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4CA575B2B0F0146004D78C4 /* MapsViewController.swift in Sources */,
+				A4FBDB8C2B42B4C500702946 /* CoreDataHelper.swift in Sources */,
 				A4C4C6D92B0BC5D400E1E84C /* Validator.swift in Sources */,
 				A4A27A0D2B39FC8C00C15AD6 /* LocationHistoryTitleTableViewCell.swift in Sources */,
 				A4B5119D2AE97B8400FB1AAB /* DailyResponse.swift in Sources */,
@@ -791,13 +818,17 @@
 				A4833BE02B0E7118006525EC /* locationDelegate.swift in Sources */,
 				A4D596282AFCD1D300BD71CC /* AstroTableViewCell.swift in Sources */,
 				A4A876C62AE51B2400ADD832 /* UIView+Extension.swift in Sources */,
+				A4FBDBAC2B445D9300702946 /* LocationEntity+CoreDataProperties.swift in Sources */,
 				A4EBDD832AEEB94E00446C7B /* DatesTableViewCell.swift in Sources */,
+				A4FBDB8A2B42AEDF00702946 /* CoreData.xcdatamodeld in Sources */,
 				A431B49B2AFD49E60047878F /* CurrentWeatherTableViewCell.swift in Sources */,
 				A41936B42ADE79DE00ED58BE /* LoginViewController.swift in Sources */,
 				A4D2F5842B0B693400A77A1A /* Loading and Show aleart Extension .swift in Sources */,
+				A4FBDBAB2B445D9300702946 /* WeatherDataEntity+CoreDataProperties.swift in Sources */,
 				A41309E32AFF952E00884FF6 /* WeatherCondition.swift in Sources */,
 				A46351F12AE1345700F8D65A /* RegisterViewController.swift in Sources */,
 				A41309E12AFF943100884FF6 /* ImageExtract.swift in Sources */,
+				A4FBDBAA2B445D9300702946 /* LocationEntity+CoreDataClass.swift in Sources */,
 				A4A626742B13C41000D154B0 /* Showloading and Aleart.swift in Sources */,
 				A41936A02ADE6F6B00ED58BE /* AppDelegate.swift in Sources */,
 				A497C3012B0A6A5C00629827 /* UserProfile.swift in Sources */,
@@ -827,6 +858,7 @@
 				A43D70A32B2FE9D700E6FE5F /* WeatherDataResponse.swift in Sources */,
 				A407C6562B125B7E00D0EA98 /* StandardForm.swift in Sources */,
 				A41355A72AF638A80084E440 /* DailyTableViewCell.swift in Sources */,
+				A4FBDBA92B445D9300702946 /* WeatherDataEntity+CoreDataClass.swift in Sources */,
 				A448D0402B173BF2000A70BF /* NetworkMonitor.swift in Sources */,
 				A484B7552B3C8F40005E96D3 /* MainPresenter.swift in Sources */,
 				A4D2F5822B0AFFD100A77A1A /* ProfileViewController.swift in Sources */,
@@ -1082,6 +1114,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A4FBDB882B42AEDF00702946 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A4FBDB892B42AEDF00702946 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = A4FBDB892B42AEDF00702946 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A41936942ADE6F6B00ED58BE /* Project object */;
 }

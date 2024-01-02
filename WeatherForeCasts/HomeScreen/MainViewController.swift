@@ -56,8 +56,10 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     }
     @IBAction func locationBtn(_ sender: Any) {
         requestLocation()
+        //updateDataFormCoreData()
         mainPresenter?.fetchWeatherDataForCurrentLocation()
-//        mainTableView.reloadData()
+        
+        mainTableView.reloadData()
         print("requestLocation")
     }
     @IBAction func mapBtn(_ sender: Any) {
@@ -277,7 +279,8 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
         let homeSection = HomeNewsSection(rawValue: indexPath.section)
         switch homeSection {
         case.aqiCell:
-            goTodailyForecastVC()
+            print("aqiCell")
+            //goTodailyForecastVC()
         default:
             return
         }
@@ -328,7 +331,7 @@ extension MainViewController : CLLocationManagerDelegate {
             // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
             locationManager.startUpdatingLocation()
 //            fetchWeatherData()
-            mainPresenter?.fetchWeatherData()
+            chooseDataToFetch()
         @unknown default:
             break
         }
@@ -354,6 +357,20 @@ extension MainViewController : CLLocationManagerDelegate {
             self.weatherData = weatherData
             self.locationNameLb.text = address
             self.mainTableView.reloadData()
+    }
+    func updateDataFormCoreData(){
+        self.weatherData = CoreDataHelper.fetchWeatherData()
+        self.locationNameLb.text = CoreDataHelper.getValueFromCoreData(key: "address") as? String
+            self.mainTableView.reloadData()
+    }
+    func chooseDataToFetch(){
+        if UserDefaults.standard.didOnMain {
+            mainPresenter?.fetchWeatherData()
+            print("true")
+        } else {
+            mainPresenter?.fetchWeatherDataForCurrentLocation()
+            print("false")
+        }
     }
 }
 
