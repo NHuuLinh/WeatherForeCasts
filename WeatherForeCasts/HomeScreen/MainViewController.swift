@@ -331,7 +331,7 @@ extension MainViewController : CLLocationManagerDelegate {
             // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
             locationManager.startUpdatingLocation()
 //            fetchWeatherData()
-            chooseDataToFetch()
+            mainPresenter?.chooseDataToFetch()
         @unknown default:
             break
         }
@@ -358,19 +358,23 @@ extension MainViewController : CLLocationManagerDelegate {
             self.locationNameLb.text = address
             self.mainTableView.reloadData()
     }
-    func updateDataFormCoreData(){
-        self.weatherData = CoreDataHelper.fetchWeatherData()
-        self.locationNameLb.text = CoreDataHelper.getValueFromCoreData(key: "address") as? String
-            self.mainTableView.reloadData()
-    }
-    func chooseDataToFetch(){
-        if UserDefaults.standard.didOnMain {
-            mainPresenter?.fetchWeatherData()
-            print("true")
-        } else {
-            mainPresenter?.fetchWeatherDataForCurrentLocation()
-            print("false")
-        }
-    }
+//    func updateDataFormCoreData(){
+//        self.weatherData = CoreDataHelper.fetchWeatherData()
+//        self.locationNameLb.text = CoreDataHelper.getValueFromCoreData(key: "address") as? String
+//            self.mainTableView.reloadData()
+//    }
+//    func chooseDataToFetch(){
+//        if UserDefaults.standard.didGetData {
+//            updateDataFormCoreData()
+//        } else {
+//            if UserDefaults.standard.didOnMain {
+//                mainPresenter?.fetchWeatherData()
+//                print("true")
+//            } else {
+//                mainPresenter?.fetchWeatherDataForCurrentLocation()
+//                print("false")
+//            }
+//        }
+//    }
 }
 
