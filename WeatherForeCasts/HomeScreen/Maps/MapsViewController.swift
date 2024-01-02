@@ -166,6 +166,7 @@ class MapsViewController: UIViewController,UISearchBarDelegate//, MapsViewContro
                         let longitude = selectedLocation.coordinate.longitude
                         let latitude = selectedLocation.coordinate.latitude
                         CoreDataHelper.saveValueToCoreData(address: address, longitude: longitude, latitude: latitude)
+                        UserDefaults.standard.didGetData = false
                         self?.delegate?.checkLocationAuthorizationStatus()
                         self?.navigationController?.popViewController(animated: true)
                     } else {

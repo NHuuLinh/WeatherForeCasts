@@ -35,6 +35,7 @@ class CoreDataHelper {
 
         do {
             try CoreDataHelper.managedContext.save()
+            UserDefaults.standard.didGetData = true
         } catch let error as NSError {
             print("Lỗi khi lưu dữ liệu vào CoreData: \(error)")
         }
