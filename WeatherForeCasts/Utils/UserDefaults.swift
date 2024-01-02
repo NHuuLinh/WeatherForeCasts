@@ -5,6 +5,7 @@ extension UserDefaults {
     private enum UserDefaultsKeys: String {
         case hasOnboarded
         case hasLogout
+        case didOnMain
     }
     var hasOnboarded : Bool {
         get {
@@ -12,6 +13,14 @@ extension UserDefaults {
         }
         set {
             setValue(newValue, forKey: UserDefaultsKeys.hasOnboarded.rawValue)
+        }
+    }
+    var didOnMain: Bool {
+        get {
+            bool(forKey: UserDefaultsKeys.didOnMain.rawValue)
+        }
+        set {
+            setValue(newValue, forKey: UserDefaultsKeys.didOnMain.rawValue)
         }
     }
     
