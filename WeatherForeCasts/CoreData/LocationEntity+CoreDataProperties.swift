@@ -2,7 +2,7 @@
 //  LocationEntity+CoreDataProperties.swift
 //  
 //
-//  Created by LinhMAC on 02/01/2024.
+//  Created by LinhMAC on 03/01/2024.
 //
 //
 
@@ -16,8 +16,8 @@ extension LocationEntity {
         return NSFetchRequest<LocationEntity>(entityName: "LocationEntity")
     }
 
-    @NSManaged public var longitude: Double
+    @NSManaged public var address: String?
     @NSManaged public var latitude: Double
-    @NSManaged public var address: NSObject?
+    @NSManaged public var longitude: Double
 
 }

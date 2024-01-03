@@ -30,7 +30,7 @@ class AnimationHandle {
 
         let animation = CAKeyframeAnimation(keyPath: "position")
         animation.path = path.cgPath
-        animation.duration = 3
+        animation.duration = 2
         animation.repeatCount = 1
         animation.timingFunctions = [CAMediaTimingFunction(name: .easeInEaseOut)]
         animation.fillMode = .forwards

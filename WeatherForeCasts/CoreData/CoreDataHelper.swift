@@ -4,98 +4,50 @@ import CoreData
 import UIKit
 
 class CoreDataHelper {
-    
-    static let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    static let managedContext = appDelegate.persistentContainer.viewContext
-    static let locationFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationEntity")
-    static let LocationfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "LocationEntity")
-    
-    static let weatherFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "WeatherDataEntity")
-    static let weatherfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "WeatherDataEntity")
-    
-    static func saveWeatherData(_ weatherData: WeatherData24h) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WeatherDataEntity")
-        // xóa dữ liệu cũ
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try CoreDataHelper.managedContext.execute(deleteRequest)
-        } catch let error as NSError {
-            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
-        }
-        // Lưu giá trị mới
-        guard let entity = NSEntityDescription.entity(forEntityName: "WeatherDataEntity",
-                                                      in: CoreDataHelper.managedContext) else {return }
-        let weatherDataEntity = NSManagedObject(entity: entity,
-                                                insertInto: CoreDataHelper.managedContext)
-        // Chuyển đổi WeatherData24h thành dữ liệu có thể lưu được (ví dụ: JSON)
-        let jsonEncoder = JSONEncoder()
-        if let jsonData = try? jsonEncoder.encode(weatherData) {
-            weatherDataEntity.setValue(jsonData, forKey: "weatherData")
-        }
-
-        do {
-            try CoreDataHelper.managedContext.save()
-            UserDefaults.standard.didGetData = true
-        } catch let error as NSError {
-            print("Lỗi khi lưu dữ liệu vào CoreData: \(error)")
-        }
-    }
-    static func deleteWeatherValue(){
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WeatherDataEntity")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+    static let share = CoreDataHelper()
         
-        do {
-            try CoreDataHelper.managedContext.execute(deleteRequest)
-        } catch let error as NSError {
-            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
-        }
-    }
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let locationFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationEntity")
+    let locationfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "LocationEntity")
     
-    static func deleteValue(){
-//        var locationEntity: LocationEntity?
-//        if let location = locationEntity {
-//            CoreDataHelper.managedContext.delete(location)
-//        }
-//        do {
-//            try CoreDataHelper.managedContext.save()
-//        } catch let error as NSError {
-//            print("lỗi delete dữ liệu : \(error)")
-//        }
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: CoreDataHelper.locationFetchRequestResult)
-        do {
-            try CoreDataHelper.managedContext.execute(deleteRequest)
-        } catch let error as NSError {
-            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
-        }
-    }
+    let weatherFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "WeatherDataEntity")
+    let weatherfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "WeatherDataEntity")
     
-    static func saveValue(){
+    let profileFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "ProfileEntity")
+    let profilefetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "ProfileEntity")
+    
+    func saveValue(){
         do {
-            try CoreDataHelper.managedContext.save()
+            try managedContext.save()
         } catch let error as NSError {
             print("lỗi lưu value: \(error)")
         }
     }
-    static func saveValueToCoreData(address: String,longitude: Double,latitude: Double) {
-        CoreDataHelper.deleteValue()
-        guard let entity = NSEntityDescription.entity(forEntityName: "LocationEntity",in: CoreDataHelper.managedContext) else {return }
+
+    func deleteLocationValue(){
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: locationFetchRequestResult)
+        do {
+            try managedContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
+        }
+    }
+
+    func saveLocationValueToCoreData(address: String,longitude: Double,latitude: Double) {
+        deleteLocationValue()
+        guard let entity = NSEntityDescription.entity(forEntityName: "LocationEntity",in: managedContext) else {return }
         let weatherDataEntity = NSManagedObject(entity: entity,
-                                                insertInto: CoreDataHelper.managedContext)
+                                                insertInto: managedContext)
         weatherDataEntity.setValue(address, forKey: "address")
         weatherDataEntity.setValue(longitude, forKey: "longitude")
         weatherDataEntity.setValue(latitude, forKey: "latitude")
-        do {
-            try CoreDataHelper.managedContext.save()
-        } catch let error as NSError {
-            print("lỗi khi lưu data :\(error)")
-        }
-
+        saveValue()
         print("saveValueToCoreData:\(address),\(longitude),\(latitude)")
     }
     
-    static func getValueFromCoreData(key: String) -> Any{
+    func getLocationValueFromCoreData(key: String) -> Any{
         do {
-            let results = try CoreDataHelper.managedContext.fetch(CoreDataHelper.LocationfetchRequestObject)
+            let results = try managedContext.fetch(locationfetchRequestObject)
             for result in results {
                 if let value = result.value(forKey: "\(key)") {
                     print("getValue:\(value)")
@@ -107,10 +59,43 @@ class CoreDataHelper {
         }
         return ""
     }
+}
+// MARK: - CoreDate WeatherData
+extension CoreDataHelper {
     
-    static func fetchWeatherData() -> WeatherData24h? {
+    func deleteWeatherValue(){
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: weatherFetchRequestResult)
+        
         do {
-            let results = try CoreDataHelper.managedContext.fetch(CoreDataHelper.weatherfetchRequestObject)
+            try managedContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
+        }
+    }
+    
+    func saveWeatherData(_ weatherData: WeatherData24h) {
+        deleteWeatherValue()
+        // Lưu giá trị mới
+        guard let entity = NSEntityDescription.entity(forEntityName: "WeatherDataEntity",
+                                                      in: managedContext) else {return }
+        let weatherDataEntity = NSManagedObject(entity: entity,
+                                                insertInto: managedContext)
+        // Chuyển đổi WeatherData24h thành dữ liệu có thể lưu được (ví dụ: JSON)
+        let jsonEncoder = JSONEncoder()
+        if let jsonData = try? jsonEncoder.encode(weatherData) {
+            weatherDataEntity.setValue(jsonData, forKey: "weatherData")
+        }
+        do {
+            try managedContext.save()
+            UserDefaults.standard.didGetData = true
+        } catch let error as NSError {
+            print("Lỗi khi lưu dữ liệu vào CoreData: \(error)")
+        }
+    }
+
+    func fetchWeatherData() -> WeatherData24h? {
+        do {
+            let results = try managedContext.fetch(weatherfetchRequestObject)
             for result in results {
                 if let weatherData = result.value(forKey: "weatherData") as? Data{
                     let jsonDecoder = JSONDecoder()
@@ -124,79 +109,112 @@ class CoreDataHelper {
         }
         return nil
     }
+}
+// MARK: - Lưu CoreDate User Profile
+extension CoreDataHelper {
     
-    static func fetchWeatherDataAll() -> (weatherData: WeatherData24h?,address: String?) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return (nil,"nil")
+    func deleteProfileValue(){
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: profileFetchRequestResult)
+        do {
+            try managedContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
         }
-
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "WeatherDataEntity")
-//        let coreData = WeatherDataEntity(context: managedContext)
-//        let address = coreData.address
-//        print("fetchWeatherData: \(address)")
+    }
+    func saveProfileValueToCoreData(avatar: UIImage,name: String,dateOfBirth: String,phoneNumber: String,gender: String ) {
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: profileFetchRequestResult)
+        do {
+            try managedContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
+        }
+        // lưu dữ liệu vào FileManager
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent("AvatarImage")
+        if let data = avatar.pngData() {
+            try? data.write(to: fileURL)
+            
+            guard let entity = NSEntityDescription.entity(forEntityName: "ProfileEntity",in: managedContext) else {return }
+            let ProfileDataEntity = NSManagedObject(entity: entity,
+                                                    insertInto: managedContext)
+            ProfileDataEntity.setValue("AvatarImage", forKey: "avatar")
+            ProfileDataEntity.setValue(name, forKey: "name")
+            ProfileDataEntity.setValue(dateOfBirth, forKey: "dateOfBirth")
+            ProfileDataEntity.setValue(phoneNumber, forKey: "phoneNumber")
+            ProfileDataEntity.setValue(gender, forKey: "gender")
+            print("saveProfileValueToCoreData success")
+            saveValue()
+        }
+    }
+    func saveImageToDocumentsDirectory(image: UIImage, fileName: String) {
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsDirectory.appendingPathComponent(fileName)
+            if let data = image.pngData() {
+                try? data.write(to: fileURL)
+                
+                let entity = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)!
+                let entities = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)
+                let record = NSManagedObject(entity: entity, insertInto: managedContext)
+                record.setValue(fileName, forKey: "avatar")
+                saveValue()
+            }
+        }
+    
+    func loadImageFromFile(fileName: String) -> UIImage? {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
         
         do {
-            let results = try managedContext.fetch(fetchRequest)
-            if let firstResult = results.first as? NSManagedObject {
-                // Lấy dữ liệu từ CoreData và chuyển đổi thành WeatherData24h
-                if firstResult.value(forKey: "weatherData") is Data {
-                    if let jsonData = firstResult.value(forKey: "weatherData") as? Data {
-                        let jsonDecoder = JSONDecoder()
-                        if let weatherData = try? jsonDecoder.decode(WeatherData24h.self, from: jsonData),
-                            let address = firstResult.value(forKey: "address") as? String {
-                            print("fetchWeatherData: \(address)")
-                            return (weatherData,address)
-                        }
+            let imageData = try Data(contentsOf: fileURL)
+            return UIImage(data: imageData)
+        } catch {
+            print("Error loading image from file: \(error)")
+            return nil
+        }
+    }
+        
+        func getProfileValueFromCoreData(key: String)-> Any {
+            do {
+                let results = try managedContext.fetch(profilefetchRequestObject)
+                for result in results {
+                    if let value = result.value(forKey: "\(key)") {
+                        print("getValue:\(value)")
+                        return value
                     }
                 }
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
             }
-        } catch let error as NSError {
-            print("Lỗi khi truy xuất dữ liệu từ CoreData: \(error)")
+            return ""
+        }
+        func getProfileValuesFromCoreData() -> (avatar: UIImage?, name: String?, dateOfBirth: String?, phoneNumber: String?, gender: String?) {
+            let avatar = loadImageFromFile(fileName: "AvatarImage")
+            do {
+                let results = try managedContext.fetch(profilefetchRequestObject)
+                print ("results:\(results.last)")
+                if let result = results.last {
+                    //                let avatar = UIImage(named: "warning")
+                    if let name = result.value(forKey: "name") as? String,
+                       let dateOfBirth = result.value(forKey: "dateOfBirth") as? String,
+                       let phoneNumber = result.value(forKey: "phoneNumber") as? String,
+                       let gender = result.value(forKey: "gender") as? String {
+                        //                    print("avatar: \(avatar)")
+                        print("name: \(name)")
+                        print("dateOfBirth: \(dateOfBirth)")
+                        print("phoneNumber: \(phoneNumber)")
+                        print("gender: \(gender)")
+                        return (avatar, name, dateOfBirth, phoneNumber, gender)
+                    } else {
+                        print("fail result")
+                    }
+                }
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+            print("fail")
+            // Return nil values in case of any error or if no data is found
+            return (nil, nil, nil, nil, nil)
         }
 
-        return (nil,"")
-    }
-
-//    static func getallItem()-> String{
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        do {
-//            let results = try context.fetch(WeatherDataEntity.fetchRequest())
-//            if let result = results.first {
-//                let latitude = result.locationLatitude
-//                print("getLatitude: \(latitude ?? "")")
-//                return latitude ?? ""
-//            }
-//        }
-//        catch let error as NSError {
-//            print("Lỗi khi truy xuất dữ liệu từ CoreData: \(error)")
-//        }
-//        return "10"
-//    }
-//    static func creatItem(locationLatitude:String) {
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        let newItem = WeatherDataEntity(context: context)
-////        context.delete(newItem)
-//        newItem.locationLatitude = locationLatitude
-//        print("locationLatitude: \(locationLatitude)")
-//        do {
-//            try context.save()
-//        }
-//        catch {
-//            //
-//        }
-//    }
-//    static func creatItem1(address:String) {
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//        let newItem = WeatherDataEntity(context: context)
-////        context.delete(newItem)
-//        newItem.address = address
-//        print("locationLatitude: \(address)")
-//        do {
-//            try context.save()
-//        }
-//        catch {
-//            //
-//        }
-//    }
 }

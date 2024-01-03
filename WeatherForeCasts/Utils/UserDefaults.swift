@@ -7,7 +7,7 @@ extension UserDefaults {
         case hasLogout
         case didOnMain
         case didGetData
-
+        case didUpdateProfile
     }
     var hasOnboarded : Bool {
         get {
@@ -31,6 +31,14 @@ extension UserDefaults {
         }
         set {
             setValue(newValue, forKey: UserDefaultsKeys.didGetData.rawValue)
+        }
+    }
+    var didUpdateProfile: Bool {
+        get {
+            bool(forKey: UserDefaultsKeys.didUpdateProfile.rawValue)
+        }
+        set {
+            setValue(newValue, forKey: UserDefaultsKeys.didUpdateProfile.rawValue)
         }
     }
     
