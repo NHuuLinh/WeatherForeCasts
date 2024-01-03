@@ -358,23 +358,6 @@ extension MainViewController : CLLocationManagerDelegate {
             self.locationNameLb.text = address
             self.mainTableView.reloadData()
     }
-//    func updateDataFormCoreData(){
-//        self.weatherData = CoreDataHelper.fetchWeatherData()
-//        self.locationNameLb.text = CoreDataHelper.getValueFromCoreData(key: "address") as? String
-//            self.mainTableView.reloadData()
-//    }
-//    func chooseDataToFetch(){
-//        if UserDefaults.standard.didGetData {
-//            updateDataFormCoreData()
-//        } else {
-//            if UserDefaults.standard.didOnMain {
-//                mainPresenter?.fetchWeatherData()
-//                print("true")
-//            } else {
-//                mainPresenter?.fetchWeatherDataForCurrentLocation()
-//                print("false")
-//            }
-//        }
-//    }
+
 }
 

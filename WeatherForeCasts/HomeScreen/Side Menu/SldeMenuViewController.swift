@@ -3,6 +3,9 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import Kingfisher
+import CoreData
+import KeychainSwift
+
 
 protocol MenuDelegate: AnyObject {
     func selectMenuItem(with menuItems: MenuItem)
@@ -19,6 +22,8 @@ class SideMenuViewController: UIViewController {
     private let storage = Storage.storage().reference()
     private var databaseRef = Database.database().reference()
     var menuItems: [MenuItem] = []
+    let keychain = KeychainSwift()
+
     let profilelb = NSLocalizedString("Profile", comment: "")
     let pinLocation = NSLocalizedString("Pin Location", comment: "")
     let settings = NSLocalizedString("Settings", comment: "")
@@ -31,8 +36,17 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        loadDataFromFirebase()
+        if UserDefaults.standard.didUpdateProfile {
+            loadProfileFromCoreData()
+            print("loadProfileFromCoreData")
+        } else {
+            loadDataFromFirebase()
+            print("loadDataFromFirebase")
+        }
         tableMenu()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
 
     func setUpView() {
@@ -90,6 +104,9 @@ extension SideMenuViewController : UITableViewDelegate, UITableViewDataSource {
     
 }
 extension SideMenuViewController {
+    
+}
+extension SideMenuViewController {
     func loadDataFromFirebase() {
        showLoading(isShow: true)
        guard let currentUserID = Auth.auth().currentUser?.uid else {
@@ -112,5 +129,11 @@ extension SideMenuViewController {
             }
         }
    }
+    func loadProfileFromCoreData(){
+        let profileData = CoreDataHelper.share.getProfileValuesFromCoreData()
+        userAvatar.image = profileData.avatar
+        userName.text = profileData.name
+        userEmail.text = keychain.get("email")
+    }
 }
 

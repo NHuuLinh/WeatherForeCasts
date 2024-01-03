@@ -856,6 +856,7 @@
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="cfs-2H-H18">
                                                         <rect key="frame" x="130" y="10" width="150" height="150"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="cfs-2H-H18" secondAttribute="height" multiplier="1:1" id="VJs-0b-gKY"/>
                                                             <constraint firstAttribute="width" constant="150" id="riO-Xn-0lL"/>

@@ -61,7 +61,7 @@ class MainPresenterImpl: MainPresenter{
                 let address = "\(province), \(country)"
                 print("Đã chọn địa điểm: \(address)")
                 // Fetch weather data using the current location
-                CoreDataHelper.saveValueToCoreData(address: address, longitude: longitude, latitude: latitude)
+                CoreDataHelper.share.saveLocationValueToCoreData(address: address, longitude: longitude, latitude: latitude)
                 UserDefaults.standard.didOnMain = true
                 WeatherAPIManager.shared.fetchWeatherData(latitude: latitude, longitude: longitude) { [weak self] weatherData in
                     //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
@@ -79,7 +79,7 @@ class MainPresenterImpl: MainPresenter{
                         }
                         DispatchQueue.main.async {
                             self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
-                            CoreDataHelper.saveWeatherData(weatherData)
+                            CoreDataHelper.share.saveWeatherData(weatherData)
                         }
                         self.isDataLoaded = true
                         self.mainVC?.showLoading(isShow: false)
@@ -118,9 +118,9 @@ class MainPresenterImpl: MainPresenter{
             handleLoadingError()
             return
         }
-        let latitude = CoreDataHelper.getValueFromCoreData(key: "latitude") as? Double ?? 0
-        let longitude = CoreDataHelper.getValueFromCoreData(key: "longitude") as? Double ?? 0
-        let address = CoreDataHelper.getValueFromCoreData(key: "address") as? String ?? "error"
+        let latitude = CoreDataHelper.share.getLocationValueFromCoreData(key: "latitude") as? Double ?? 0
+        let longitude = CoreDataHelper.share.getLocationValueFromCoreData(key: "longitude") as? Double ?? 0
+        let address = CoreDataHelper.share.getLocationValueFromCoreData(key: "address") as? String ?? "error"
         
         // Fetch weather data using the current location
         WeatherAPIManager.shared.fetchWeatherData(latitude: latitude , longitude: longitude ) { [weak self] weatherData in
@@ -141,7 +141,7 @@ class MainPresenterImpl: MainPresenter{
                 }
                 DispatchQueue.main.async {
                     self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
-                    CoreDataHelper.saveWeatherData(weatherData)
+                    CoreDataHelper.share.saveWeatherData(weatherData)
                 }
                 self.isDataLoaded = true
                 self.mainVC?.showLoading(isShow: false)
@@ -149,8 +149,8 @@ class MainPresenterImpl: MainPresenter{
         }
     }
     func updateDataFormCoreData(){
-        guard let weatherData = CoreDataHelper.fetchWeatherData() else { return }
-        let address = CoreDataHelper.getValueFromCoreData(key: "address") as? String ?? "error"
+        guard let weatherData = CoreDataHelper.share.fetchWeatherData() else { return }
+        let address = CoreDataHelper.share.getLocationValueFromCoreData(key: "address") as? String ?? "error"
         self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
     }
     func chooseDataToFetch(){

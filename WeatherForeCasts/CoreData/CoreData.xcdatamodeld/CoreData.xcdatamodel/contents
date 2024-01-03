@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FullResImageEntity" representedClassName="FullResImageEntity" syncable="YES">
+        <attribute name="fullResAvatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+    </entity>
     <entity name="LocationEntity" representedClassName="LocationEntity" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ProfileEntity" representedClassName="ProfileEntity" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="dateOfBirth" optional="YES" attributeType="String"/>
+        <attribute name="gender" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
     </entity>
     <entity name="WeatherDataEntity" representedClassName="WeatherDataEntity" isAbstract="YES" syncable="YES">
         <attribute name="weatherData" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>

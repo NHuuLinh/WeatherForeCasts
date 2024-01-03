@@ -2,7 +2,7 @@
 //  WeatherDataEntity+CoreDataProperties.swift
 //  
 //
-//  Created by LinhMAC on 02/01/2024.
+//  Created by LinhMAC on 03/01/2024.
 //
 //
 

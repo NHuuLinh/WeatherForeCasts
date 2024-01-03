@@ -56,10 +56,18 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromFirebase()
+
     }
     override func viewWillAppear(_ animated: Bool) {
 //        loadDataFromFirebase()
+//        loadDataFromFirebase()
+        if UserDefaults.standard.didUpdateProfile {
+            loadProfileFromCoreData()
+            print("loadProfileFromCoreData")
+        } else {
+            loadDataFromFirebase()
+            print("loadDataFromFirebase")
+        }
         setupView()
         createDatePicker()
         phoneNumberTF.delegate = self
@@ -217,6 +225,31 @@ extension ProfileViewController {
         updateGenderButtons()
         // update ảnh lên firebase
         uploadImageToFirebaseStorage()
+            guard let defaultImage = UIImage(named: "warning") else {return}
+            CoreDataHelper.share.saveProfileValueToCoreData(avatar: avatarImg.image ?? defaultImage,
+                                                             name: nameTF.text ?? "",
+                                                             dateOfBirth: dateOfBirthTF.text ?? "",
+                                                             phoneNumber: phoneNumberTF.text ?? "",
+                                                            gender: selectedGender.rawValue)
+            UserDefaults.standard.didUpdateProfile = true
+    }
+    func loadProfileFromCoreData(){
+        let profileData = CoreDataHelper.share.getProfileValuesFromCoreData()
+        avatarImg.image = profileData.avatar
+        nameTF.text = profileData.name
+        dateOfBirthTF.text = profileData.dateOfBirth
+        phoneNumberTF.text = profileData.phoneNumber
+        if let genderString = profileData.gender{
+            if let gender = Gender(rawValue: genderString){
+                userGender = gender
+                selectedGender = gender
+                updateGenderButtons()
+            } else {
+                print(" gender is nil")
+            }
+        }else {
+            print("genderString is nil")
+        }
     }
 }
 // MARK: - date of birth text field
