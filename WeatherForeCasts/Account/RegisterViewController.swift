@@ -122,7 +122,7 @@ extension RegisterViewController {
                                       passwordResult: passwordResult.valid)
             print("true")
         } else {
-            rePasswordErrrorTF.text = "password don't match"
+            rePasswordErrrorTF.text = NSLocalizedString("Password don't match", comment: "")
             ReEnterpasswordResult = false
             StandardForm.handleButton(button: registerBtn,
                                       emailResult: emailResult.valid,

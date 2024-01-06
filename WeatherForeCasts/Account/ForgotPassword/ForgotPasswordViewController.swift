@@ -64,9 +64,13 @@ class ForgotPasswordViewController: UIViewController {
             self.showLoading(isShow: false)
             if let error = error {
                 print("\(error)")
-                self.showAlert(title: "error", message: "Sever busy please try again later")
+                let title = NSLocalizedString("Error", comment: "")
+                let message = NSLocalizedString("Sever busy please try again later", comment: "")
+                self.showAlert(title: title, message: message)
             } else {
-                self.showAlert(title: "Success", message: "New password has been sent to your email. Please check your email and log in again with your new password"){
+                let title = NSLocalizedString("Success", comment: "")
+                let message = NSLocalizedString("New password has been sent to your email. Please check your email and log in again with your new password", comment: "")
+                self.showAlert(title: title, message: message){
                     self.navigationController?.popToRootViewController(animated: true)
                     self.onSuccessResetPassword?(email)
                 }

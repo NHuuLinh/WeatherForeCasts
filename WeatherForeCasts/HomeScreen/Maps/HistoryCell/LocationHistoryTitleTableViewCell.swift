@@ -8,11 +8,14 @@
 import UIKit
 
 class LocationHistoryTitleTableViewCell: UITableViewCell {
+    @IBOutlet weak var searchTitle: UILabel!
+    @IBOutlet weak var ClearBtnTitle: UIButton!
     var onDataUpdate: (() -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        searchTitle.text = NSLocalizedString(searchTitle.text ?? "", comment: "")
+        ClearBtnTitle.setTitle(NSLocalizedString(ClearBtnTitle.currentTitle ?? "", comment: ""), for: .normal)
         // Initialization code
     }
 
@@ -23,7 +26,6 @@ class LocationHistoryTitleTableViewCell: UITableViewCell {
     }
     
     @IBAction func clearBtn(_ sender: Any) {
-//        UserDefaults.standard.removeObject(forKey: "searchHistory")
         onDataUpdate?()
     }
 }

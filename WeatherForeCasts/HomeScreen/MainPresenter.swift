@@ -154,9 +154,9 @@ class MainPresenterImpl: MainPresenter{
         self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
     }
     func chooseDataToFetch(){
-        if UserDefaults.standard.didGetData {
-            updateDataFormCoreData()
-        } else {
+//        if UserDefaults.standard.didGetData {
+//            updateDataFormCoreData()
+//        } else {
             if UserDefaults.standard.didOnMain {
                 fetchWeatherData()
                 print("true")
@@ -165,5 +165,5 @@ class MainPresenterImpl: MainPresenter{
                 print("false")
             }
         }
-    }
+//    }
 }

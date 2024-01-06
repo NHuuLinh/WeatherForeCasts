@@ -27,6 +27,11 @@
 "Register" = "Đăng kí";
 "Already have an account ?" = "Đã có tài khoản";
 "Re enter password" = "Nhập lại mật khẩu";
+"Password don't match" = "Mật khẩu không trùng nhau";
+"Sever busy please try again later" = "Máy chủ bận, vui lòng thử lại sau";
+"Success" = "Thành công";
+"New password has been sent to your email. Please check your email and log in again with your new password" = "Mật khẩu mới đã được gửi đến email của bạn";
+
 // MARK: - Màn hình quên mật khẩu
 "Forgot Password" = "Quên Mật Khẩu";
 "Send request" = "Gửi yêu cầu";
@@ -73,6 +78,9 @@
 "Warning" = "Cảnh báo";
 "Please select a location" = "Vui lòng chọn địa điểm";
 "Select Location" = "Chọn địa điểm";
+"Search History" = "Lịch sử tìm kiếm";
+"Clear History" = "Xóa lịch sử";
+
 // MARK: - Màn hình nointernet
 "No internet connection" = "Không có kết nối mạng";
 "Please check internet connection and retry again" = "Vui lòng kiểm tra kêt nối mạng và thử lại";

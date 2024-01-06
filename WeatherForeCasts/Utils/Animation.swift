@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class AnimationHandle {
 
@@ -22,7 +23,7 @@ class AnimationHandle {
 //        print("\(startAngle)")
         path.addArc(withCenter: CGPoint(x: xcordate + value/2, y: ycordate),
                     radius: value/2,
-                    startAngle: CGFloat.pi,
+                    startAngle: startAngle,
                     endAngle: -CGFloat.pi*endAngle,
 //                    endAngle: -CGFloat.pi*1,
 
@@ -30,7 +31,7 @@ class AnimationHandle {
 
         let animation = CAKeyframeAnimation(keyPath: "position")
         animation.path = path.cgPath
-        animation.duration = 2
+        animation.duration = 5
         animation.repeatCount = 1
         animation.timingFunctions = [CAMediaTimingFunction(name: .easeInEaseOut)]
         animation.fillMode = .forwards
