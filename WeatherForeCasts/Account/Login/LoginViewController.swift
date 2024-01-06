@@ -137,7 +137,7 @@ extension LoginViewController {
     func translateLangue(){
         SignInLb.text = NSLocalizedString(SignInLb.text ?? "", comment: "")
         emailLb.text = NSLocalizedString(emailLb.text ?? "", comment: "")
-        passwordLb.text = NSLocalizedString(emailLb.text ?? "", comment: "")
+        passwordLb.text = NSLocalizedString(passwordLb.text ?? "", comment: "")
         forgotPasswordBtn.setTitle(NSLocalizedString(forgotPasswordBtn.currentTitle ?? "", comment: ""), for: .normal)
         dontHaveAcountLb.text = NSLocalizedString(dontHaveAcountLb.text ?? "", comment: "")
         signUpBtn.setTitle(NSLocalizedString(signUpBtn.currentTitle ?? "", comment: ""), for: .normal)

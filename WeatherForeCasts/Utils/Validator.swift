@@ -76,7 +76,7 @@ class PasswordValidater {
             case 0:
                 return (emtyPassword, false)
             case 1...5:
-                return ("Password must be more than 6 digits.", false)
+                return (wrongFormatMessage, false)
             case 6...:
                 return ("ok", true)
             default:

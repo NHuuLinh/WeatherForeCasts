@@ -5,8 +5,7 @@ import MapKit
 protocol MapsViewControllerDelegate:AnyObject {
     func checkLocationAuthorizationStatus()
 }
-//func didPickLocation(_ location: CLLocation, address: String)
-//}
+
 
 class MapsViewController: UIViewController,UISearchBarDelegate//, MapsViewControllerDelegate{
 {

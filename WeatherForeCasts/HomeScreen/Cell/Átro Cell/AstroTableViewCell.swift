@@ -75,31 +75,5 @@ class AstroTableViewCell: UITableViewCell {
                                        rootImage: moonOrbit,
                                        animationImage: moonImage)
     }
-    func testads(endAngle: CGFloat ) {
-        let path = UIBezierPath()
-        let xcordate = sunOrbit.frame.minX + 25
-        print("xcordate: \(xcordate)")
-        let ycordate = sunOrbit.frame.maxY - 15
-        print("ycordate: \(ycordate)")
-        let value: CGFloat = 110
-        path.move(to: CGPoint(x: xcordate, y: ycordate))
-        let startAngle = CGFloat.pi  // Bắt đầu từ phía trên
-        print("\(startAngle)")
-        path.addArc(withCenter: CGPoint(x: xcordate + value/2, y: ycordate),
-                    radius: value/2,
-                    startAngle: CGFloat.pi,
-                    endAngle: -CGFloat.pi*endAngle,
-                    clockwise: true)
-
-        let animation = CAKeyframeAnimation(keyPath: "position")
-        animation.path = path.cgPath
-        animation.duration = 4
-        animation.repeatCount = 1
-        animation.timingFunctions = [CAMediaTimingFunction(name: .easeInEaseOut)]
-        animation.fillMode = .forwards
-        animation.isRemovedOnCompletion = false
-        sunImage.layer.add(animation, forKey: "curveAnimation")
-        sunImage.layer.position = CGPoint(x: xcordate, y: ycordate + value)
-    }
     
 }

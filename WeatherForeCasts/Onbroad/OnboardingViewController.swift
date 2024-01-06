@@ -4,30 +4,34 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var collectionViewOnbroad: UICollectionView!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var pageControl: UIPageControl!
+
     
     var slides: [OnboardingSlide] = []
-    var currentPage = 0 {
-        didSet {
-            pageControl.currentPage = currentPage
-            if currentPage == slides.count - 1 {
-                nextBtn.setTitle(NSLocalizedString("Get Started", comment: ""), for: .normal)
-            } else {
-                nextBtn.setTitle(NSLocalizedString("Next", comment: ""), for: .normal)
-            }
-        }
-    }
+
+    let nextTitle = NSLocalizedString("Next", comment: "")
     let title1 = NSLocalizedString("Detailed 24-hour forecast", comment: "")
     let title2 = NSLocalizedString("Global Weather", comment: "")
     let title3 = NSLocalizedString("Various location forecasts", comment: "")
     let description1 = NSLocalizedString("Update with the latest weather information.", comment: "")
     let description2 = NSLocalizedString("Add any position you want and easy to change.", comment: "")
     let description3 = NSLocalizedString("Easily grasp the weather of desired locations.", comment: "")
+    var currentPage = 0 {
+        didSet {
+            pageControl.currentPage = currentPage
+            if currentPage == slides.count - 1 {
+                nextBtn.setTitle(NSLocalizedString("Get Started", comment: ""), for: .normal)
+            } else {
+                nextBtn.setTitle(nextTitle, for: .normal)
+            }
+        }
+    }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
         slideData()
+        
     }
     func slideData(){
         slides = [
@@ -90,4 +94,5 @@ extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDa
         let width = scrollView.frame.width
         currentPage = Int(scrollView.contentOffset.x / width)
     }
+
 }
