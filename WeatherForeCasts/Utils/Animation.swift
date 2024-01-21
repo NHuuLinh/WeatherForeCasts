@@ -15,7 +15,7 @@ class AnimationHandle {
         let path = UIBezierPath()
         let xcordate = rootImage.frame.minX + 25
 //        print("xcordate: \(xcordate)")
-        let ycordate = rootImage.frame.maxY - 15
+        let ycordate = rootImage.frame.maxY - 10
 //        print("ycordate: \(ycordate)")
         let value: CGFloat = 110
         path.move(to: CGPoint(x: xcordate, y: ycordate))
@@ -25,8 +25,6 @@ class AnimationHandle {
                     radius: value/2,
                     startAngle: startAngle,
                     endAngle: -CGFloat.pi*endAngle,
-//                    endAngle: -CGFloat.pi*1,
-
                     clockwise: true)
 
         let animation = CAKeyframeAnimation(keyPath: "position")

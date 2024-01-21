@@ -44,31 +44,31 @@ class PasswordValidator: Validator {
     }
 }
 class PasswordValidater {
-    static func passwordValid(password: String) -> Bool {
-            switch password.count {
-            case 0:
-                return false
-            case 1...5:
-                return false
-            case 6...:
-                return true
-            default:
-                return false
-            }
-        }
-        
-    static func passwordValidText(password: String) -> String {
-            switch password.count {
-            case 0:
-                return "Password can't be empty"
-            case 1...5:
-                return "Password must be more than 6 digits"
-            case 6...:
-                return "ok"
-            default:
-                return "Invalid input"
-            }
-        }
+//    static func passwordValid(password: String) -> Bool {
+//            switch password.count {
+//            case 0:
+//                return false
+//            case 1...5:
+//                return false
+//            case 6...:
+//                return true
+//            default:
+//                return false
+//            }
+//        }
+//
+//    static func passwordValidText(password: String) -> String {
+//            switch password.count {
+//            case 0:
+//                return "Password can't be empty"
+//            case 1...5:
+//                return "Password must be more than 6 digits"
+//            case 6...:
+//                return "ok"
+//            default:
+//                return "Invalid input"
+//            }
+//        }
     static func passwordValidator(password: String) -> (message: String, valid: Bool) {
         let emtyPassword = NSLocalizedString("Password can't be empty.", comment: "")
         let wrongFormatMessage = NSLocalizedString("Password must be more than 6 digits.", comment: "")

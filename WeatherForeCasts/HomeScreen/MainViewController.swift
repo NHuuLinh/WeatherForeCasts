@@ -1,10 +1,10 @@
 import UIKit
 import CoreLocation
 import Alamofire
-import FirebaseAuth
 
 protocol MainViewControllerDisplay: UIViewController {
     func updateDataForCurrentLocation(with weatherData: WeatherData24h,address: String? )
+    func goToMapsVC()
 }
 
 class MainViewController: UIViewController,MainViewControllerDisplay {
@@ -16,15 +16,17 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     @IBOutlet weak var menuViewLocation: NSLayoutConstraint!
     @IBOutlet weak var locationNameLb: UILabel!
     @IBOutlet weak var menuImage: UIImageView!
+    @IBOutlet weak var noInternetView: UIView!
+    @IBOutlet weak var noInternetViewConstraints: NSLayoutConstraint!
+    @IBOutlet weak var nointernetLb: UILabel!
+    private let locationManager = CLLocationManager()
     private var isMenuOpen = false
-    private var loadingTimer: Timer?
-    private var isDataLoaded = false
-    private var sections = [HomeNewsSection]()
-    var weatherData: WeatherData24h?
-    let locationManager = CLLocationManager()
+    private var weatherData: WeatherData24h?
     private var mainPresenter: MainPresenter?
-
-    enum HomeNewsSection: Int {
+    private var hasReachedEnd = false
+    private var refeshControl = UIRefreshControl()
+    
+    enum HomeNewsSection: Int,CaseIterable {
         case currentCell = 0
         case dailyCell
         case weeklyCell
@@ -38,36 +40,49 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
         super.viewDidLoad()
         mainPresenter = MainPresenterImpl(mainVC: self)
         setupTableView()
-        checkLocationAuthorizationStatus()
-        print("view : \(view.frame.width)")
-        mainPresenter?.test()
+//        mainPresenter?.checkLocationAuthorizationStatus()
+        refeshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
+        mainTableView.addSubview(refeshControl)
+        updateInternetView()
+        nointernetLb.text = NSLocalizedString(nointernetLb.text ?? "", comment: "")
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addSideMenuViewController()
         tapGestureSetup()
-        requestLocation()
+        mainPresenter?.requestLocation()
         locationManager.delegate = self
         navigationController?.isNavigationBarHidden = true
+        
     }
-
+    func updateInternetView() {
+        NetworkMonitor.shared.startMonitoring { path in
+            if path.status == .satisfied {
+                self.noInternetView.isHidden = true
+                self.noInternetViewConstraints.constant = -25
+            } else {
+                self.noInternetView.isHidden = false
+                self.noInternetViewConstraints.constant = 0
+            }
+        }
+    }
+    
     @IBAction func MenuBtnHandle(_ sender: Any) {
         displayMenu()
     }
     @IBAction func locationBtn(_ sender: Any) {
-        requestLocation()
-        //updateDataFormCoreData()
-        mainPresenter?.fetchWeatherDataForCurrentLocation()
-        
-        mainTableView.reloadData()
         print("requestLocation")
+        mainPresenter?.currentLocationBtnHandle()
+        mainTableView.reloadData()
     }
     @IBAction func mapBtn(_ sender: Any) {
-        goToMapsVC()
+        mainPresenter?.mapBtnHandle()
     }
 }
 // MARK: - Các hàm liên quan side Menu
 extension MainViewController {
+    
     // thêm tapGestureSetup cho blurview
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         let locationInView = sender.location(in: view)
@@ -77,6 +92,7 @@ extension MainViewController {
         }
         print(isMenuOpen)
     }
+    
     func tapGestureSetup(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         blurMenuView.addGestureRecognizer(tapGesture)
@@ -112,47 +128,33 @@ extension MainViewController {
     // xử lí khi nhấn vào có ô trên menu
     private func handleMenuItemSelection(_ menuItem: MenuItem) {
         switch menuItem.screen {
-            case .profile :
-                print("profile")
-                goToProfileVC()
-            case .location :
-                print("Location")
+        case .profile :
+            print("profile")
+            goToProfileVC()
+        case .location :
+            print("Location")
             self.underDevelopment()
-            case .settings :
-                print("settings")
-                goToSettingVC()
-            case .notification :
+        case .settings :
+            print("settings")
+            goToSettingVC()
+        case .notification :
             self.underDevelopment()
-                print("notification")
-            case .aboutUs :
+            print("notification")
+        case .aboutUs :
             self.underDevelopment()
-                print("aboutUs")
-            case .privatePolicy :
+            print("aboutUs")
+        case .privatePolicy :
             self.underDevelopment()
-                print("privatePolicy")
-            case .termsOfUse :
+            print("privatePolicy")
+        case .termsOfUse :
             self.underDevelopment()
-                print("termsOfUse")
-            case .logout :
-                logoutHandle()
-                print("logout")
-            }
-        }
-    //logout firebase
-    private func logoutHandle() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            if firebaseAuth.currentUser == nil {
-                print("Error: User nil")
-                AppDelegate.scene?.goToLogin()
-            } else {
-                print("Error: User is still signed in")
-            }
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
+            print("termsOfUse")
+        case .logout :
+            mainPresenter?.logoutHandle()
+            print("logout")
         }
     }
+    
     // display menu
     private func displayMenu() {
         isMenuOpen.toggle()
@@ -170,6 +172,7 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
         mainTableView.dataSource = self
         mainTableView.delegate = self
         mainTableView.separatorStyle = .none
+        mainTableView.sectionFooterHeight = 10
         let dailyCell = UINib(nibName: "DailyTableViewCell", bundle: nil)
         mainTableView.register(dailyCell, forCellReuseIdentifier: "DailyTableViewCell")
         let weeklyCell = UINib(nibName: "WeeklyTableViewCell", bundle: nil)
@@ -185,18 +188,18 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
         let adviceCell = UINib(nibName: "WeatherAdviceTableViewCell", bundle: nil)
         mainTableView.register(adviceCell, forCellReuseIdentifier: "WeatherAdviceTableViewCell")
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: mainTableView.frame.size.width, height: 10))
-        headerView.backgroundColor = .green
-        return headerView
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10 // Đặt khoảng cách giữa các section
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView()
+        footerView.backgroundColor = UIColor.clear // Đặt màu nền của footerInSection ở đây
+        return footerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        let numberOfCases = HomeNewsSection.allCases.count
+        return numberOfCases
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let homeSection = HomeNewsSection(rawValue: section)
@@ -280,7 +283,6 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
         switch homeSection {
         case.aqiCell:
             print("aqiCell")
-            //goTodailyForecastVC()
         default:
             return
         }
@@ -298,7 +300,7 @@ extension MainViewController: MapsViewControllerDelegate {
             }
         }
     }
-    private func goToMapsVC() {
+    func goToMapsVC() {
         NavigationHelper.navigateToViewController(from: self, withIdentifier: "MapsViewController") { viewcontroller in
             if let mapsVC = viewcontroller as? MapsViewController {
                 mapsVC.delegate = self
@@ -319,45 +321,27 @@ extension MainViewController: MapsViewControllerDelegate {
 }
 // MARK: - Các hàm liên quan vị trí
 extension MainViewController : CLLocationManagerDelegate {
-    func checkLocationAuthorizationStatus() {
-        switch locationManager.authorizationStatus {
-        case .notDetermined:
-            // Yêu cầu quyền sử dụng vị trí khi ứng dụng đang được sử dụng
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted, .denied:
-            showAlert(title: "Ok", message: "Please allow to use location")
-            break
-        case .authorizedWhenInUse, .authorizedAlways:
-            // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
-            locationManager.startUpdatingLocation()
-//            fetchWeatherData()
-            mainPresenter?.chooseDataToFetch()
-        @unknown default:
-            break
-        }
+    
+    func loadDataAfterAuthorizationStatus(){
+        print("loadDataAfterAuthorizationStatus")
+        mainPresenter?.checkLocationAuthorizationStatus()
     }
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        // Kiểm tra lại trạng thái ủy quyền khi nó thay đổi
-        checkLocationAuthorizationStatus()
-    }
-    func requestLocation() {
-        // đưa nó vào một luồng khác để tránh làm màn hình người dùng đơ
-        DispatchQueue.global().async {
-            if CLLocationManager.locationServicesEnabled() {
-                // khai báo delegate để nhận thông tin thay đổi trạng thái vị trí
-                self.locationManager.delegate = self
-                // yêu cầu độ chính xác khi dò vi trí
-                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                // update vị trí cho các hàm của CLLocationManager
-                self.locationManager.startUpdatingLocation()
-            }
-        }
-    }
+    
     func updateDataForCurrentLocation(with weatherData: WeatherData24h,address: String? ){
-            self.weatherData = weatherData
-            self.locationNameLb.text = address
-            self.mainTableView.reloadData()
+        self.weatherData = weatherData
+        self.locationNameLb.text = address
+        self.mainTableView.reloadData()
     }
-
 }
+extension MainViewController: UIScrollViewDelegate {
+    
+    @objc func reloadData(send: UIRefreshControl){
+        DispatchQueue.main.async {
+            self.mainPresenter?.chooseDataToFetch()
+            print("đã scroll hết")
+            self.refeshControl.endRefreshing()
+        }
+    }
+}
+
 

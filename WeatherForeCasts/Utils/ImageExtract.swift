@@ -3,6 +3,7 @@ import UIKit
 
 class ExtractImage {
     static func extractImageName1(url: String) -> UIImage? {
+        
         let cleanedURL = url
             .replacingOccurrences(of: "//cdn.weatherapi.com/weather/64x64/", with: "")
             .replacingOccurrences(of: ".png", with: "")
@@ -13,7 +14,9 @@ class ExtractImage {
             return UIImage(named: "defaultImage")
         }
     }
+    
     static func extractImageName(url: String?) -> String {
+        
         guard let url = url else {
             return "defaultImage"
         }

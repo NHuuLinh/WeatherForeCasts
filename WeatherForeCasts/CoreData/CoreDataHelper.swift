@@ -50,7 +50,6 @@ class CoreDataHelper {
             let results = try managedContext.fetch(locationfetchRequestObject)
             for result in results {
                 if let value = result.value(forKey: "\(key)") {
-                    print("getValue:\(value)")
                     return value
                 }
             }
@@ -192,18 +191,11 @@ extension CoreDataHelper {
             let avatar = loadImageFromFile(fileName: "AvatarImage")
             do {
                 let results = try managedContext.fetch(profilefetchRequestObject)
-                print ("results:\(results.last)")
                 if let result = results.last {
-                    //                let avatar = UIImage(named: "warning")
                     if let name = result.value(forKey: "name") as? String,
                        let dateOfBirth = result.value(forKey: "dateOfBirth") as? String,
                        let phoneNumber = result.value(forKey: "phoneNumber") as? String,
                        let gender = result.value(forKey: "gender") as? String {
-                        //                    print("avatar: \(avatar)")
-                        print("name: \(name)")
-                        print("dateOfBirth: \(dateOfBirth)")
-                        print("phoneNumber: \(phoneNumber)")
-                        print("gender: \(gender)")
                         return (avatar, name, dateOfBirth, phoneNumber, gender)
                     } else {
                         print("fail result")

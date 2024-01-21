@@ -1,28 +1,27 @@
-//
-//  MainPresenter.swift
-//  WeatherForeCasts
-//
-//  Created by LinhMAC on 27/12/2023.
-//
 
 import Foundation
 import CoreLocation
 import UIKit
 import CoreData
+import FirebaseAuth
 
 protocol MainPresenter:AnyObject {
-    func fetchWeatherDataForCurrentLocation()
-    func test()
     func fetchWeatherData()
     func chooseDataToFetch()
+    func currentLocationBtnHandle()
+    func mapBtnHandle()
+    func requestLocation()
+    func checkLocationAuthorizationStatus()
+    func logoutHandle()
 }
-class MainPresenterImpl: MainPresenter{
-    
+
+class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     weak var mainVC: MainViewControllerDisplay?
-    private var loadingTimer: Timer?
-    let locationManager = CLLocationManager()
-    private var isDataLoaded = false
     weak var mapsVC: MapsViewControllerDelegate?
+    let locationManager = CLLocationManager()
+    let isReachableConnection = NetworkMonitor.shared.isReachable
+    private var loadingTimer: Timer?
+    private var isDataLoaded = false
     
     init(mainVC: MainViewControllerDisplay? = nil, loadingTimer: Timer? = nil, isDataLoaded: Bool = false, mapsVC: MapsViewControllerDelegate? = nil) {
         self.mainVC = mainVC
@@ -30,12 +29,9 @@ class MainPresenterImpl: MainPresenter{
         self.isDataLoaded = isDataLoaded
         self.mapsVC = mapsVC
     }
-    func test(){
-        print("test ok")
-    }
     func fetchWeatherDataForCurrentLocation() {
         // Bắt đầu hẹn giờ 20 giây
-        loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
+        loadingTimer = Timer.scheduledTimer(timeInterval: 40, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
         mainVC?.showLoading(isShow: true)
         // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
         guard let currentLocation = locationManager.location else {
@@ -110,7 +106,7 @@ class MainPresenterImpl: MainPresenter{
     
     func fetchWeatherData() {
         // Bắt đầu hẹn giờ 20 giây
-        loadingTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
+        loadingTimer = Timer.scheduledTimer(timeInterval: 40, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
         mainVC?.showLoading(isShow: true)
         // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
         guard let currentLocation = locationManager.location else {
@@ -154,16 +150,96 @@ class MainPresenterImpl: MainPresenter{
         self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
     }
     func chooseDataToFetch(){
-//        if UserDefaults.standard.didGetData {
-//            updateDataFormCoreData()
-//        } else {
+        if UserDefaults.standard.didGetData && !isReachableConnection {
+            updateDataFormCoreData()
+            print("updateDataFormCoreData: updateDataFormCoreData")
+        } else {
             if UserDefaults.standard.didOnMain {
                 fetchWeatherData()
-                print("true")
+                print("fetchWeatherData: fetchWeatherData")
             } else {
                 fetchWeatherDataForCurrentLocation()
-                print("false")
+                print("fetchWeatherDataForCurrentLocation: fetchWeatherDataForCurrentLocation")
             }
         }
-//    }
+    }
+    func mapBtnHandle(){
+        NetworkMonitor.shared.startMonitoring { path in
+            if path.status == .satisfied {
+                self.mainVC?.goToMapsVC()
+            } else {
+                self.mainVC?.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
+            }
+        }
+    }
+    
+    func logoutHandle() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            if firebaseAuth.currentUser == nil {
+                NetworkMonitor.shared.startMonitoring { path in
+                    if path.status == .satisfied {
+                        AppDelegate.scene?.goToLogin()
+                    } else {
+                        AppDelegate.scene?.routeToNoInternetAccess()
+                    }
+                }
+            } else {
+                print("Error: User is still signed in")
+            }
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    func currentLocationBtnHandle(){
+        NetworkMonitor.shared.startMonitoring { path in
+            if path.status == .satisfied {
+                self.requestLocation()
+                self.fetchWeatherDataForCurrentLocation()
+            } else {
+                self.mainVC?.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
+            }
+        }
+    }
+}
+extension MainPresenterImpl {
+    func requestLocation() {
+        print("requestLocation")
+
+        // đưa nó vào một luồng khác để tránh làm màn hình người dùng đơ
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                // khai báo delegate để nhận thông tin thay đổi trạng thái vị trí
+                self.locationManager.delegate = self
+                // yêu cầu độ chính xác khi dò vi trí
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                // update vị trí cho các hàm của CLLocationManager
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+    }
+    func checkLocationAuthorizationStatus() {
+        print("checkLocationAuthorizationStatus: checkLocationAuthorizationStatus")
+
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            // Yêu cầu quyền sử dụng vị trí khi ứng dụng đang được sử dụng
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            self.mainVC?.showAlert(title: "Ok", message: "Please allow to use location")
+            break
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Bắt đầu cập nhật vị trí và gọi api nếu được cấp quyền
+            locationManager.startUpdatingLocation()
+            chooseDataToFetch()
+        @unknown default:
+            break
+        }
+    }
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        // Kiểm tra lại trạng thái ủy quyền khi nó thay đổi
+        checkLocationAuthorizationStatus()
+    }
 }

@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // đổi theme
         
         FirebaseApp.configure()
-        NetworkMonitor.shared.startMonitoring()
+        NetworkMonitor.shared.checkConnection()
             return true
     }
 

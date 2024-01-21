@@ -30,6 +30,7 @@ class NoInternetAccessViewController: UIViewController {
                 print("goToOnboard")
             }
         } else {
+            showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
             print("no internet")
             return
         }
