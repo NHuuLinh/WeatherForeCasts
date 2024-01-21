@@ -14,6 +14,7 @@ class NoInternetAccessViewController: UIViewController {
     }
     
     @IBAction func retryBtnTapped(_ sender: UIButton) {
+        
         if NetworkMonitor.shared.isReachable {
             print("internet connected")
             //Kiểm tra xem người dùng đã hoàn thành Onboarding Screen và check đăng nhập

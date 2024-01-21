@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         NetworkMonitor.shared.checkConnection()
+
             return true
     }
 
@@ -38,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+    }
+    func applicationWillTerminate(_ application: UIApplication) {
+        NetworkMonitor.shared.stopMonitoring()
     }
     lazy var persistentContainer: NSPersistentContainer = {
             /*
