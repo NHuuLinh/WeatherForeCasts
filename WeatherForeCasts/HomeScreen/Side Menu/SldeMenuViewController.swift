@@ -66,13 +66,13 @@ class SideMenuViewController: UIViewController {
                      image: UIImage(named: "Location"),
                      screen: .location),
             MenuItem(title: settings,
-                     image: UIImage(named: "settings"),
+                     image: UIImage(named: "Settings"),
                      screen: .settings),
             MenuItem(title: notification,
-                     image: UIImage(named: "notification"),
+                     image: UIImage(named: "Notification"),
                      screen: .notification),
             MenuItem(title: aboutUs,
-                     image: UIImage(named: "aboutUs"),
+                     image: UIImage(named: "Aboutus"),
                      screen: .aboutUs),
             MenuItem(title: privatePolicy,
                      image: UIImage(named: "privatePolicy"),
@@ -81,7 +81,7 @@ class SideMenuViewController: UIViewController {
                      image: UIImage(named: "termsOfUse"),
                      screen: .termsOfUse),
             MenuItem(title: logout,
-                     image: UIImage(named: "logout"),
+                     image: UIImage(named: "Logout"),
                      screen: .logout)
         ]
     }
@@ -103,10 +103,9 @@ extension SideMenuViewController : UITableViewDelegate, UITableViewDataSource {
     
     
 }
+
 extension SideMenuViewController {
     
-}
-extension SideMenuViewController {
     func loadDataFromFirebase() {
        showLoading(isShow: true)
        guard let currentUserID = Auth.auth().currentUser?.uid else {

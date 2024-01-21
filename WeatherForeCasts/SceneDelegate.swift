@@ -36,10 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let isReachableConnection = NetworkMonitor.shared.isReachable
         
-        guard isReachableConnection else {
-            routeToNoInternetAccess()
-            return
-        }
+//        guard isReachableConnection else {
+//            routeToNoInternetAccess()
+//            return
+//        }
         if UserDefaults.standard.hasOnboarded {
             if Auth.auth().currentUser != nil {
                 goToMain()

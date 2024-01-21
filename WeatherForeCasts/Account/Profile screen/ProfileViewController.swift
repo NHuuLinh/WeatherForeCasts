@@ -52,15 +52,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     var isEditingProfile: Bool = false
     private let storage = Storage.storage().reference()
     var currentUser: UserProfile?
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     override func viewWillAppear(_ animated: Bool) {
-//        loadDataFromFirebase()
-//        loadDataFromFirebase()
         if UserDefaults.standard.didUpdateProfile {
             loadProfileFromCoreData()
             print("loadProfileFromCoreData")
@@ -88,13 +85,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         DateOfBirthEditOff.isHidden = isEditing
         PhoneEditOff.isHidden = isEditing
     }
-
+    
     func setButtonVisibility(_ isVisible: Bool) {
         clearNameBtn.isHidden = !isVisible
         clearDateOfBirthBtn.isHidden = !isVisible
         clearPhoneNumberBtn.isHidden = !isVisible
     }
-
+    
     func setEditProfileBtnStyle(_ isEditing: Bool) {
         if isEditing {
             editProfileBtn.backgroundColor = .yellow
@@ -113,7 +110,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     }
     func editProfileState() {
         setEditingState(true)
-//        setButtonVisibility(true)
+        //        setButtonVisibility(true)
         setEditProfileBtnStyle(true)
         saveEditBtn.alpha = 1
     }
@@ -147,7 +144,14 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             textFieldChangeHandle(phoneNumberTF)
             print("phoneNumberTF")
         case editProfileBtn:
-            editProfileState()
+            //            editProfileState()
+            NetworkMonitor.shared.startMonitoring { path in
+                if path.status == .satisfied {
+                    self.editProfileState()
+                } else {
+                    self.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
+                }
+            }
             print("editProfileBtn")
         case clearEditBtn:
             loadDataFromFirebase()
@@ -155,11 +159,11 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         case saveEditBtn:
             updateDataToFireBase()
             print("updateDataToFireBase")
-            default:
-                break
-            }
-            updateGenderButtons()
+        default:
+            break
         }
+        updateGenderButtons()
+    }
     @IBAction func textFieldChangeHandle(_ textField: UITextField) {
         switch textField {
         case nameTF:
@@ -225,13 +229,13 @@ extension ProfileViewController {
         updateGenderButtons()
         // update ảnh lên firebase
         uploadImageToFirebaseStorage()
-            guard let defaultImage = UIImage(named: "warning") else {return}
-            CoreDataHelper.share.saveProfileValueToCoreData(avatar: avatarImg.image ?? defaultImage,
-                                                             name: nameTF.text ?? "",
-                                                             dateOfBirth: dateOfBirthTF.text ?? "",
-                                                             phoneNumber: phoneNumberTF.text ?? "",
-                                                            gender: selectedGender.rawValue)
-            UserDefaults.standard.didUpdateProfile = true
+        guard let defaultImage = UIImage(named: "warning") else {return}
+        CoreDataHelper.share.saveProfileValueToCoreData(avatar: avatarImg.image ?? defaultImage,
+                                                        name: nameTF.text ?? "",
+                                                        dateOfBirth: dateOfBirthTF.text ?? "",
+                                                        phoneNumber: phoneNumberTF.text ?? "",
+                                                        gender: selectedGender.rawValue)
+        UserDefaults.standard.didUpdateProfile = true
     }
     func loadProfileFromCoreData(){
         let profileData = CoreDataHelper.share.getProfileValuesFromCoreData()
@@ -282,8 +286,8 @@ extension ProfileViewController {
         self.view.endEditing(true)
     }
     @objc func cancelBtn() {
-            self.view.endEditing(true)
-        }
+        self.view.endEditing(true)
+    }
 }
 // MARK: - Load image slectecd
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -293,7 +297,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         }
         // Update the UI with the picked image
         avatarImg.image = pickedImage
-
+        
         picker.dismiss(animated: true, completion: nil)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
