@@ -25,8 +25,6 @@ class OnboardingViewController: UIViewController {
             }
         }
     }
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
@@ -59,8 +57,8 @@ class OnboardingViewController: UIViewController {
     func moveToNextPage() {
         if currentPage == slides.count - 1 {
             AppDelegate.scene?.goToLogin()
-        } else {
             UserDefaults.standard.hasOnboarded = true
+        } else {
             currentPage += 1
             collectionViewOnbroad.isPagingEnabled = false
             collectionViewOnbroad.scrollToItem(

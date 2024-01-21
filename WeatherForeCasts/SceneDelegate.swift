@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     static let shared = SceneDelegate()
-
+    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         /**
@@ -36,25 +36,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let isReachableConnection = NetworkMonitor.shared.isReachable
         
-//        guard isReachableConnection else {
-//            routeToNoInternetAccess()
-//            return
-//        }
-        if UserDefaults.standard.hasOnboarded {
-            if Auth.auth().currentUser != nil {
-                goToMain()
-                print("goToMain")
+        if isReachableConnection {
+            // có mạng
+            if UserDefaults.standard.hasOnboarded {
+                if Auth.auth().currentUser != nil {
+                    goToMain()
+                    print("goToMain")
+                } else {
+                    goToLogin()
+                    print("goToLogin")
+                }
             } else {
-                goToLogin()
-                print("goToLogin")
+                goToOnboard()
+                print("goToOnboard")
             }
         } else {
-            goToOnboard()
-            print("goToOnboard")
+            // mất mạng
+            if UserDefaults.standard.hasOnboarded {
+                if Auth.auth().currentUser != nil {
+                    goToMain()
+                } else {
+                    routeToNoInternetAccess()
+                }
+            } else {
+                routeToNoInternetAccess()
+            }
+            
         }
     }
-
-     func goToMain() {
+    
+    func goToMain() {
         print("Đã login rồi. Cho vào main")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
@@ -62,45 +73,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window!.rootViewController = mainNavigation
         window!.makeKeyAndVisible()
     }
-     func goToOnboard() {
+    func goToOnboard() {
         print("Đã login rồi. Cho vào main")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let onboardVC = storyboard.instantiateViewController(withIdentifier: "OnboardingViewController")
         window!.rootViewController = onboardVC
         window!.makeKeyAndVisible()
     }
-     func goToLogin() {
+    func goToLogin() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
         let loginNavigation = UINavigationController(rootViewController: loginVC)
         window!.rootViewController = loginNavigation
         window!.makeKeyAndVisible()
     }
-     func routeToNoInternetAccess() {
+    func routeToNoInternetAccess() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let noInernetVC = storyboard.instantiateViewController(withIdentifier: "NoInternetAccessViewController")
         let noInternetNavigation = UINavigationController(rootViewController: noInernetVC)
         window!.rootViewController = noInternetNavigation
         window!.makeKeyAndVisible()
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
-
+        
     }
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) {
     }
-
+    
     func sceneWillResignActive(_ scene: UIScene) {
     }
-
+    
     func sceneWillEnterForeground(_ scene: UIScene) {
     }
-
+    
     func sceneDidEnterBackground(_ scene: UIScene) {
+        
     }
-
-
+    
+    
 }
 
 

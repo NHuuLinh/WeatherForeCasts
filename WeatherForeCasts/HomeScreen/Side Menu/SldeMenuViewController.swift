@@ -7,8 +7,9 @@ import CoreData
 import KeychainSwift
 
 
-protocol MenuDelegate: AnyObject {
+protocol SideMenuDelegate: AnyObject {
     func selectMenuItem(with menuItems: MenuItem)
+    func loadDataFromFirebase()
 }
 
 class SideMenuViewController: UIViewController {
@@ -16,7 +17,7 @@ class SideMenuViewController: UIViewController {
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var menuTableView: UITableView!
-    weak var delegate: MenuDelegate?
+    weak var delegate: SideMenuDelegate?
     var onMenuItemSelected: ((MenuItem) -> Void)?
     var currentUser: UserProfile?
     private let storage = Storage.storage().reference()

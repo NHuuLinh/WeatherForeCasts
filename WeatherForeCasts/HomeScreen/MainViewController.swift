@@ -86,11 +86,9 @@ extension MainViewController {
     // thêm tapGestureSetup cho blurview
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         let locationInView = sender.location(in: view)
-        print("\(locationInView)")
         if isMenuOpen {
             displayMenu()
         }
-        print(isMenuOpen)
     }
     
     func tapGestureSetup(){
