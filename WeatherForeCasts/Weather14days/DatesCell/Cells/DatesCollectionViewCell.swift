@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DatesCollectionViewCell: UICollectionViewCell {
+class DatesCollectionViewCell: UICollectionViewCell,DateConvertFormat {
     @IBOutlet weak var dateLb: UILabel!
     @IBOutlet weak var dateBackGroundColors: UIView!
     
@@ -16,7 +16,7 @@ class DatesCollectionViewCell: UICollectionViewCell {
       }
       
     func bindData(date: Forecastday, isSelected: Bool) {
-        dateLb.text = DateConvert.convertDate(date: date.date, inputFormat: "yyyy-MM-dd", outputFormat: "dd/MM EEE")
+        dateLb.text = convertDate(date: date.date, inputFormat: "yyyy-MM-dd", outputFormat: "dd/MM EEE")
 //        dateLb.text = date
 //        if isSelected {
 //            dateBackGroundColors.backgroundColor = UIColor(red: 0.11, green: 0.11, blue: 0.14, alpha: 1.00)

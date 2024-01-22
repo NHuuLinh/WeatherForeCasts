@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CurrentWeatherTableViewCell: UITableViewCell {
+class CurrentWeatherTableViewCell: UITableViewCell, ExtractImageFromUrl,WeatherCondition, DateConvertFormat  {
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var currentTemp: UILabel!
     @IBOutlet weak var currentWeatherCondition: UILabel!
@@ -26,16 +26,15 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     }
     func getCurrentData(with forecastCurrent : WeatherData24h ) {
         let localTime = forecastCurrent.location.localtime
-//        print( "localTime: \(localTime)")
-        currentTime.text = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm EEEE")
+        currentTime.text = convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm EEEE")
         currentTemp.text = "\(Int(forecastCurrent.current.tempC.rounded()))°C"
         currentWeatherCondition.text = forecastCurrent.current.condition.text
         currentFeelsLikeTemp.text = "\(Int(forecastCurrent.current.feelslikeC.rounded()))°C"
-        let imageName = ExtractImage.extractImageName(url: forecastCurrent.current.condition.icon)
+        let imageName = extractImageName(url: forecastCurrent.current.condition.icon)
         currentWeatherIcon.image = UIImage(named: imageName)
-        let willItRain = WeatherCondition.willRain(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
+        let willItRain = willRain(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
         currentWillRain.text = willItRain
-        let willItSnow = WeatherCondition.willSnow(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
+        let willItSnow = willSnow(localTime: localTime, forecastDays: forecastCurrent.forecast.forecastday)
         currentWillSnow.text = willItSnow
     }
 }

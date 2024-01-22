@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 protocol Validator {
     func isValid() -> Bool
@@ -43,33 +44,9 @@ class PasswordValidator: Validator {
         return password.isMatching(regex: PasswordValidator.passwordRegex)
     }
 }
-class PasswordValidater {
-//    static func passwordValid(password: String) -> Bool {
-//            switch password.count {
-//            case 0:
-//                return false
-//            case 1...5:
-//                return false
-//            case 6...:
-//                return true
-//            default:
-//                return false
-//            }
-//        }
-//
-//    static func passwordValidText(password: String) -> String {
-//            switch password.count {
-//            case 0:
-//                return "Password can't be empty"
-//            case 1...5:
-//                return "Password must be more than 6 digits"
-//            case 6...:
-//                return "ok"
-//            default:
-//                return "Invalid input"
-//            }
-//        }
-    static func passwordValidator(password: String) -> (message: String, valid: Bool) {
+// kiểm tra thông tin email, mật khẩu
+extension UIViewController {
+    func passwordValidator(password: String) -> (message: String, valid: Bool) {
         let emtyPassword = NSLocalizedString("Password can't be empty.", comment: "")
         let wrongFormatMessage = NSLocalizedString("Password must be more than 6 digits.", comment: "")
             switch password.count {
@@ -83,15 +60,14 @@ class PasswordValidater {
                 return ("Invalid input.", false)
             }
         }
-    }
-
-class EmailValidater {
-    static func isValidEmail(_ email: String) -> Bool {
+    
+    func isValidEmail(_ email: String) -> Bool {
         let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         return predicate.evaluate(with: email)
     }
-    static func emailValidator(_ email: String) -> (message: String, valid: Bool) {
+    
+    func emailValidator(_ email: String) -> (message: String, valid: Bool) {
         let emptyMessage = NSLocalizedString("Email can't be empty.", comment: "")
         let wrongFormatMessage = NSLocalizedString("The email is in the wrong format.", comment: "")
         if email.isEmpty {
@@ -103,5 +79,6 @@ class EmailValidater {
         }
     }
 }
+
 
 

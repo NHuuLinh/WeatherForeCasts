@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class DailyTableViewCell: UITableViewCell{
+class DailyTableViewCell: UITableViewCell, DateConvertFormat{
     
     @IBOutlet weak var dailyCollectionView: UICollectionView!
     @IBOutlet weak var chartView: UIView!
@@ -33,7 +33,7 @@ class DailyTableViewCell: UITableViewCell{
         dataEntries.removeAll()
 //        chartView.subviews.forEach({ $0.removeFromSuperview() })
         // Chuyển đổi thời gian hiện tại thành giờ
-        let currentHour = DateConvert.convertDate(date: currentTime ?? "0", inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
+        let currentHour = convertDate(date: currentTime ?? "0", inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
         let startHour = Int(currentHour) ?? 0
         // Kiểm tra xem có đủ dữ liệu cho 24 giờ tiếp theo không
         guard startHour + 24 <= forecastHours.count else {

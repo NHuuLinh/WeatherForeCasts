@@ -17,11 +17,11 @@ protocol LoginPresenter {
 class LoginPresenterImpl: LoginPresenter {
     let keychain = KeychainSwift()
     var loginVC: LoginViewControllerDisplay
-
+    
     init(loginVC: LoginViewControllerDisplay) {
         self.loginVC = loginVC
     }
-
+    
     func login(email: String, password: String) {
         self.loginVC.showLoading(isShow: true)
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
@@ -43,7 +43,7 @@ class LoginPresenterImpl: LoginPresenter {
                 print("\(message)")
                 return
             }
-//            self.routeToMain()
+            //            self.routeToMain()
             AppDelegate.scene?.goToMain()
             keychain.set(email, forKey: "email")
             keychain.set(password, forKey: "password")

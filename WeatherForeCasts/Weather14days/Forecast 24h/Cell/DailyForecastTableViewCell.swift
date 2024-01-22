@@ -7,7 +7,8 @@
 
 import UIKit
 
-class DailyForecastTableViewCell: UITableViewCell {
+class DailyForecastTableViewCell: UITableViewCell, UvValueHandle, AQIHandle, ExtractImageFromUrl,DateConvertFormat {
+    
     @IBOutlet weak var forecastHourTime: UILabel!
     @IBOutlet weak var forecastHourIcone: UIImageView!
     @IBOutlet weak var forecastHourTemp: UILabel!
@@ -36,21 +37,21 @@ class DailyForecastTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     func getHourData(hour: Hour ) {
-        forecastHourTime.text = DateConvert.convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
-        let imageName = ExtractImage.extractImageName(url: "\(hour.condition.icon)")
+        forecastHourTime.text = convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
+        let imageName = extractImageName(url: "\(hour.condition.icon)")
         forecastHourIcone.image = UIImage(named: imageName)
         forecastHourTemp.text = "\(Int(hour.tempC.rounded()))°C"
         forecastHourConditionText.text = hour.condition.text
         forecastHourFellTemp.text = "\(Int(hour.feelslikeC.rounded()))°C"
         forecastHourWind.text = "\(Int(hour.windMph.rounded()))"
         forecastHourUv.text = "\(Int(hour.uv))"
-        forecastHourUvText.text = NSLocalizedString(UVIndex.uvCondition(uvValue: Int(hour.uv)), comment: "")
+        forecastHourUvText.text = NSLocalizedString(uvCondition(uvValue: Int(hour.uv)), comment: "")
         forecastHourRainChance.text = "\(hour.chanceOfRain)"
         forecastHourHumidity.text = "\(hour.humidity)"
         
         let AirQlyNumber = hour.airQuality.usEpaIndex ?? 0
         forecastHourAirQly.text = "\(AirQlyNumber)"
-        forecastHourAirQlyText.text = NSLocalizedString(AQIHandle.airQlyDataCondition(numb: AirQlyNumber), comment: "")
+        forecastHourAirQlyText.text = NSLocalizedString(airQlyDataCondition(numb: AirQlyNumber), comment: "")
     }
     func translateLangue(){
         titleFeelLike.text = NSLocalizedString(titleFeelLike.text ?? "", comment: "")

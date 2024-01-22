@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DailyCollectionViewCell: UICollectionViewCell {
+class DailyCollectionViewCell: UICollectionViewCell,ExtractImageFromUrl,DateConvertFormat {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var precipitationLabel: UILabel!
@@ -18,10 +18,10 @@ class DailyCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     func getData24h(with hour: Hour) {
-        timeLabel.text = DateConvert.convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
+        timeLabel.text = convertDate(date: hour.time, inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "HH:mm")
         temperatureLabel.text = "\(Int(hour.tempC.rounded()))°C"
         precipitationLabel.text = "\(hour.chanceOfRain)"
-        let weatherIcon = ExtractImage.extractImageName(url: "\(hour.condition.icon)")
+        let weatherIcon = extractImageName(url: "\(hour.condition.icon)")
         weatherIconImageView.image = UIImage(named: weatherIcon)
     }
 }

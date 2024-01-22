@@ -7,17 +7,17 @@ import CoreData
 import KeychainSwift
 
 
-protocol SideMenuDelegate: AnyObject {
-    func selectMenuItem(with menuItems: MenuItem)
+protocol SideMenuViewControllerDisplay: AnyObject {
+//    func selectMenuItem(with menuItems: MenuItem)
     func loadDataFromFirebase()
 }
 
-class SideMenuViewController: UIViewController {
+class SideMenuViewController: UIViewController, SideMenuViewControllerDisplay {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var menuTableView: UITableView!
-    weak var delegate: SideMenuDelegate?
+//    weak var delegate: SideMenuDelegate?
     var onMenuItemSelected: ((MenuItem) -> Void)?
     var currentUser: UserProfile?
     private let storage = Storage.storage().reference()
@@ -37,13 +37,7 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
-        if UserDefaults.standard.didUpdateProfile {
-            loadProfileFromCoreData()
-            print("loadProfileFromCoreData")
-        } else {
-            loadDataFromFirebase()
-            print("loadDataFromFirebase")
-        }
+        chooseDataToLoad()
         tableMenu()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -134,6 +128,15 @@ extension SideMenuViewController {
         userAvatar.image = profileData.avatar
         userName.text = profileData.name
         userEmail.text = keychain.get("email")
+    }
+    func chooseDataToLoad(){
+        if UserDefaults.standard.didUpdateProfile {
+            loadProfileFromCoreData()
+            print("loadProfileFromCoreData")
+        } else {
+            loadDataFromFirebase()
+            print("loadDataFromFirebase")
+        }
     }
 }
 

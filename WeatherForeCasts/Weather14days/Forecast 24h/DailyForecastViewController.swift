@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DailyForecastViewController: UIViewController {
+class DailyForecastViewController: UIViewController, DateConvertFormat {
     @IBOutlet weak var dailyForecastTableView: UITableView!
     @IBOutlet weak var dayForecastLb: UILabel!
     var weatherData24h: Forecastday?
@@ -17,8 +17,7 @@ class DailyForecastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
-        
-        dayForecastLb.text = DateConvert.convertDate(date: weatherData24h?.date ?? "0", inputFormat: "yyyy-MM-dd", outputFormat: "EEE dd/MM")
+        dayForecastLb.text = convertDate(date: weatherData24h?.date ?? "0", inputFormat: "yyyy-MM-dd", outputFormat: "EEE dd/MM")
         mainTitle.text = NSLocalizedString(mainTitle.text ?? "" , comment: "")
             dailyForecastTableView.reloadData()
     }

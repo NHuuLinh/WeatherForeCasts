@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AQITableViewCell: UITableViewCell {
+class AQITableViewCell: UITableViewCell, AQIHandle {
     @IBOutlet weak var currentAirQuality: UILabel!
     @IBOutlet weak var currentAirCondition: UILabel!
     @IBOutlet weak var currentAirLevel: UIView!
@@ -27,11 +27,11 @@ class AQITableViewCell: UITableViewCell {
     func getAirData(with forecastAqi : AirQuality) {
         let AirQlyNumber = forecastAqi.usEpaIndex ?? 0
         currentAirQuality.text = "\(AirQlyNumber)"
-        let airCondition = AQIHandle.airQlyDataCondition(numb: AirQlyNumber)
+        let airCondition = airQlyDataCondition(numb: AirQlyNumber)
         currentAirCondition.text = NSLocalizedString(airCondition, comment: "")
-        let airLevel = AQIHandle.airQlyLevel(width: AirQlyNumber)
+        let airLevel = airQlyLevel(width: AirQlyNumber)
         currentAirLevelWidth.constant = airLevel
-        let airQlyColor = AQIHandle.airQlyColor(numb: AirQlyNumber)
+        let airQlyColor = airQlyColor(numb: AirQlyNumber)
         currentAirLevel.backgroundColor = airQlyColor
     }
 }

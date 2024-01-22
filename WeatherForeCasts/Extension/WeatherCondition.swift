@@ -6,9 +6,13 @@
 //
 
 import Foundation
-class WeatherCondition {
+protocol WeatherCondition {
+    func willSnow(localTime: String, forecastDays: [Forecastday]) -> String
+    func willRain(localTime: String, forecastDays: [Forecastday]) -> String
+}
+extension WeatherCondition {
     
-    static func willSnow(localTime: String, forecastDays: [Forecastday]) -> String {
+    func willSnow(localTime: String, forecastDays: [Forecastday]) -> String {
         
         var willItSnowValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
@@ -23,12 +27,12 @@ class WeatherCondition {
             }
         }
         
-        let hourForcast = 6
+        let hourForcast = 3
         guard willItSnowValues.count >= hourForcast else {
             return errorText
         }
         
-        let hours = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
+        let hours = convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
 
         let hour  = Int(hours) ?? 0
         let values = Array(willItSnowValues[hour..<hour+hourForcast])
@@ -41,7 +45,7 @@ class WeatherCondition {
         }
     }
     
-    static func willRain(localTime: String, forecastDays: [Forecastday]) -> String {
+    func willRain(localTime: String, forecastDays: [Forecastday]) -> String {
         
         var willItRainValues: [Int] = []
         let hourText = NSLocalizedString("hours", comment: "")
@@ -54,14 +58,14 @@ class WeatherCondition {
                 willItRainValues.append(willItRainValue)
             }
         }
-        let hourForcast = 6
+        let hourForcast = 3
         let errorText = NSLocalizedString("Unknown", comment: "")
         
         guard willItRainValues.count >= hourForcast else {
             return errorText
         }
         
-        let hours = DateConvert.convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
+        let hours = convertDate(date: localTime, inputFormat: "yyyy-MM-dd HH:ss", outputFormat: "HH")
         let hour  = Int(hours) ?? 0
         let values = Array(willItRainValues[hour..<hour+hourForcast])
         
@@ -70,6 +74,20 @@ class WeatherCondition {
             return "\(wontText) \(hourForcast) \(hourText)"
         default:
             return "\(willText) \(hourForcast) \(hourText)"
+        }
+    }
+    private func convertDate(date: String, inputFormat: String, outputFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = inputFormat
+        if let inputDate = dateFormatter.date(from: date) {
+            // Định dạng thời gian đầu ra
+            dateFormatter.dateFormat = outputFormat
+            // Chuyển đổi thành chuỗi
+            let formattedDateString = dateFormatter.string(from: inputDate)
+            return formattedDateString
+        } else {
+            return "date error"
         }
     }
 

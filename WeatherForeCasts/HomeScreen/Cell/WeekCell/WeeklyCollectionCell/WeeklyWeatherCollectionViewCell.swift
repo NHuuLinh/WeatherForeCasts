@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
+class WeeklyWeatherCollectionViewCell: UICollectionViewCell,ExtractImageFromUrl, DateConvertFormat {
     @IBOutlet weak var weeklyDate: UILabel!
     @IBOutlet weak var weeklyImage: UIImageView!
     @IBOutlet weak var weeklyConditionText: UILabel!
@@ -15,13 +15,12 @@ class WeeklyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var maxTemp: UILabel!
     static let identifier = String(describing: WeeklyWeatherCollectionViewCell.self)
 
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     func getWeeklyDatas(with week: Forecastday ) {
-        weeklyDate.text = DateConvert.convertDate(date: week.date, inputFormat: "yyyy-MM-dd", outputFormat: "EEE dd/MM")
-        let imageName = ExtractImage.extractImageName(url: "\(week.day.condition.icon)")
+        weeklyDate.text = convertDate(date: week.date, inputFormat: "yyyy-MM-dd", outputFormat: "EEE dd/MM")
+        let imageName = extractImageName(url: "\(week.day.condition.icon)")
         weeklyImage.image = UIImage(named: imageName)
         weeklyConditionText.text = week.day.condition.text
         minTemp.text = "\(Int(week.day.mintempC.rounded()))"

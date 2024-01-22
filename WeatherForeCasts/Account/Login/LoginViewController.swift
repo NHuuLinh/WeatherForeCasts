@@ -13,7 +13,7 @@ enum LoginFormField {
 }
 
 class LoginViewController: UIViewController, LoginViewControllerDisplay {
-
+    
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
     @IBOutlet weak var emailerrorTF: UITextField!
@@ -41,11 +41,11 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
     @IBOutlet weak var orContinueWith: UILabel!
     
     private var loginPresenter: LoginPresenter!
+    private var navigator = NavigationHelper.shared
     let keychain = KeychainSwift()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
         translateLangue()
     }
@@ -58,18 +58,19 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
         checkValidInput()
         loginPresenter = LoginPresenterImpl(loginVC: self)
     }
-
+    
     func goToResgister() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "RegisterViewController")
+        navigator.navigateToViewController(from: self, withIdentifier: "RegisterViewController")
         keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
         keychain.set(passwordTF.text ?? "", forKey: "TemporaryPassword")
     }
+    
     func goToForgotPassword() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController") { viewController in
+        navigator.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController") { viewController in
             if let forgotVC = viewController as? ForgotPasswordViewController {
                 forgotVC.onSuccessResetPassword = { [weak self] email in
                     self?.emailTF.text = email
-//                    self?.passwordTF.text = ""
+                    //                    self?.passwordTF.text = ""
                     self?.checkValidInput()
                 }
             }
@@ -87,11 +88,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
         case clearBtn :
             emailTF.text = ""
         case secureBtn:
-            passwordTF.isSecureTextEntry.toggle()
-            let showImage = UIImage(systemName: "eye.circle")
-            let hideImage = UIImage(systemName: "eye.slash.circle")
-            let buttonImage = passwordTF.isSecureTextEntry ? hideImage : showImage
-            secureBtn.setImage(buttonImage, for: .normal)
+            setupSecureButton(textFied: passwordTF, button: secureBtn)
         case forgotPasswordBtn:
             goToForgotPassword()
         case signUpBtn:
@@ -109,27 +106,28 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
 }
 
 extension LoginViewController {
-    
+    // các hàm passwordValidator,emailValidator xem ở extension Validator
+    // các hàm handleInputTF, handleButton xem ở extension StandardForm
     func checkValidInput(){
         let email = emailTF.text ?? ""
-        let emailResult = EmailValidater.emailValidator(email)
+        let emailResult = emailValidator(email)
         emailerrorTF.text = emailResult.message
-        StandardForm.handleInputTF(status: emailResult.valid,
-                                   errorView: emailErrorView,
-                                   errorViewHeight: errorViewHieght,
-                                   textView: emailTextView)
+        handleInputTF(status: emailResult.valid,
+                      errorView: emailErrorView,
+                      errorViewHeight: errorViewHieght,
+                      textView: emailTextView)
         
         let password = passwordTF.text ?? ""
-        let passwordResult = PasswordValidater.passwordValidator(password: password)
+        let passwordResult = passwordValidator(password: password)
         passwordErrrorTF.text = passwordResult.message
-        StandardForm.handleInputTF(status: passwordResult.valid,
-                                   errorView: passwordErorrView,
-                                   errorViewHeight: passwordErrorViewHieght,
-                                   textView: passwordTextView)
+        handleInputTF(status: passwordResult.valid,
+                      errorView: passwordErorrView,
+                      errorViewHeight: passwordErrorViewHieght,
+                      textView: passwordTextView)
         
-        StandardForm.handleButton(button: loginBtn,
-                                  emailResult: emailResult.valid,
-                                  passwordResult: passwordResult.valid)
+        handleButton(button: loginBtn,
+                     emailResult: emailResult.valid,
+                     passwordResult: passwordResult.valid)
     }
 }
 // MARK: - Dịch thuật

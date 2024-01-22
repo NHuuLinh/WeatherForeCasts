@@ -1,7 +1,6 @@
 
 import Foundation
 import CoreLocation
-import UIKit
 import CoreData
 import FirebaseAuth
 
@@ -17,9 +16,9 @@ protocol MainPresenter:AnyObject {
 
 class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     weak var mainVC: MainViewControllerDisplay?
-    weak var mapsVC: MapsViewControllerDelegate?
+//    weak var mapsVC: MapsViewControllerDelegate?
     let locationManager = CLLocationManager()
-    let isReachableConnection = NetworkMonitor.shared.isReachable
+    let isReachable = NetworkMonitor.shared.isReachable
     private var loadingTimer: Timer?
     private var isDataLoaded = false
     
@@ -27,7 +26,7 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         self.mainVC = mainVC
         self.loadingTimer = loadingTimer
         self.isDataLoaded = isDataLoaded
-        self.mapsVC = mapsVC
+//        self.mapsVC = mapsVC
     }
     func fetchWeatherDataForCurrentLocation() {
         // Bắt đầu hẹn giờ 20 giây
@@ -90,7 +89,7 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         loadingTimer = nil
         let title = NSLocalizedString("Error", comment: "")
         let message = NSLocalizedString("Failed to fetch weather data. Please try again.", comment: "")
-        mainVC?.showAlert(title: title, message: message )
+//        mainVC?.showAlert(title: title, message: message )
         mainVC?.showLoading(isShow: false)
     }
     
@@ -150,7 +149,7 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         self.mainVC?.updateDataForCurrentLocation(with: weatherData, address: address)
     }
     func chooseDataToFetch(){
-        if UserDefaults.standard.didGetData && !isReachableConnection {
+        if UserDefaults.standard.didGetData && !isReachable {
             updateDataFormCoreData()
             print("updateDataFormCoreData: updateDataFormCoreData")
         } else {
@@ -163,13 +162,17 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
             }
         }
     }
+}
+// MARK: - Các hàm xử lí nút nhấn màn hình home
+extension MainPresenterImpl {
+    func noInternetWarning(){
+        self.mainVC?.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
+    }
     func mapBtnHandle(){
-        NetworkMonitor.shared.startMonitoring { path in
-            if path.status == .satisfied {
-                self.mainVC?.goToMapsVC()
-            } else {
-                self.mainVC?.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
-            }
+        if isReachable {
+            self.mainVC?.goToMapsVC()
+        } else {
+            noInternetWarning()
         }
     }
     
@@ -178,14 +181,12 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         do {
             try firebaseAuth.signOut()
             if firebaseAuth.currentUser == nil {
-                NetworkMonitor.shared.startMonitoring { path in
-                    if path.status == .satisfied {
-                        AppDelegate.scene?.goToLogin()
-                    } else {
-                        AppDelegate.scene?.routeToNoInternetAccess()
-                    }
+                if isReachable {
+                    AppDelegate.scene?.goToLogin()
+                } else {
+                    AppDelegate.scene?.routeToNoInternetAccess()
                 }
-            } else {
+            }  else {
                 print("Error: User is still signed in")
             }
         } catch let signOutError as NSError {
@@ -194,20 +195,19 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     }
     
     func currentLocationBtnHandle(){
-        NetworkMonitor.shared.startMonitoring { path in
-            if path.status == .satisfied {
-                self.requestLocation()
-                self.fetchWeatherDataForCurrentLocation()
-            } else {
-                self.mainVC?.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
-            }
+        if isReachable {
+            self.requestLocation()
+            self.fetchWeatherDataForCurrentLocation()
+        } else {
+            noInternetWarning()
         }
     }
 }
+// MARK: - Các hàm liên quan vị trí
 extension MainPresenterImpl {
     func requestLocation() {
         print("requestLocation")
-
+        
         // đưa nó vào một luồng khác để tránh làm màn hình người dùng đơ
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
@@ -221,8 +221,6 @@ extension MainPresenterImpl {
         }
     }
     func checkLocationAuthorizationStatus() {
-        print("checkLocationAuthorizationStatus: checkLocationAuthorizationStatus")
-
         switch locationManager.authorizationStatus {
         case .notDetermined:
             // Yêu cầu quyền sử dụng vị trí khi ứng dụng đang được sử dụng
