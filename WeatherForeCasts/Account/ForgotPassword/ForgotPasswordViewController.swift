@@ -83,15 +83,17 @@ class ForgotPasswordViewController: UIViewController {
 }
 //MARK: - Validate Form
 extension ForgotPasswordViewController {
+    // các hàm passwordValidator,emailValidator xem ở extension Validator
+    // các hàm handleInputTF, handleButton xem ở extension StandardForm
     func checkValidInput(){
         let email = emailTF.text ?? ""
-        let emailResult = EmailValidater.emailValidator(email)
+        let emailResult = emailValidator(email)
         emailerrorTF.text = emailResult.message
-        StandardForm.handleInputTF(status: emailResult.valid,
+        handleInputTF(status: emailResult.valid,
                                    errorView: emailErrorView,
                                    errorViewHeight: errorViewHieght,
                                    textView: emailTextView)
-        StandardForm.handleButton(button: sendRequsetBtn,
+        handleButton(button: sendRequsetBtn,
                                   emailResult: emailResult.valid,
                                   passwordResult: emailResult.valid)
     }

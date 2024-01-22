@@ -7,7 +7,8 @@
 
 import UIKit
 
-class WeatherAdviceTableViewCell: UITableViewCell {
+class WeatherAdviceTableViewCell: UITableViewCell,UvValueHandle, AQIHandle{
+    
     @IBOutlet weak var outDoorActive: UILabel!
     @IBOutlet weak var outDoorExercise: UILabel!
     @IBOutlet weak var conditionForUV: UILabel!
@@ -62,8 +63,8 @@ class WeatherAdviceTableViewCell: UITableViewCell {
         }
         conditionForDrive.text = conditionForDriveResult
         
-        conditionForUV.text = NSLocalizedString(UVIndex.uvAdvice(uvValue: data.day.uv), comment: "")
-        let aqiData = AQIHandle.airQualityDataAdvice(index: data.day.airQuality.usEpaIndex ?? 0)
+        conditionForUV.text = NSLocalizedString(uvAdvice(uvValue: data.day.uv), comment: "")
+        let aqiData = airQualityDataAdvice(index: data.day.airQuality.usEpaIndex ?? 0)
         adviceAirPolution.text = NSLocalizedString(aqiData, comment: "")
     }
 }

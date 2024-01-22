@@ -5,6 +5,7 @@ import Alamofire
 protocol MainViewControllerDisplay: UIViewController {
     func updateDataForCurrentLocation(with weatherData: WeatherData24h,address: String? )
     func goToMapsVC()
+    func updateInternetView()
 }
 
 class MainViewController: UIViewController,MainViewControllerDisplay {
@@ -19,10 +20,12 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     @IBOutlet weak var noInternetView: UIView!
     @IBOutlet weak var noInternetViewConstraints: NSLayoutConstraint!
     @IBOutlet weak var nointernetLb: UILabel!
+    private let naviation = NavigationHelper.shared
     private let locationManager = CLLocationManager()
     private var isMenuOpen = false
     private var weatherData: WeatherData24h?
     private var mainPresenter: MainPresenter?
+    private var sideMenuVC: SideMenuViewController?
     private var hasReachedEnd = false
     private var refeshControl = UIRefreshControl()
     
@@ -38,15 +41,15 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NetworkMonitor.shared.mainVC = self
         mainPresenter = MainPresenterImpl(mainVC: self)
         setupTableView()
-//        mainPresenter?.checkLocationAuthorizationStatus()
-        refeshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
-        mainTableView.addSubview(refeshControl)
         updateInternetView()
-        nointernetLb.text = NSLocalizedString(nointernetLb.text ?? "", comment: "")
+        sideMenuVC?.loadDataFromFirebase()
+        mainPresenter?.checkLocationAuthorizationStatus()
+        pullToRefesh()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addSideMenuViewController()
@@ -54,18 +57,6 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
         mainPresenter?.requestLocation()
         locationManager.delegate = self
         navigationController?.isNavigationBarHidden = true
-        
-    }
-    func updateInternetView() {
-        NetworkMonitor.shared.startMonitoring { path in
-            if path.status == .satisfied {
-                self.noInternetView.isHidden = true
-                self.noInternetViewConstraints.constant = -25
-            } else {
-                self.noInternetView.isHidden = false
-                self.noInternetViewConstraints.constant = 0
-            }
-        }
     }
     
     @IBAction func MenuBtnHandle(_ sender: Any) {
@@ -289,27 +280,27 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
 // MARK: - Các hàm chuyển màn hình
 extension MainViewController: MapsViewControllerDelegate {
     private func goToProfileVC() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "ProfileViewController")
+        naviation.navigateToViewController(from: self, withIdentifier: "ProfileViewController")
     }
     private func goToForecast14DaysVC() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "WeatherLongDayViewController") { viewcontroller in
+        naviation.navigateToViewController(from: self, withIdentifier: "WeatherLongDayViewController") { viewcontroller in
             if let weatherLongDayVC = viewcontroller as? WeatherLongDayViewController {
                 weatherLongDayVC.weatherData = self.weatherData
             }
         }
     }
     func goToMapsVC() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "MapsViewController") { viewcontroller in
+        naviation.navigateToViewController(from: self, withIdentifier: "MapsViewController") { viewcontroller in
             if let mapsVC = viewcontroller as? MapsViewController {
                 mapsVC.delegate = self
             }
         }
     }
     private func goTodailyForecastVC() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "DailyForecastViewController")
+        naviation.navigateToViewController(from: self, withIdentifier: "DailyForecastViewController")
     }
     private func goToSettingVC(){
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "SetingViewController")
+        naviation.navigateToViewController(from: self, withIdentifier: "SetingViewController")
     }
     private func underDevelopment(){
         let title = NSLocalizedString("The feature is under development", comment: "")
@@ -317,9 +308,9 @@ extension MainViewController: MapsViewControllerDelegate {
         showAlert(title: title, message: message)
     }
 }
-// MARK: - Các hàm liên quan vị trí
+// MARK: - Các hàm dể load data
 extension MainViewController : CLLocationManagerDelegate {
-    
+    // sử dụng để load lại data sau khi chọn địa điểm trên maps
     func loadDataAfterAuthorizationStatus(){
         print("loadDataAfterAuthorizationStatus")
         mainPresenter?.checkLocationAuthorizationStatus()
@@ -332,12 +323,39 @@ extension MainViewController : CLLocationManagerDelegate {
     }
 }
 extension MainViewController: UIScrollViewDelegate {
-    
+    func pullToRefesh(){
+        refeshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
+        mainTableView.addSubview(refeshControl)
+        nointernetLb.text = NSLocalizedString(nointernetLb.text ?? "", comment: "")
+    }
     @objc func reloadData(send: UIRefreshControl){
         DispatchQueue.main.async {
             self.mainPresenter?.chooseDataToFetch()
             print("đã scroll hết")
             self.refeshControl.endRefreshing()
+        }
+    }
+}
+// MARK: - Các hàm xử lí liên quan đến kết nối internet
+extension MainViewController {
+    // Khi có thay đổi trạng thái mạng, bạn có thể gọi hàm này để cập nhật UIView
+    func handleNetworkStatusChange(isReachable: Bool) {
+        // Xử lý sự thay đổi trạng thái mạng tại đây
+        updateInternetView()
+    }
+    func updateInternetView() {
+        print("updateInternetView")
+
+        if NetworkMonitor.shared.isReachable {
+            DispatchQueue.main.async {
+                self.noInternetView.isHidden = true
+                self.noInternetViewConstraints.constant = -25
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.noInternetView.isHidden = false
+                self.noInternetViewConstraints.constant = 0
+            }
         }
     }
 }

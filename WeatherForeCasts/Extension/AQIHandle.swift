@@ -8,8 +8,14 @@
 import Foundation
 import UIKit
 
-class AQIHandle {
-    static func airQlyLevel(width: Int) -> CGFloat {
+protocol AQIHandle {
+    func airQlyLevel(width: Int) -> CGFloat
+    func airQlyColor(numb: Int) -> UIColor
+    func airQlyDataCondition(numb: Int) -> String
+    func airQualityDataAdvice(index: Int) -> String
+}
+extension AQIHandle {
+    func airQlyLevel(width: Int) -> CGFloat {
         let level :CGFloat = 50.0
         switch width {
         case 1 :
@@ -28,7 +34,7 @@ class AQIHandle {
             return 0.0
         }
     }
-    static func airQlyColor(numb: Int) -> UIColor {
+    func airQlyColor(numb: Int) -> UIColor {
         switch numb {
         case 1 :
             return .green
@@ -46,7 +52,7 @@ class AQIHandle {
             return .white
         }
     }
-    static func airQlyDataCondition(numb: Int) -> String {
+    func airQlyDataCondition(numb: Int) -> String {
         switch numb {
         case 1 :
             return "(Good)"
@@ -65,7 +71,7 @@ class AQIHandle {
             return "(Unknow)"
         }
     }
-    static func airQualityDataAdvice(index: Int) -> String {
+    func airQualityDataAdvice(index: Int) -> String {
         switch index {
         case 1:
             return "Great air quality, you don't need any protection."

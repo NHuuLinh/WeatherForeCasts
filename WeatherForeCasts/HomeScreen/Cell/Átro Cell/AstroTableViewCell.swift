@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AstroTableViewCell: UITableViewCell {
+class AstroTableViewCell: UITableViewCell, DateConvertFormat,AnimationHandle {
     @IBOutlet weak var sunriseTime: UILabel!
     @IBOutlet weak var sunsetTime: UILabel!
     @IBOutlet weak var moonriseTime: UILabel!
@@ -40,38 +40,38 @@ class AstroTableViewCell: UITableViewCell {
 
     }
     func getAstroData(with forecastAstro : Forecastday,with currentTime: String ) {
-        sunriseTime.text = DateConvert.convertDate24h(date: forecastAstro.astro.sunrise,
+        sunriseTime.text = convertDate24h(date: forecastAstro.astro.sunrise,
                                                       inputFormat: "hh:mm a",
                                                       outputFormat: "HH:mm")
-        sunsetTime.text = DateConvert.convertDate24h(date: forecastAstro.astro.sunset,
+        sunsetTime.text = convertDate24h(date: forecastAstro.astro.sunset,
                                                      inputFormat: "hh:mm a",
                                                      outputFormat: "HH:mm")
-        moonriseTime.text = DateConvert.convertDate24h(date:forecastAstro.astro.moonrise,
+        moonriseTime.text = convertDate24h(date:forecastAstro.astro.moonrise,
                                                        inputFormat: "hh:mm a",
                                                        outputFormat: "HH:mm")
-        moonsetTime.text = DateConvert.convertDate24h(date: forecastAstro.astro.moonset,
+        moonsetTime.text = convertDate24h(date: forecastAstro.astro.moonset,
                                                       inputFormat: "hh:mm a",
                                                       outputFormat: "HH:mm")
         let moonPhaseText = forecastAstro.astro.moonPhase
         moonPhase.text = NSLocalizedString(moonPhaseText ,comment: "")
         
-        let currentValue = DateConvert.convertDate24h(date: currentTime,
+        let currentValue = convertDate24h(date: currentTime,
                                                       inputFormat: "yyyy-MM-dd HH:mm",
                                                       outputFormat: "HH:mm")
         
-        let sunEndAngle = DateConvert.hourToAngle(riseHours: sunriseTime.text ?? "",
+        let sunEndAngle = hourToAngle(riseHours: sunriseTime.text ?? "",
                                                   setHours: sunsetTime.text ?? "",
                                                   currentHours: currentValue )
         
-        AnimationHandle.astroAnimetion(endAngle: sunEndAngle,
+        astroAnimetion(endAngle: sunEndAngle,
                                        rootImage: sunOrbit,
                                        animationImage: sunImage)
         
-        let moonEndAngle = DateConvert.hourToAngle(riseHours: moonriseTime.text ?? "",
+        let moonEndAngle = hourToAngle(riseHours: moonriseTime.text ?? "",
                                                    setHours: moonsetTime.text ?? "",
                                                    currentHours: currentValue )
         
-        AnimationHandle.astroAnimetion(endAngle: moonEndAngle,
+        astroAnimetion(endAngle: moonEndAngle,
                                        rootImage: moonOrbit,
                                        animationImage: moonImage)
     }

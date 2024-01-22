@@ -9,9 +9,12 @@ import Foundation
 import UIKit
 import CoreData
 
-class AnimationHandle {
+protocol AnimationHandle{
+    func astroAnimetion(endAngle: CGFloat, rootImage:UIImageView, animationImage: UIImageView )
+}
+extension AnimationHandle {
 
-    static func astroAnimetion(endAngle: CGFloat, rootImage:UIImageView, animationImage: UIImageView ) {
+    func astroAnimetion(endAngle: CGFloat, rootImage:UIImageView, animationImage: UIImageView ) {
         let path = UIBezierPath()
         let xcordate = rootImage.frame.minX + 25
 //        print("xcordate: \(xcordate)")

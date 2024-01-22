@@ -1,8 +1,8 @@
 import Foundation
 import UIKit
 
-class StandardForm {
-    static func handleInputTF(status: Bool,errorView: UIView, errorViewHeight: NSLayoutConstraint, textView: UIView) {
+extension UIViewController {
+    func handleInputTF(status: Bool,errorView: UIView, errorViewHeight: NSLayoutConstraint, textView: UIView) {
         
         if status {
             errorViewHeight.constant = 0
@@ -17,7 +17,7 @@ class StandardForm {
         }
     }
     
-    static func setupSecureButton(textFied: UITextField, button: UIButton){
+    func setupSecureButton(textFied: UITextField, button: UIButton){
         
         textFied.isSecureTextEntry.toggle()
         let showImage = UIImage(systemName: "eye.circle")
@@ -26,7 +26,7 @@ class StandardForm {
         button.setImage(buttonImage, for: .normal)
     }
     
-    static func handleButton(button: UIButton , emailResult: Bool, passwordResult: Bool ){
+    func handleButton(button: UIButton , emailResult: Bool, passwordResult: Bool ){
         if emailResult && passwordResult{
             
             button.isEnabled = true
@@ -37,16 +37,6 @@ class StandardForm {
         }
     }
 
-}
-class NavigationHelper {
-    static func navigateToViewController(from sourceVC: UIViewController, withIdentifier identifier: String, setup: ((UIViewController) -> Void)? = nil) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let viewController = storyboard.instantiateViewController(withIdentifier: identifier) as? UIViewController {
-            setup?(viewController)
-            sourceVC.navigationController?.pushViewController(viewController, animated: true)
-        }
-    }
 }
 extension UIImageView {
   func setImageColor(color: UIColor) {

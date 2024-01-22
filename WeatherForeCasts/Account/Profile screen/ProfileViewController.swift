@@ -145,13 +145,11 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             print("phoneNumberTF")
         case editProfileBtn:
             //            editProfileState()
-            NetworkMonitor.shared.startMonitoring { path in
-                if path.status == .satisfied {
+                if NetworkMonitor.shared.isReachable  {
                     self.editProfileState()
                 } else {
                     self.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
                 }
-            }
             print("editProfileBtn")
         case clearEditBtn:
             loadDataFromFirebase()

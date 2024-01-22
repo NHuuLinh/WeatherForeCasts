@@ -26,7 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // đổi theme
         
         FirebaseApp.configure()
-        NetworkMonitor.shared.checkConnection()
+        
+        NetworkMonitor.shared.startMonitoring()
+//        NetworkMonitor.shared.startMonitor()
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            NetworkMonitor.shared.stopMonitoring()
+//        }
 
             return true
     }

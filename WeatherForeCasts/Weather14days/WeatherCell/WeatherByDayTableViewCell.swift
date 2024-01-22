@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeatherByDayTableViewCell: UITableViewCell {
+class WeatherByDayTableViewCell: UITableViewCell,UvValueHandle,AQIHandle, ExtractImageFromUrl,DateConvertFormat, AnimationHandle {
     //    forecastDay
     @IBOutlet weak var forecastDayIcone: UIImageView!
     @IBOutlet weak var forecastDayAvgTemp: UILabel!
@@ -62,7 +62,7 @@ class WeatherByDayTableViewCell: UITableViewCell {
         self.timeData = test1
     }
     func updateValue(datasForecast: Forecastday ) {
-        let imageName  = ExtractImage.extractImageName(url: "\(datasForecast.day.condition.icon)")
+        let imageName  = extractImageName(url: "\(datasForecast.day.condition.icon)")
         forecastDayIcone.image = UIImage(named: imageName)
         forecastDayAvgTemp.text = "\(Int(datasForecast.day.avgtempC.rounded()))"
         forecastDayConditionText.text = datasForecast.day.condition.text
@@ -71,40 +71,40 @@ class WeatherByDayTableViewCell: UITableViewCell {
         forecastDayWind.text = "\(Int(datasForecast.day.maxwindKph.rounded()))"
         let uvValue = Int(datasForecast.day.uv.rounded())
         forecastDayUV.text = "\(uvValue)"
-        forecastDayUvCondition.text = NSLocalizedString(UVIndex.uvCondition(uvValue: uvValue),
+        forecastDayUvCondition.text = NSLocalizedString(uvCondition(uvValue: uvValue),
                                                         comment: "")
         forecastDayRainChance.text = "\(datasForecast.day.dailyChanceOfRain)"
         forecastDayHumidity.text = "\(Int(datasForecast.day.avghumidity.rounded()))"
         let aqiValue = datasForecast.day.airQuality.usEpaIndex ?? 0
         forecastDayAirQly.text = "\(aqiValue)"
-        let AirQlyCondition = NSLocalizedString(AQIHandle.airQlyDataCondition(numb: aqiValue),
+        let AirQlyCondition = NSLocalizedString(airQlyDataCondition(numb: aqiValue),
                                                 comment: "")
         forecastDayAirQlyText.text = NSLocalizedString(AirQlyCondition,
                                                        comment: "")
-        forecastDaySunRaise.text = DateConvert.convertDate24h(date: datasForecast.astro.sunrise,
+        forecastDaySunRaise.text = convertDate24h(date: datasForecast.astro.sunrise,
                                                               inputFormat: "hh:mm a",
                                                               outputFormat: "HH:mm")
-        forecastDaySunSet.text = DateConvert.convertDate24h(date: datasForecast.astro.sunset,
+        forecastDaySunSet.text = convertDate24h(date: datasForecast.astro.sunset,
                                                             inputFormat: "hh:mm a",
                                                             outputFormat: "HH:mm")
-        forecastDayMoonRise.text = DateConvert.convertDate24h(date: datasForecast.astro.moonrise,
+        forecastDayMoonRise.text = convertDate24h(date: datasForecast.astro.moonrise,
                                                               inputFormat: "hh:mm a",
                                                               outputFormat: "HH:mm")
-        forecastDayMoonset.text = DateConvert.convertDate24h(date: datasForecast.astro.moonset,
+        forecastDayMoonset.text = convertDate24h(date: datasForecast.astro.moonset,
                                                              inputFormat: "hh:mm a",
                                                              outputFormat: "HH:mm")
         
         forecastDayMoonPhase.text = NSLocalizedString(datasForecast.astro.moonPhase, comment: "")
         
         
-        let currentValue = DateConvert.convertDate24h(date: timeData?.location.localtime ?? "",
+        let currentValue = convertDate24h(date: timeData?.location.localtime ?? "",
                                                       inputFormat: "yyyy-MM-dd HH:mm",
                                                       outputFormat: "HH:mm")
-        let sunEndAngle = DateConvert.hourToAngle(riseHours: forecastDaySunRaise.text ?? "",
+        let sunEndAngle = hourToAngle(riseHours: forecastDaySunRaise.text ?? "",
                                                   setHours: forecastDaySunSet.text ?? "",
                                                   currentHours: currentValue)
 
-        let moonEndAngle = DateConvert.hourToAngle(riseHours: forecastDayMoonRise.text ?? "",
+        let moonEndAngle = hourToAngle(riseHours: forecastDayMoonRise.text ?? "",
                                                   setHours: forecastDayMoonset.text ?? "",
                                                   currentHours: currentValue)
 
@@ -112,7 +112,7 @@ class WeatherByDayTableViewCell: UITableViewCell {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        let currentDate = DateConvert.convertDate(date: timeData?.location.localtime ?? "", inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "yyyy-MM-dd")
+        let currentDate = convertDate(date: timeData?.location.localtime ?? "", inputFormat: "yyyy-MM-dd HH:mm", outputFormat: "yyyy-MM-dd")
         let tomorrowDate = datasForecast.date
 
         if let todayDay = dateFormatter.date(from: currentDate), let tomorrowDay = dateFormatter.date(from: tomorrowDate) {
@@ -120,10 +120,10 @@ class WeatherByDayTableViewCell: UITableViewCell {
                 print("không cần hàm animation")
 
             } else {
-                AnimationHandle.astroAnimetion(endAngle: sunEndAngle,
+                astroAnimetion(endAngle: sunEndAngle,
                                                rootImage: sunOrbit,
                                                animationImage: sunImage)
-                AnimationHandle.astroAnimetion(endAngle: moonEndAngle,
+                astroAnimetion(endAngle: moonEndAngle,
                                                rootImage: moonOrbit,
                                                animationImage: moonImage)
             }

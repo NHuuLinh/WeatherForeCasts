@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OtherInformTableViewCell: UITableViewCell {
+class OtherInformTableViewCell: UITableViewCell, UvValueHandle {
     @IBOutlet weak var currentCloud: UILabel!
     @IBOutlet weak var currentUvIndex: UILabel!
     @IBOutlet weak var currentUvCondition: UILabel!
@@ -34,7 +34,7 @@ class OtherInformTableViewCell: UITableViewCell {
         currentCloud.text = "\(forecastOther.cloud)"
         let indexValue = Int(forecastOther.uv)
         currentUvIndex.text = "\(indexValue)"
-        currentUvCondition.text = NSLocalizedString(UVIndex.uvCondition(uvValue: indexValue), comment: "")
+        currentUvCondition.text = NSLocalizedString(uvCondition(uvValue: indexValue), comment: "")
         currentTemp.text = "\(Int(forecastOther.tempC.rounded()))"
         currentWindSpeed.text = "\(forecastOther.windKph)"
         currentVisibility.text = "\(forecastOther.visKm)"

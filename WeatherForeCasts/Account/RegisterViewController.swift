@@ -4,11 +4,11 @@ import FirebaseAuth
 import KeychainSwift
 
 protocol RegisterDisplay: UIViewController {
-
+    
 }
 
 class RegisterViewController: UIViewController, RegisterDisplay {
-
+    
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
     @IBOutlet weak var emailerrorTF: UITextField!
@@ -42,10 +42,9 @@ class RegisterViewController: UIViewController, RegisterDisplay {
     @IBOutlet weak var dotHaveAcountLb: UILabel!
     @IBOutlet weak var orContinueWith: UILabel!
     
-    
     private var registerPresenter: RegisterPresenter!
     let keychain = KeychainSwift()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -60,9 +59,10 @@ class RegisterViewController: UIViewController, RegisterDisplay {
         checkValidInput()
         registerPresenter = RegisterPresenterImpl(registerVC: self)
     }
-
+    
     func goToForgotPassword() {
-        NavigationHelper.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController")
+        let navigation = NavigationHelper.shared
+        navigation.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController")
         keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
     }
     
@@ -76,9 +76,9 @@ class RegisterViewController: UIViewController, RegisterDisplay {
         case clearBtn :
             emailTF.text = ""
         case securePasswordBtn:
-            StandardForm.setupSecureButton(textFied: passwordTF, button: securePasswordBtn)
+            setupSecureButton(textFied: passwordTF, button: securePasswordBtn)
         case secureRePasswordBtn:
-            StandardForm.setupSecureButton(textFied: rePassworđTF, button: secureRePasswordBtn)
+            setupSecureButton(textFied: rePassworđTF, button: secureRePasswordBtn)
         case forgotPasswordBtn:
             goToForgotPassword()
         case signInBtn:
@@ -96,39 +96,44 @@ class RegisterViewController: UIViewController, RegisterDisplay {
 }
 
 extension RegisterViewController {
+    // các hàm passwordValidator,emailValidator xem ở extension Validator
+    // các hàm handleInputTF, handleButton xem ở extension StandardForm
     
     func checkValidInput(){
         let email = emailTF.text ?? ""
-        let emailResult = EmailValidater.emailValidator(email)
+        let emailResult = emailValidator(email)
         emailerrorTF.text = emailResult.message
-        StandardForm.handleInputTF(status: emailResult.valid,
-                                   errorView: emailErrorView,
-                                   errorViewHeight: errorViewHieght,
-                                   textView: emailTextView)
+        handleInputTF(status: emailResult.valid,
+                      errorView: emailErrorView,
+                      errorViewHeight: errorViewHieght,
+                      textView: emailTextView)
         
         let password = passwordTF.text ?? ""
-        let passwordResult = PasswordValidater.passwordValidator(password: password)
+        let passwordResult = passwordValidator(password: password)
         passwordErrrorTF.text = passwordResult.message
-        StandardForm.handleInputTF(status: passwordResult.valid,
-                                   errorView: passwordErorrView,
-                                   errorViewHeight: passwordErrorViewHieght,
-                                   textView: passwordTextView)
+        handleInputTF(status: passwordResult.valid,
+                      errorView: passwordErorrView,
+                      errorViewHeight: passwordErrorViewHieght,
+                      textView: passwordTextView)
+        
         let ReEnterpasswordResult : Bool
         if rePassworđTF.text == passwordTF.text {
             rePasswordErrrorTF.text = "ok"
             ReEnterpasswordResult = true
-            StandardForm.handleButton(button: registerBtn,
-                                      emailResult: emailResult.valid,
-                                      passwordResult: passwordResult.valid)
-            print("true")
+            handleButton(button: registerBtn,
+                         emailResult: emailResult.valid,
+                         passwordResult: passwordResult.valid)
         } else {
             rePasswordErrrorTF.text = NSLocalizedString("Password don't match", comment: "")
             ReEnterpasswordResult = false
-            StandardForm.handleButton(button: registerBtn,
-                                      emailResult: emailResult.valid,
-                                      passwordResult: ReEnterpasswordResult)
+            handleButton(button: registerBtn,
+                         emailResult: emailResult.valid,
+                         passwordResult: ReEnterpasswordResult)
         }
-        StandardForm.handleInputTF(status: ReEnterpasswordResult, errorView: rePasswordErorrView, errorViewHeight: rePasswordErrorViewHieght, textView: rePasswordTextView)
+        handleInputTF(status: ReEnterpasswordResult,
+                      errorView: rePasswordErorrView,
+                      errorViewHeight: rePasswordErrorViewHieght,
+                      textView: rePasswordTextView)
     }
 }
 // MARK: - Dịch Thuật

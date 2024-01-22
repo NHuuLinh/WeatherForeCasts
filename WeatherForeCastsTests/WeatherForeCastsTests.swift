@@ -10,15 +10,14 @@ import XCTest
 
 final class WeatherForeCastsTests: XCTestCase {
     
-    func validatorInformTestCase() {
-//        XCTAssertFalse(test())
-    }
     func test(){
+        let vc = UIViewController()
         let email = "linhlinh"
         let password = "123"
-        let testvalidator = EmailValidater.emailValidator(email).valid
+        let emailTestvalidator = vc.emailValidator(email).valid
+        let passwordTestvalidator = password
 //        return testvalidator
-        XCTAssertFalse(testvalidator)
+        XCTAssertFalse(emailTestvalidator)
     }
 
     func testAddition() {
@@ -30,7 +29,7 @@ final class WeatherForeCastsTests: XCTestCase {
         let result = addNumbers12(number1, number2)
         
         // Assert
-        XCTAssertEqual(result, 8, "Addition result should be 8")
+        XCTAssertEqual(result, 8, "ket qua đúng là 8")
     }
     
     // Hàm tính tổng

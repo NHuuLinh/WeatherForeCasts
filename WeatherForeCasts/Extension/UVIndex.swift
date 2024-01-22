@@ -1,7 +1,11 @@
 
 import Foundation
-class UVIndex {
-    static func uvCondition(uvValue: Int) -> String {
+protocol UvValueHandle {
+    func uvCondition(uvValue: Int) -> String
+    func uvAdvice(uvValue: Double) -> String
+}
+extension UvValueHandle {
+    func uvCondition(uvValue: Int) -> String {
         switch uvValue {
         case 1...2 :
             return "(low)"
@@ -17,7 +21,7 @@ class UVIndex {
             return "(Error)"
         }
     }
-    static func uvAdvice(uvValue: Double) -> String {
+    func uvAdvice(uvValue: Double) -> String {
         switch uvValue {
         case 0...2 :
             return "Low UV index. You don't need special protection."

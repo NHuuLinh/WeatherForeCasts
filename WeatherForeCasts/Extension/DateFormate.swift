@@ -1,9 +1,16 @@
 
 import Foundation
 import UIKit
-class DateConvert {
+
+protocol DateConvertFormat {
+    func convertDate(date: String, inputFormat: String, outputFormat: String) -> String
+    func convertDate24h(date: String, inputFormat: String, outputFormat: String) -> String
+    func hourToMinutes(hours: String) -> (Float)
+    func hourToAngle(riseHours: String ,setHours: String, currentHours: String) -> (CGFloat)
+}
+extension DateConvertFormat {
     
-    static func convertDate(date: String, inputFormat: String, outputFormat: String) -> String {
+    func convertDate(date: String, inputFormat: String, outputFormat: String) -> String {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = inputFormat
@@ -18,7 +25,7 @@ class DateConvert {
         }
     }
     
-    static func convertDate24h(date: String, inputFormat: String, outputFormat: String) -> String {
+    func convertDate24h(date: String, inputFormat: String, outputFormat: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Set locale here
         dateFormatter.dateFormat = inputFormat
@@ -31,19 +38,19 @@ class DateConvert {
         }
     }
     
-    static func hourToMinutes(hours: String) -> (Float){
+    func hourToMinutes(hours: String) -> (Float){
         print("hourToMinuest:\(hours)")
 
-        let hourToMinuest = (Float(DateConvert.convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "HH")) ?? 0)*60
-        let minutes = (Float(DateConvert.convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "mm")) ?? 0)
+        let hourToMinuest = (Float(convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "HH")) ?? 0)*60
+        let minutes = (Float(convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "mm")) ?? 0)
         let minutesValue = hourToMinuest + minutes
         return minutesValue
     }
     
-    static func hourToAngle(riseHours: String ,setHours: String, currentHours: String) -> (CGFloat){
-        let startHour = DateConvert.hourToMinutes(hours: riseHours)
-        let endHour = DateConvert.hourToMinutes(hours: setHours)
-        let currentHour = DateConvert.hourToMinutes(hours: currentHours)
+    func hourToAngle(riseHours: String ,setHours: String, currentHours: String) -> (CGFloat){
+        let startHour = hourToMinutes(hours: riseHours)
+        let endHour = hourToMinutes(hours: setHours)
+        let currentHour = hourToMinutes(hours: currentHours)
         // + giá trị 24h khi thời gian kết thúc chu kì là ngày hôm sau
         var endValue: Float = 1
         if endHour < startHour {
