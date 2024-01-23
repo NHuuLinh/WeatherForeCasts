@@ -21,12 +21,11 @@ class RegisterPresenterImpl: RegisterPresenter {
     init(registerVC: RegisterDisplay) {
         self.registerVC = registerVC
     }
-    
-    func register(email: String,password: String) {
+    func register(email: String, password: String) {
         self.registerVC.showLoading(isShow: true)
         Auth.auth().createUser(withEmail: email, password: password) { [self] authResult, err in
             guard err == nil else {
-                /// Cach xử lý custom error.
+                // Xử lý lỗi khi đăng ký tài khoản
                 var message = ""
                 switch AuthErrorCode.Code(rawValue: err!._code) {
                 case .emailAlreadyInUse:
@@ -37,14 +36,40 @@ class RegisterPresenterImpl: RegisterPresenter {
                     message = err?.localizedDescription ?? ""
                 }
                 self.registerVC.showLoading(isShow: false)
-                self.registerVC.showAlert(title: "error", message: message)
+                self.registerVC.showAlert(title: "Error", message: message)
                 return
             }
-            AppDelegate.scene?.goToMain()
+            
+            // Gửi email xác thực
+            if let user = Auth.auth().currentUser {
+                user.sendEmailVerification { (error) in
+                    if let error = error {
+                        print("Lỗi khi gửi email xác thực: \(error.localizedDescription)")
+                    }
+                }
+            }
+            let firebaseAuth = Auth.auth()
+            do {
+                try firebaseAuth.signOut()
+                if firebaseAuth.currentUser == nil {
+                }  else {
+                    print("Error: User is still signed in")
+                }
+            } catch let signOutError as NSError {
+                print("Error signing out: %@", signOutError)
+            }
+            // Ẩn loading indicator
+            self.registerVC.showLoading(isShow: false)
+            // Lưu email và password vào Keychain
             self.keychain.set(email, forKey: "email")
             self.keychain.set(password, forKey: "password")
+            // Hiển thị thông báo cho người dùng về việc kiểm tra email để xác thực
+            self.registerVC.showAlert(title: "Success", message: "Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.") {
+                self.registerVC.navigationController?.popToRootViewController(animated: true)
+            }
         }
     }
+    
     func loginBySocialNW(){
         let title = NSLocalizedString("The feature is under development", comment: "")
         let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")

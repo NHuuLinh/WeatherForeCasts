@@ -117,8 +117,6 @@ class WeatherByDayTableViewCell: UITableViewCell,UvValueHandle,AQIHandle, Extrac
 
         if let todayDay = dateFormatter.date(from: currentDate), let tomorrowDay = dateFormatter.date(from: tomorrowDate) {
             if todayDay < tomorrowDay {
-                print("không cần hàm animation")
-
             } else {
                 astroAnimetion(endAngle: sunEndAngle,
                                                rootImage: sunOrbit,
@@ -145,37 +143,6 @@ class WeatherByDayTableViewCell: UITableViewCell,UvValueHandle,AQIHandle, Extrac
         titleMoonrise.text = NSLocalizedString(titleMoonrise.text ?? "", comment: "")
         titleMoonset.text = NSLocalizedString(titleMoonset.text ?? "", comment: "")
         titleSunAndMoon.text = NSLocalizedString(titleSunAndMoon.text ?? "", comment: "")
-    }
-    func testads(endAngle: CGFloat ) {
-        let path = UIBezierPath()
-        let xcordate = sunOrbit.frame.minX + 25
-        print("xcordate: \(xcordate)")
-        let ycordate = sunOrbit.frame.maxY - 15
-        print("ycordate: \(ycordate)")
-        let value: CGFloat = 110
-
-        path.move(to: CGPoint(x: xcordate, y: ycordate))
-        
-        
-        // Add an arc representing 1/2 of a circle
-        let startAngle = CGFloat.pi  // Bắt đầu từ phía trên
-        print("\(startAngle)")
-//        let endAngle = startAngle + CGFloat.pi  // Kết thúc ở phía dưới
-        path.addArc(withCenter: CGPoint(x: xcordate + value/2, y: ycordate),
-                    radius: value/2,
-                    startAngle: startAngle,
-                    endAngle: -(CGFloat.pi*(endAngle )),
-                    clockwise: true)
-
-        let animation = CAKeyframeAnimation(keyPath: "position")
-        animation.path = path.cgPath
-        animation.duration = 4
-        animation.timingFunctions = [CAMediaTimingFunction(name: .easeInEaseOut)]
-        animation.fillMode = .forwards
-        animation.isRemovedOnCompletion = false
-
-        sunImage.layer.add(animation, forKey: "curveAnimation")
-        sunImage.layer.position = CGPoint(x: xcordate, y: ycordate + value)
     }
 }
 

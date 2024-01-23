@@ -39,8 +39,6 @@ extension DateConvertFormat {
     }
     
     func hourToMinutes(hours: String) -> (Float){
-        print("hourToMinuest:\(hours)")
-
         let hourToMinuest = (Float(convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "HH")) ?? 0)*60
         let minutes = (Float(convertDate(date: hours, inputFormat: "HH:mm", outputFormat: "mm")) ?? 0)
         let minutesValue = hourToMinuest + minutes
@@ -58,6 +56,7 @@ extension DateConvertFormat {
         } else {
             endValue = endHour
         }
+        
         
         var currentValue: Float = 1
         if currentHour < startHour {
@@ -82,14 +81,6 @@ extension DateConvertFormat {
         } else {
             anggle = CGFloat(1 - currentValuePercen)
         }
-//        let anggle = CGFloat(1 - currentValuePercen)
-        print("endValue:\(endValue)")
-        print("startHour:\(startHour)")
-        print("currentValue:\(currentValue)")
-        print("anggle:\(anggle)")
-//        print("endValue:\(endValue)")
-//        print("endValue:\(endValue)")
-
         return (CGFloat)(anggle)
     }
 }

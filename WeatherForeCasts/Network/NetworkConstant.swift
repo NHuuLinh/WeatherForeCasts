@@ -11,7 +11,6 @@ class WeatherAPIManager {
     
     func fetchWeatherData(latitude: Double, longitude: Double, completion: @escaping (WeatherData24h?) -> Void) {
         let selectedLanguage = UserDefaults.standard.string(forKey: "AppleLanguages") ?? Locale.current.languageCode
-        print("selectedLanguage: \(selectedLanguage)")
         let url = Constants.baseUrl
         let parameters: [String: Any] = [
             "key": Constants.key,
@@ -25,7 +24,6 @@ class WeatherAPIManager {
                 let decoder = JSONDecoder()
                 do {
                     let weatherData = try decoder.decode(WeatherData24h.self, from: data)
-                    print("Fetched weather data: \(weatherData.location.name)")
                     completion(weatherData)
                 } catch {
                     print("Error decoding: \(error)")
