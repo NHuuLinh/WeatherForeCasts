@@ -19,6 +19,7 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
 //    weak var mapsVC: MapsViewControllerDelegate?
     let locationManager = CLLocationManager()
     let isReachable = NetworkMonitor.shared.isReachable
+    let coreData = CoreDataHelper.share
     private var loadingTimer: Timer?
     private var isDataLoaded = false
     
@@ -119,8 +120,6 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         
         // Fetch weather data using the current location
         WeatherAPIManager.shared.fetchWeatherData(latitude: latitude , longitude: longitude ) { [weak self] weatherData in
-            print("longitude: \(longitude)")
-            print("latitude: \(latitude)")
             //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
             guard let self = self else { return }
             
@@ -151,14 +150,11 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     func chooseDataToFetch(){
         if UserDefaults.standard.didGetData && !isReachable {
             updateDataFormCoreData()
-            print("updateDataFormCoreData: updateDataFormCoreData")
         } else {
             if UserDefaults.standard.didOnMain {
                 fetchWeatherData()
-                print("fetchWeatherData: fetchWeatherData")
             } else {
                 fetchWeatherDataForCurrentLocation()
-                print("fetchWeatherDataForCurrentLocation: fetchWeatherDataForCurrentLocation")
             }
         }
     }
@@ -180,6 +176,12 @@ extension MainPresenterImpl {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            coreData.deleteProfileValue()
+            coreData.deleteWeatherValue()
+            coreData.deleteLocationValue()
+            coreData.saveValue()
+            UserDefaults.standard.didOnMain = false
+
             if firebaseAuth.currentUser == nil {
                 if isReachable {
                     AppDelegate.scene?.goToLogin()
@@ -193,7 +195,6 @@ extension MainPresenterImpl {
             print("Error signing out: %@", signOutError)
         }
     }
-    
     func currentLocationBtnHandle(){
         if isReachable {
             self.requestLocation()

@@ -25,7 +25,6 @@ class WeatherLongDayViewController: UIViewController {
         setupTableView()
         Weather14dayTbView.reloadData()
         titleForecast.text = NSLocalizedString(titleForecast.text ?? "", comment: "")
-//        getweatherData()
     }
     private func setupTableView() {
         Weather14dayTbView.dataSource = self
@@ -42,23 +41,6 @@ class WeatherLongDayViewController: UIViewController {
     func gotoHomeViewController() {
         self.navigationController?.popToRootViewController(animated: true)
     }
-//        private func getweatherData() {
-//            guard let location = LocationManager.shared.currentLocation else {
-//                print("Failed to get current location")
-//                return
-//            }
-//            DispatchQueue.global().async {
-//                WeatherAPIManager1.shared.fetchWeatherData(latitude: location.latitude, longitude: location.longitude) { weatherData in
-//                    guard let weatherData = weatherData else {
-//                        print("Failed to fetch weather data")
-//                        return
-//                    }
-//                    WeatherDataManager.shared.weatherData = weatherData
-//                    self.weatherData = weatherData
-//                    self.Weather14dayTbView.reloadData()
-//                }
-//            }
-//        }
 }
 
 extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelegate {
@@ -72,8 +54,6 @@ extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelega
         case .dates:
             return 1
         case .datasForecast:
-            print("\(weatherData?.forecast.forecastday.count ?? 0)")
-
             return weatherData?.forecast.forecastday.count ?? 0
         default:
             return 0
@@ -128,7 +108,6 @@ extension WeatherLongDayViewController: UITableViewDataSource, UITableViewDelega
             print("Bạn đã chọn dòng \(indexPath.row) trong phần datasForecast")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let dailyForecastVC: DailyForecastViewController = storyboard.instantiateViewController(withIdentifier: "DailyForecastViewController") as! DailyForecastViewController
-//            dailyForecastVC.dayForecast = indexPath.row // Gán giá trị cho dayForecast
             dailyForecastVC.weatherData24h = weatherData?.forecast.forecastday[indexPath.row]
             navigationController?.pushViewController(dailyForecastVC, animated: true )
         default:

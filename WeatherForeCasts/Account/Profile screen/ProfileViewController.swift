@@ -58,6 +58,14 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
     }
     override func viewWillAppear(_ animated: Bool) {
+        chooseDataLoader()
+        setupView()
+        createDatePicker()
+        phoneNumberTF.delegate = self
+        phoneNumberTF.keyboardType = .phonePad
+        translateLangue()
+    }
+    func chooseDataLoader(){
         if UserDefaults.standard.didUpdateProfile {
             loadProfileFromCoreData()
             print("loadProfileFromCoreData")
@@ -65,11 +73,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             loadDataFromFirebase()
             print("loadDataFromFirebase")
         }
-        setupView()
-        createDatePicker()
-        phoneNumberTF.delegate = self
-        phoneNumberTF.keyboardType = .phonePad
-        translateLangue()
     }
     func setEditingState(_ isEditing: Bool) {
         isEditingProfile = isEditing
@@ -110,7 +113,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     }
     func editProfileState() {
         setEditingState(true)
-        //        setButtonVisibility(true)
         setEditProfileBtnStyle(true)
         saveEditBtn.alpha = 1
     }
@@ -144,7 +146,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             textFieldChangeHandle(phoneNumberTF)
             print("phoneNumberTF")
         case editProfileBtn:
-            //            editProfileState()
                 if NetworkMonitor.shared.isReachable  {
                     self.editProfileState()
                 } else {
@@ -152,7 +153,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                 }
             print("editProfileBtn")
         case clearEditBtn:
-            loadDataFromFirebase()
+            chooseDataLoader()
             setupView()
         case saveEditBtn:
             updateDataToFireBase()
@@ -236,22 +237,26 @@ extension ProfileViewController {
         UserDefaults.standard.didUpdateProfile = true
     }
     func loadProfileFromCoreData(){
+        showLoading(isShow: true)
         let profileData = CoreDataHelper.share.getProfileValuesFromCoreData()
-        avatarImg.image = profileData.avatar
-        nameTF.text = profileData.name
-        dateOfBirthTF.text = profileData.dateOfBirth
-        phoneNumberTF.text = profileData.phoneNumber
-        if let genderString = profileData.gender{
-            if let gender = Gender(rawValue: genderString){
-                userGender = gender
-                selectedGender = gender
-                updateGenderButtons()
-            } else {
-                print(" gender is nil")
+        DispatchQueue.main.async {
+            self.avatarImg.image = profileData.avatar
+            self.nameTF.text = profileData.name
+            self.dateOfBirthTF.text = profileData.dateOfBirth
+            self.phoneNumberTF.text = profileData.phoneNumber
+            if let genderString = profileData.gender{
+                if let gender = Gender(rawValue: genderString){
+                    self.userGender = gender
+                    self.selectedGender = gender
+                    self.updateGenderButtons()
+                } else {
+                    print(" gender is nil")
+                }
+            }else {
+                print("genderString is nil")
             }
-        }else {
-            print("genderString is nil")
         }
+        showLoading(isShow: false)
     }
 }
 // MARK: - date of birth text field

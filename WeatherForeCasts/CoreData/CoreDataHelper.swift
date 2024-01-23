@@ -5,7 +5,7 @@ import UIKit
 
 class CoreDataHelper {
     static let share = CoreDataHelper()
-        
+    
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let locationFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationEntity")
     let locationfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "LocationEntity")
@@ -23,7 +23,7 @@ class CoreDataHelper {
             print("lỗi lưu value: \(error)")
         }
     }
-
+    
     func deleteLocationValue(){
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: locationFetchRequestResult)
         do {
@@ -32,7 +32,7 @@ class CoreDataHelper {
             print("Lỗi khi xóa dữ liệu cũ từ CoreData: \(error)")
         }
     }
-
+    
     func saveLocationValueToCoreData(address: String,longitude: Double,latitude: Double) {
         deleteLocationValue()
         guard let entity = NSEntityDescription.entity(forEntityName: "LocationEntity",in: managedContext) else {return }
@@ -91,7 +91,7 @@ extension CoreDataHelper {
             print("Lỗi khi lưu dữ liệu vào CoreData: \(error)")
         }
     }
-
+    
     func fetchWeatherData() -> WeatherData24h? {
         do {
             let results = try managedContext.fetch(weatherfetchRequestObject)
@@ -147,18 +147,18 @@ extension CoreDataHelper {
         }
     }
     func saveImageToDocumentsDirectory(image: UIImage, fileName: String) {
-            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let fileURL = documentsDirectory.appendingPathComponent(fileName)
-            if let data = image.pngData() {
-                try? data.write(to: fileURL)
-                
-                let entity = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)!
-                let entities = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)
-                let record = NSManagedObject(entity: entity, insertInto: managedContext)
-                record.setValue(fileName, forKey: "avatar")
-                saveValue()
-            }
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        if let data = image.pngData() {
+            try? data.write(to: fileURL)
+            
+            let entity = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)!
+            let entities = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)
+            let record = NSManagedObject(entity: entity, insertInto: managedContext)
+            record.setValue(fileName, forKey: "avatar")
+            saveValue()
         }
+    }
     
     func loadImageFromFile(fileName: String) -> UIImage? {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -172,41 +172,41 @@ extension CoreDataHelper {
             return nil
         }
     }
-        
-        func getProfileValueFromCoreData(key: String)-> Any {
-            do {
-                let results = try managedContext.fetch(profilefetchRequestObject)
-                for result in results {
-                    if let value = result.value(forKey: "\(key)") {
-                        print("getValue:\(value)")
-                        return value
-                    }
+    
+    func getProfileValueFromCoreData(key: String)-> Any {
+        do {
+            let results = try managedContext.fetch(profilefetchRequestObject)
+            for result in results {
+                if let value = result.value(forKey: "\(key)") {
+                    print("getValue:\(value)")
+                    return value
                 }
-            } catch let error as NSError {
-                print("Could not fetch. \(error), \(error.userInfo)")
             }
-            return ""
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
-        func getProfileValuesFromCoreData() -> (avatar: UIImage?, name: String?, dateOfBirth: String?, phoneNumber: String?, gender: String?) {
-            let avatar = loadImageFromFile(fileName: "AvatarImage")
-            do {
-                let results = try managedContext.fetch(profilefetchRequestObject)
-                if let result = results.last {
-                    if let name = result.value(forKey: "name") as? String,
-                       let dateOfBirth = result.value(forKey: "dateOfBirth") as? String,
-                       let phoneNumber = result.value(forKey: "phoneNumber") as? String,
-                       let gender = result.value(forKey: "gender") as? String {
-                        return (avatar, name, dateOfBirth, phoneNumber, gender)
-                    } else {
-                        print("fail result")
-                    }
+        return ""
+    }
+    func getProfileValuesFromCoreData() -> (avatar: UIImage?, name: String?, dateOfBirth: String?, phoneNumber: String?, gender: String?) {
+        let avatar = loadImageFromFile(fileName: "AvatarImage")
+        do {
+            let results = try managedContext.fetch(profilefetchRequestObject)
+            if let result = results.last {
+                if let name = result.value(forKey: "name") as? String,
+                   let dateOfBirth = result.value(forKey: "dateOfBirth") as? String,
+                   let phoneNumber = result.value(forKey: "phoneNumber") as? String,
+                   let gender = result.value(forKey: "gender") as? String {
+                    return (avatar, name, dateOfBirth, phoneNumber, gender)
+                } else {
+                    print("fail result")
                 }
-            } catch let error as NSError {
-                print("Could not fetch. \(error), \(error.userInfo)")
             }
-            print("fail")
-            // Return nil values in case of any error or if no data is found
-            return (nil, nil, nil, nil, nil)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
-
+        print("fail")
+        // Return nil values in case of any error or if no data is found
+        return (nil, nil, nil, nil, nil)
+    }
+    
 }
