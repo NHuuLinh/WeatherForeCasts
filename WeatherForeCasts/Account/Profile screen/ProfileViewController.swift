@@ -53,7 +53,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     private let storage = Storage.storage().reference()
     var currentUser: UserProfile?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -68,10 +67,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     func chooseDataLoader(){
         if UserDefaults.standard.didUpdateProfile {
             loadProfileFromCoreData()
-            print("loadProfileFromCoreData")
+            print("loadProfileFromCoreData.")
         } else {
             loadDataFromFirebase()
-            print("loadDataFromFirebase")
+            print("loadDataFromFirebase.")
         }
     }
     func setEditingState(_ isEditing: Bool) {
