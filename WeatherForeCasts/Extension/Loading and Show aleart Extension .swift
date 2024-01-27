@@ -1,6 +1,7 @@
 import MBProgressHUD
 
 extension UIViewController {
+    //show loading
     func showLoading(isShow: Bool) {
         if isShow {
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -9,6 +10,7 @@ extension UIViewController {
             MBProgressHUD.hide(for: self.view, animated: true)
         }
     }
+    // showAleart và thêm hành động ok
     func showAlert(title: String, message: String, completionHandler: (()->Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { _ in
@@ -18,6 +20,7 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
     
+    // showAleart và thêm hành động khi người dùng muốn thay đổi ngôn ngữ của app
     func showAlertAndAction(title: String, message: String, completionHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 

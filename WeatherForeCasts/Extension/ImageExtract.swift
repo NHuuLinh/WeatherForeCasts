@@ -5,9 +5,8 @@ protocol ExtractImageFromUrl {
     func extractImageName(url: String?) -> String
 }
 extension ExtractImageFromUrl {
-    
+    // hàm trên ảng từ url 
     func extractImageName(url: String?) -> String {
-        
         guard let url = url else {
             return "defaultImage"
         }

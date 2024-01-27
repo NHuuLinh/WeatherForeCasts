@@ -9,17 +9,45 @@ import XCTest
 @testable import WeatherForeCasts
 
 final class WeatherForeCastsTests: XCTestCase {
+//    class mockCheckValid: checkValid {
+//        
+//    }
+//    var testValid : mockCheckValid!
+//    override func setUp() {
+//        super.setUp()
+//        testValid = mockCheckValid()
+//    }
+//    
+//    func testPasswordValidator() {
+//        let (message1, valid1) = testValid.passwordValidator(password: "")
+//        XCTAssertEqual(message1, "Password can't be empty.")
+//        XCTAssertFalse(valid1)
+//        
+//        let (message2, valid2) = testValid.passwordValidator(password: "12345")
+//        XCTAssertEqual(message2, "Password must be more than 6 digits.")
+//        XCTAssertFalse(valid2)
+//        
+//        let (message3, valid3) = testValid.passwordValidator(password: "123456")
+//        XCTAssertEqual(message3, "ok")
+//        XCTAssertTrue(valid3)
+//    }
+//    
+//    func testEmailValidator() {
+//        let (message1, valid1) = testValid.emailValidator("")
+//        XCTAssertEqual(message1, "Email can't be empty.")
+//        XCTAssertFalse(valid1)
+//        
+//        let (message2, valid2) = testValid.emailValidator("invalidEmail")
+//        XCTAssertEqual(message2, "The email is in the wrong format.")
+//        XCTAssertFalse(valid2)
+//        
+//        let (message3, valid3) = testValid.emailValidator("validEmail@example.com")
+//        XCTAssertEqual(message3, "ok")
+//        XCTAssertTrue(valid3)
+//    }
     
-    func test(){
-        let vc = UIViewController()
-        let email = "linhlinh"
-        let password = "123"
-        let emailTestvalidator = vc.emailValidator(email).valid
-        let passwordTestvalidator = password
-//        return testvalidator
-        XCTAssertFalse(emailTestvalidator)
-    }
-
+    
+    
     func testAddition() {
         // Arrange
         let number1 = 3
@@ -36,5 +64,5 @@ final class WeatherForeCastsTests: XCTestCase {
     func addNumbers12(_ a: Int, _ b: Int) -> Int {
         return a + b
     }
-
+    
 }

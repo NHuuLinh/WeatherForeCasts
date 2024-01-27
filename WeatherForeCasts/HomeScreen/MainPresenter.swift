@@ -16,27 +16,23 @@ protocol MainPresenter:AnyObject {
 
 class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     weak var mainVC: MainViewControllerDisplay?
-//    weak var mapsVC: MapsViewControllerDelegate?
+    weak var mapsVC: MapsViewControllerDelegate?
     let locationManager = CLLocationManager()
     let isReachable = NetworkMonitor.shared.isReachable
     let coreData = CoreDataHelper.share
-    private var loadingTimer: Timer?
     private var isDataLoaded = false
     
-    init(mainVC: MainViewControllerDisplay? = nil, loadingTimer: Timer? = nil, isDataLoaded: Bool = false, mapsVC: MapsViewControllerDelegate? = nil) {
+    init(mainVC: MainViewControllerDisplay? = nil, isDataLoaded: Bool = false, mapsVC: MapsViewControllerDelegate? = nil) {
         self.mainVC = mainVC
-        self.loadingTimer = loadingTimer
         self.isDataLoaded = isDataLoaded
-//        self.mapsVC = mapsVC
+        self.mapsVC = mapsVC
     }
     func fetchWeatherDataForCurrentLocation() {
-        // Bắt đầu hẹn giờ 20 giây
-        loadingTimer = Timer.scheduledTimer(timeInterval: 40, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
+        // Bắt đầu hẹn giờ 40 giây
         mainVC?.showLoading(isShow: true)
         // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
         guard let currentLocation = locationManager.location else {
             print("Current location not available.")
-            handleLoadingError()
             return
         }
         let geocoder = CLGeocoder()
@@ -44,7 +40,6 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
         geocoder.reverseGeocodeLocation(currentLocation) { [weak self] (placemarks, error) in
             if let error = error {
                 print("Reverse geocoding failed: \(error.localizedDescription)")
-                self?.handleLoadingError()
                 return
             }
             let longitude = currentLocation.coordinate.longitude
@@ -63,14 +58,10 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
                     //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
                     guard let self = self else { return }
                     
-                    // Hủy hẹn giờ vì đã có dữ liệu
-                    self.loadingTimer?.invalidate()
-                    self.loadingTimer = nil
                     // chạy các tác vụ ưu tiên trên luồng chính, tránh lag  giao diện
                     DispatchQueue.main.async {
                         guard let weatherData = weatherData else {
                             print("Failed to fetch weather data")
-                            self.handleLoadingError()
                             return
                         }
                         DispatchQueue.main.async {
@@ -84,34 +75,12 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
             }
         }
     }
-    @objc private func handleLoadingTimeout() {
-        // Hủy hẹn giờ và hiển thị cảnh báo khi lấy dữ liệu quá thời gian
-        loadingTimer?.invalidate()
-        loadingTimer = nil
-        let title = NSLocalizedString("Error", comment: "")
-        let message = NSLocalizedString("Failed to fetch weather data. Please try again.", comment: "")
-//        mainVC?.showAlert(title: title, message: message )
-        mainVC?.showLoading(isShow: false)
-    }
-    
-    private func handleLoadingError() {
-        // Hủy hẹn giờ và hiển thị cảnh báo khi có lỗi trong quá trình lấy dữ liệu
-        loadingTimer?.invalidate()
-        loadingTimer = nil
-        let title = NSLocalizedString("Error", comment: "")
-        let message = NSLocalizedString("Please allow to use location.", comment: "")
-        mainVC?.showAlert(title: title, message: message)
-        mainVC?.showLoading(isShow: false)
-    }
     
     func fetchWeatherData() {
-        // Bắt đầu hẹn giờ 20 giây
-        loadingTimer = Timer.scheduledTimer(timeInterval: 40, target: self, selector: #selector(handleLoadingTimeout), userInfo: nil, repeats: false)
         mainVC?.showLoading(isShow: true)
         // check xem có đia điểm hiện tại không,nếu không thì không làm gì cả
         guard let currentLocation = locationManager.location else {
             print("Current location not available.")
-            handleLoadingError()
             return
         }
         let latitude = CoreDataHelper.share.getLocationValueFromCoreData(key: "latitude") as? Double ?? 0
@@ -123,14 +92,10 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
             //đảm bảo rằng self vẫn tồn tại trước khi sử dụng nó bên trong closure
             guard let self = self else { return }
             
-            // Hủy hẹn giờ vì đã có dữ liệu
-            self.loadingTimer?.invalidate()
-            self.loadingTimer = nil
             // chạy các tác vụ ưu tiên trên luồng chính, tránh lag  giao diện
             DispatchQueue.main.async {
                 guard let weatherData = weatherData else {
                     print("Failed to fetch weather data")
-                    self.handleLoadingError()
                     return
                 }
                 DispatchQueue.main.async {

@@ -10,11 +10,13 @@ protocol WeatherCondition {
     func willSnow(localTime: String, forecastDays: [Forecastday]) -> String
     func willRain(localTime: String, forecastDays: [Forecastday]) -> String
 }
+
 extension WeatherCondition {
     
     func willSnow(localTime: String, forecastDays: [Forecastday]) -> String {
-        
+        // tạo mảng để lấy giá trị từ 2 mảng ngày gần nhất
         var willItSnowValues: [Int] = []
+            // các biến để dịch thuật
         let hourText = NSLocalizedString("hours", comment: "")
         let wontText = NSLocalizedString("Won't snow in", comment: "")
         let willText = NSLocalizedString("Will snow in", comment: "")

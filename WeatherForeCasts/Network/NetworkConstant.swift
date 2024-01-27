@@ -6,7 +6,6 @@ import Alamofire
 class WeatherAPIManager {
     static let shared = WeatherAPIManager()
     
-
     private init() {}
     
     func fetchWeatherData(latitude: Double, longitude: Double, completion: @escaping (WeatherData24h?) -> Void) {
@@ -19,19 +18,18 @@ class WeatherAPIManager {
             "aqi": "yes",
             "lang": selectedLanguage ?? "en"
         ]
-        AF.request(url, parameters: parameters).response { response in
-            if let data = response.data {
-                let decoder = JSONDecoder()
-                do {
-                    let weatherData = try decoder.decode(WeatherData24h.self, from: data)
+        AF.request(url,method: .get, parameters: parameters)
+            .validate(statusCode: 200...299)
+            .responseDecodable(of: WeatherData24h.self) { data in
+                switch data.result {
+                case .success(let data):
+                    let weatherData = data.self
                     completion(weatherData)
-                } catch {
-                    print("Error decoding: \(error)")
+                case .failure(let error):
                     completion(nil)
+                    print("\(error)")
                 }
             }
-        }
     }
-    
 }
 
