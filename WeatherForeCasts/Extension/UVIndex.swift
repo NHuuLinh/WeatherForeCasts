@@ -1,10 +1,13 @@
 
 import Foundation
+
 protocol UvValueHandle {
     func uvCondition(uvValue: Int) -> String
     func uvAdvice(uvValue: Double) -> String
 }
+
 extension UvValueHandle {
+    // hàm nhận giá trị uv và trả về nhận xét
     func uvCondition(uvValue: Int) -> String {
         switch uvValue {
         case 1...2 :
@@ -21,6 +24,8 @@ extension UvValueHandle {
             return "(Error)"
         }
     }
+    
+    // hàm nhận giá trị uv và trả về lời khuyên
     func uvAdvice(uvValue: Double) -> String {
         switch uvValue {
         case 0...2 :

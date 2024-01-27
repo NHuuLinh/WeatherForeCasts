@@ -7,6 +7,7 @@ class CoreDataHelper {
     static let share = CoreDataHelper()
     
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     let locationFetchRequestResult = NSFetchRequest<NSFetchRequestResult>(entityName: "LocationEntity")
     let locationfetchRequestObject = NSFetchRequest<NSManagedObject>(entityName: "LocationEntity")
     
@@ -153,7 +154,6 @@ extension CoreDataHelper {
             try? data.write(to: fileURL)
             
             let entity = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)!
-            let entities = NSEntityDescription.entity(forEntityName: "ProfileEntity", in: managedContext)
             let record = NSManagedObject(entity: entity, insertInto: managedContext)
             record.setValue(fileName, forKey: "avatar")
             saveValue()
@@ -187,6 +187,7 @@ extension CoreDataHelper {
         }
         return ""
     }
+    
     func getProfileValuesFromCoreData() -> (avatar: UIImage?, name: String?, dateOfBirth: String?, phoneNumber: String?, gender: String?) {
         let avatar = loadImageFromFile(fileName: "AvatarImage")
         do {
@@ -205,7 +206,6 @@ extension CoreDataHelper {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         print("fail")
-        // Return nil values in case of any error or if no data is found
         return (nil, nil, nil, nil, nil)
     }
     

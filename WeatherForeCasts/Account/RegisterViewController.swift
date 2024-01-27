@@ -7,7 +7,7 @@ protocol RegisterDisplay: UIViewController {
     
 }
 
-class RegisterViewController: UIViewController, RegisterDisplay {
+class RegisterViewController: UIViewController, RegisterDisplay,checkValid {
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
@@ -76,9 +76,9 @@ class RegisterViewController: UIViewController, RegisterDisplay {
         case clearBtn :
             emailTF.text = ""
         case securePasswordBtn:
-            setupSecureButton(textFied: passwordTF, button: securePasswordBtn)
+            setupSecureButton(passwordTF: passwordTF, button: securePasswordBtn)
         case secureRePasswordBtn:
-            setupSecureButton(textFied: rePassworđTF, button: secureRePasswordBtn)
+            setupSecureButton(passwordTF: rePassworđTF, button: secureRePasswordBtn)
         case forgotPasswordBtn:
             goToForgotPassword()
         case signInBtn:

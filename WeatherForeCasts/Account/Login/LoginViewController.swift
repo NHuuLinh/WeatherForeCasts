@@ -12,7 +12,7 @@ enum LoginFormField {
     case password
 }
 
-class LoginViewController: UIViewController, LoginViewControllerDisplay {
+class LoginViewController: UIViewController, LoginViewControllerDisplay,checkValid {
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
@@ -70,7 +70,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
             if let forgotVC = viewController as? ForgotPasswordViewController {
                 forgotVC.onSuccessResetPassword = { [weak self] email in
                     self?.emailTF.text = email
-                    //                    self?.passwordTF.text = ""
+
                     self?.checkValidInput()
                 }
             }
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay {
         case clearBtn :
             emailTF.text = ""
         case secureBtn:
-            setupSecureButton(textFied: passwordTF, button: secureBtn)
+            setupSecureButton(passwordTF: passwordTF, button: secureBtn)
         case forgotPasswordBtn:
             goToForgotPassword()
         case signUpBtn:

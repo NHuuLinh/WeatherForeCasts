@@ -14,7 +14,9 @@ protocol AQIHandle {
     func airQlyDataCondition(numb: Int) -> String
     func airQualityDataAdvice(index: Int) -> String
 }
+
 extension AQIHandle {
+    // hàm nhận giá trị aqi và trả về chiều dài của thanh slider
     func airQlyLevel(width: Int) -> CGFloat {
         let level :CGFloat = 50.0
         switch width {
@@ -34,6 +36,7 @@ extension AQIHandle {
             return 0.0
         }
     }
+    // hàm nhận giá trị aqi và trả về màu của thanh slider
     func airQlyColor(numb: Int) -> UIColor {
         switch numb {
         case 1 :
@@ -52,6 +55,7 @@ extension AQIHandle {
             return .white
         }
     }
+    // hàm nhận giá trị aqi và trả về nhận xét về chỉ số aqi
     func airQlyDataCondition(numb: Int) -> String {
         switch numb {
         case 1 :
@@ -60,7 +64,6 @@ extension AQIHandle {
             return "(Moderate)"
         case 3 :
             return "(Unhealthy for sensitive group)"
-//            return "(Not Good)"
         case 4 :
             return "(Unhealthy)"
         case 5 :
@@ -71,6 +74,8 @@ extension AQIHandle {
             return "(Unknow)"
         }
     }
+    // hàm nhận giá trị aqi và trả về nhận xét dựa trên chỉ số aqi
+
     func airQualityDataAdvice(index: Int) -> String {
         switch index {
         case 1:

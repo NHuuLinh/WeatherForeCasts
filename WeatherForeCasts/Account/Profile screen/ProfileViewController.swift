@@ -145,11 +145,11 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             textFieldChangeHandle(phoneNumberTF)
             print("phoneNumberTF")
         case editProfileBtn:
-                if NetworkMonitor.shared.isReachable  {
-                    self.editProfileState()
-                } else {
-                    self.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
-                }
+            if NetworkMonitor.shared.isReachable  {
+                self.editProfileState()
+            } else {
+                self.showAlert(title: NSLocalizedString("No internet connection", comment: ""), message: NSLocalizedString("Please check internet connection and retry again", comment: ""))
+            }
             print("editProfileBtn")
         case clearEditBtn:
             chooseDataLoader()
@@ -396,6 +396,8 @@ extension ProfileViewController {
         }
     }
 }
+// MARK: - Xử lí bàn phím
+
 // MARK: - Alert Upload image to Firebase
 extension ProfileViewController {
     func translateLangue(){

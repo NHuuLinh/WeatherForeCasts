@@ -6,7 +6,7 @@ import KeychainSwift
 enum ForgotPasswordFormField {
     case email
 }
-class ForgotPasswordViewController: UIViewController {
+class ForgotPasswordViewController: UIViewController,checkValid {
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
     @IBOutlet weak var emailerrorTF: UITextField!
@@ -87,6 +87,7 @@ extension ForgotPasswordViewController {
     // các hàm handleInputTF, handleButton xem ở extension StandardForm
     func checkValidInput(){
         let email = emailTF.text ?? ""
+        
         let emailResult = emailValidator(email)
         emailerrorTF.text = emailResult.message
         handleInputTF(status: emailResult.valid,
@@ -103,7 +104,7 @@ extension ForgotPasswordViewController {
     func translateLangue(){
         forogtPasswordLb.text = NSLocalizedString("Forgot Password", comment: "")
         alreadyHaveAcountLb.text = NSLocalizedString("Already have an account ?", comment: "")
-        signInBtn.setTitle(NSLocalizedString("Đăng nhập", comment: ""), for: .normal)
+        signInBtn.setTitle(NSLocalizedString(signInBtn.currentTitle ?? "", comment: ""), for: .normal)
         orContinueWithLb.text = NSLocalizedString("or continue with", comment: "")
         sendRequsetBtn.setTitle(NSLocalizedString("Send request", comment: ""), for: .normal)
     }
