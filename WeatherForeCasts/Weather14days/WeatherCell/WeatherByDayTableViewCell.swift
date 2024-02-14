@@ -75,7 +75,7 @@ class WeatherByDayTableViewCell: UITableViewCell,UvValueHandle,AQIHandle, Extrac
                                                         comment: "")
         forecastDayRainChance.text = "\(datasForecast.day.dailyChanceOfRain)"
         forecastDayHumidity.text = "\(Int(datasForecast.day.avghumidity.rounded()))"
-        let aqiValue = datasForecast.day.airQuality.usEpaIndex ?? 0
+        let aqiValue = datasForecast.day.airQuality?.usEpaIndex ?? 0
         forecastDayAirQly.text = "\(aqiValue)"
         let AirQlyCondition = NSLocalizedString(airQlyDataCondition(numb: aqiValue),
                                                 comment: "")

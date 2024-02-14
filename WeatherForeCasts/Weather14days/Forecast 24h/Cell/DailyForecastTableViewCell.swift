@@ -49,7 +49,7 @@ class DailyForecastTableViewCell: UITableViewCell, UvValueHandle, AQIHandle, Ext
         forecastHourRainChance.text = "\(hour.chanceOfRain)"
         forecastHourHumidity.text = "\(hour.humidity)"
         
-        let AirQlyNumber = hour.airQuality.usEpaIndex ?? 0
+        let AirQlyNumber = hour.airQuality?.usEpaIndex ?? 0
         forecastHourAirQly.text = "\(AirQlyNumber)"
         forecastHourAirQlyText.text = NSLocalizedString(airQlyDataCondition(numb: AirQlyNumber), comment: "")
     }

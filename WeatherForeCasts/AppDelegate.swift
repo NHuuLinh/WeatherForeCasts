@@ -22,10 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
         print("url của file là: \(urls)")
         // đổi theme
         
         FirebaseApp.configure()
+        WeatherAPIManager.shared.getWeatherApiKey { apiKey in
+            UserDefaults.standard.set(apiKey, forKey: "WeatherAPIKey")
+        }
         NetworkMonitor.shared.startMonitoring()
             return true
     }

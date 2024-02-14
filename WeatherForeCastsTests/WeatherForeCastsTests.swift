@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import WeatherForeCasts
+//@testable import WeatherForeCasts
 
 final class WeatherForeCastsTests: XCTestCase {
 //    class mockCheckValid: checkValid {

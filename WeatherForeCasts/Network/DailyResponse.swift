@@ -54,7 +54,7 @@ struct Current: Codable {
     let uv: Double
     let gustMph: Double
     let gustKph: Double
-    let airQuality: AirQuality
+    let airQuality: AirQuality?
 
     enum CodingKeys: String, CodingKey {
         case lastUpdatedEpoch = "last_updated_epoch"
@@ -155,7 +155,7 @@ struct Day: Codable {
     let dailyChanceOfSnow: Int
     let condition: Condition
     let uv: Double
-    let airQuality: AirQuality
+    let airQuality: AirQuality?
 
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -236,7 +236,7 @@ struct Hour: Codable {
     let gustMph: Double
     let gustKph: Double
     let uv: Double
-    let airQuality: AirQuality
+    let airQuality: AirQuality?
     
     enum CodingKeys: String, CodingKey {
         case timeEpoch = "time_epoch"
@@ -274,4 +274,7 @@ struct Hour: Codable {
         case uv
         case airQuality = "air_quality"
     }
+}
+struct ApiKey: Codable {
+    let apiKey: String
 }
