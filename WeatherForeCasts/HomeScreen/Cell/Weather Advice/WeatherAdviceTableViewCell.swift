@@ -64,7 +64,7 @@ class WeatherAdviceTableViewCell: UITableViewCell,UvValueHandle, AQIHandle{
         conditionForDrive.text = conditionForDriveResult
         
         conditionForUV.text = NSLocalizedString(uvAdvice(uvValue: data.day.uv), comment: "")
-        let aqiData = airQualityDataAdvice(index: data.day.airQuality.usEpaIndex ?? 0)
+        let aqiData = airQualityDataAdvice(index: data.day.airQuality?.usEpaIndex ?? 0)
         adviceAirPolution.text = NSLocalizedString(aqiData, comment: "")
     }
 }

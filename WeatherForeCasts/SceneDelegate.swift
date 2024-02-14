@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          */
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+
+        
         
         // kiểm tra xem có người dùng đã chọn theme chưa, nếu chưa load theme theo hệ thống
         if let selectedTheme = UserDefaults.standard.selectedTheme {

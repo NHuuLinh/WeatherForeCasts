@@ -2,28 +2,28 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataClass.swift">
+      location = "group:LocationEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/WeatherDataEntity+CoreDataProperties.swift">
+      location = "group:LocationEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/FullResImageEntity+CoreDataClass.swift">
+      location = "group:ProfileEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/FullResImageEntity+CoreDataProperties.swift">
+      location = "group:ProfileEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/ProfileEntity+CoreDataClass.swift">
+      location = "group:FullResImageEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/ProfileEntity+CoreDataProperties.swift">
+      location = "group:FullResImageEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataClass.swift">
+      location = "group:WeatherDataEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/nguyenlinh/Documents/new1 weatherforecast/WeatherForeCasts/WeatherForeCasts/CoreData/LocationEntity+CoreDataProperties.swift">
+      location = "group:WeatherDataEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:WeatherForeCasts.xcodeproj">
