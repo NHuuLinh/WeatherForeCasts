@@ -2,28 +2,28 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:LocationEntity+CoreDataClass.swift">
+      location = "group:WeatherForeCasts/FullResImageEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:LocationEntity+CoreDataProperties.swift">
+      location = "group:WeatherForeCasts/FullResImageEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:ProfileEntity+CoreDataClass.swift">
+      location = "group:WeatherForeCasts/LocationEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:ProfileEntity+CoreDataProperties.swift">
+      location = "group:WeatherForeCasts/LocationEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:FullResImageEntity+CoreDataClass.swift">
+      location = "group:WeatherForeCasts/WeatherDataEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:FullResImageEntity+CoreDataProperties.swift">
+      location = "group:WeatherForeCasts/WeatherDataEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
-      location = "group:WeatherDataEntity+CoreDataClass.swift">
+      location = "group:WeatherForeCasts/ProfileEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:WeatherDataEntity+CoreDataProperties.swift">
+      location = "group:WeatherForeCasts/ProfileEntity+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:WeatherForeCasts.xcodeproj">

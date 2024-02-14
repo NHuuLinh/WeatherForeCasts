@@ -2,7 +2,7 @@
 //  LocationEntity+CoreDataProperties.swift
 //  
 //
-//  Created by LinhMAC on 14/02/2024.
+//  Created by LinhMAC on 15/02/2024.
 //
 //
 
