@@ -12,59 +12,59 @@ import FirebaseCore
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    static let shared = SceneDelegate()
-    
+    var appCoordinator: AppCoordinator?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         /**
          Khởi tạo window từ windownScene
          */
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
-
-        
-        
-        // kiểm tra xem có người dùng đã chọn theme chưa, nếu chưa load theme theo hệ thống
-        if let selectedTheme = UserDefaults.standard.selectedTheme {
-            print("Selected Theme:", selectedTheme.rawValue)
-            ThemeManager.shared.applyTheme(selectedTheme, to: window)
-        } else {
-            print("No theme saved. Using default theme.")
-            ThemeManager.shared.applyTheme(.system, to: window)
-        }
-        
-        /// Vứt cho appDelegate nó giữ để sau mình lấy ra cho dễ
-        (UIApplication.shared.delegate as? AppDelegate)?.window = window
-        
-        let isReachableConnection = NetworkMonitor.shared.isReachable
-        
-        if isReachableConnection {
-            // có mạng
-            if UserDefaults.standard.hasOnboarded {
-                if Auth.auth().currentUser != nil {
-                    goToMain()
-                    print("goToMain")
-                } else {
-                    goToLogin()
-                    print("goToLogin")
-                }
-            } else {
-                goToOnboard()
-                print("goToOnboard")
-            }
-        } else {
-            // mất mạng
-            if UserDefaults.standard.hasOnboarded {
-                if Auth.auth().currentUser != nil {
-                    goToMain()
-                } else {
-                    routeToNoInternetAccess()
-                }
-            } else {
-                routeToNoInternetAccess()
-            }
-            
-        }
+        let actualWindow = UIWindow(windowScene: windowScene)
+        self.window = actualWindow
+        appCoordinator = AppCoordinator(window: actualWindow)
+        appCoordinator?.routeWindow()
+//        
+//        // kiểm tra xem có người dùng đã chọn theme chưa, nếu chưa load theme theo hệ thống
+//        if let selectedTheme = UserDefaults.standard.selectedTheme {
+//            print("Selected Theme:", selectedTheme.rawValue)
+//            ThemeManager.shared.applyTheme(selectedTheme, to: window)
+//        } else {
+//            print("No theme saved. Using default theme.")
+//            ThemeManager.shared.applyTheme(.system, to: window)
+//        }
+//        
+//        /// Vứt cho appDelegate nó giữ để sau mình lấy ra cho dễ
+////        (UIApplication.shared.delegate as? AppDelegate)?.window = window
+//        
+//        let isReachableConnection = NetworkMonitor.shared.isReachable
+//        
+//        if isReachableConnection {
+//            // có mạng
+//            if UserDefaults.standard.hasOnboarded {
+//                if Auth.auth().currentUser != nil {
+//                    goToMain()
+//                    print("goToMain")
+//                } else {
+//                    goToLogin()
+//                    print("goToLogin")
+//                }
+//            } else {
+//                goToOnboard()
+//                print("goToOnboard")
+//            }
+//        } else {
+//            // mất mạng
+//            if UserDefaults.standard.hasOnboarded {
+//                if Auth.auth().currentUser != nil {
+//                    goToMain()
+//                } else {
+//                    routeToNoInternetAccess()
+//                }
+//            } else {
+//                routeToNoInternetAccess()
+//            }
+//            
+//        }
     }
     
     func goToMain() {

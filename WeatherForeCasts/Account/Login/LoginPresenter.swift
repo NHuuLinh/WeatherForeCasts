@@ -17,9 +17,11 @@ protocol LoginPresenter {
 class LoginPresenterImpl: LoginPresenter {
     let keychain = KeychainSwift()
     var loginVC: LoginViewControllerDisplay
+    private weak var appCoordinator : AppCoordinator?
     
     init(loginVC: LoginViewControllerDisplay) {
         self.loginVC = loginVC
+//        self.appCoordinator = appCoordinator
     }
 
     func login(email: String, password: String) {
@@ -51,6 +53,7 @@ class LoginPresenterImpl: LoginPresenter {
             if user.isEmailVerified {
                 // Cho phép đăng nhập
                 // Điều hành đến màn hình chính hoặc thực hiện các bước khác sau khi đăng nhập
+//                appCoordinator?.routeToScene(.login)
                 AppDelegate.scene?.goToMain()
                 keychain.set(email, forKey: "email")
                 keychain.set(password, forKey: "password")
@@ -69,18 +72,6 @@ class LoginPresenterImpl: LoginPresenter {
             }
         }
     }
-        func routeToMain() {
-            if let uwWindow = (UIApplication.shared.delegate as? AppDelegate)?.window {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-                let mainNavigation = UINavigationController(rootViewController: mainVC)
-                uwWindow.rootViewController = mainNavigation// Đưa cho windown 1 viewcontroller
-                /// Make visible keywindown
-                uwWindow.makeKeyAndVisible()
-            } else {
-                print("LỖI")
-            }
-        }
         func loginBySocialNW(){
             let title = NSLocalizedString("The feature is under development", comment: "")
             let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")
