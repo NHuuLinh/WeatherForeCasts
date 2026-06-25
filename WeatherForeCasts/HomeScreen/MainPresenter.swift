@@ -21,6 +21,7 @@ class MainPresenterImpl: NSObject, MainPresenter, CLLocationManagerDelegate{
     let isReachable = NetworkMonitor.shared.isReachable
     let coreData = CoreDataHelper.share
     private var isDataLoaded = false
+    private let appCoordinator = AppCoordinator.shared
     
     init(mainVC: MainViewControllerDisplay? = nil, isDataLoaded: Bool = false, mapsVC: MapsViewControllerDelegate? = nil) {
         self.mainVC = mainVC
@@ -149,9 +150,9 @@ extension MainPresenterImpl {
 
             if firebaseAuth.currentUser == nil {
                 if isReachable {
-                    AppDelegate.scene?.goToLogin()
+                    appCoordinator.routeToScene(.login)
                 } else {
-                    AppDelegate.scene?.routeToNoInternetAccess()
+                    appCoordinator.routeToScene(.noInternet)
                 }
             }  else {
                 print("Error: User is still signed in")

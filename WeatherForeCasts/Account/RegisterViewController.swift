@@ -61,8 +61,7 @@ class RegisterViewController: UIViewController, RegisterDisplay,checkValid {
     }
     
     func goToForgotPassword() {
-        let navigation = NavigationHelper.shared
-        navigation.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController")
+        AppCoordinator.shared.navigateToVC(from: self, withIdentifier: .forgotPasswordVC)
         keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
     }
     

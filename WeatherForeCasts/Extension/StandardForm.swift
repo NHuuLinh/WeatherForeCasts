@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+
 protocol checkValid {
     func passwordValidator(password: String) -> (message: String, valid: Bool)
     func emailValidator(_ email: String) -> (message: String, valid: Bool)

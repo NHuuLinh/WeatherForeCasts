@@ -20,7 +20,7 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     @IBOutlet weak var noInternetView: UIView!
     @IBOutlet weak var noInternetViewConstraints: NSLayoutConstraint!
     @IBOutlet weak var nointernetLb: UILabel!
-    private let naviation = NavigationHelper.shared
+    private let naviation = AppCoordinator.shared
     private let locationManager = CLLocationManager()
     private var isMenuOpen = false
     private var weatherData: WeatherData24h?
@@ -28,6 +28,7 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     private var sideMenuVC: SideMenuViewController?
     private var hasReachedEnd = false
     private var refeshControl = UIRefreshControl()
+    private let networkMonitor = NetworkMonitor.shared
     
     enum HomeNewsSection: Int,CaseIterable {
         case currentCell = 0
@@ -41,7 +42,7 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkMonitor.shared.mainVC = self
+        networkMonitor.startMonitoring()
         mainPresenter = MainPresenterImpl(mainVC: self)
         setupTableView()
         updateInternetView()
@@ -280,27 +281,27 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
 // MARK: - Các hàm chuyển màn hình
 extension MainViewController: MapsViewControllerDelegate {
     private func goToProfileVC() {
-        naviation.navigateToViewController(from: self, withIdentifier: "ProfileViewController")
+        naviation.navigateToVC(from: self, withIdentifier: .profileVC)
     }
     private func goToForecast14DaysVC() {
-        naviation.navigateToViewController(from: self, withIdentifier: "WeatherLongDayViewController") { viewcontroller in
+        naviation.navigateToVC(from: self, withIdentifier: .weatherLongDayVC) { viewcontroller in
             if let weatherLongDayVC = viewcontroller as? WeatherLongDayViewController {
                 weatherLongDayVC.weatherData = self.weatherData
             }
         }
     }
     func goToMapsVC() {
-        naviation.navigateToViewController(from: self, withIdentifier: "MapsViewController") { viewcontroller in
+        naviation.navigateToVC(from: self, withIdentifier: .mapsVC) { viewcontroller in
             if let mapsVC = viewcontroller as? MapsViewController {
                 mapsVC.delegate = self
             }
         }
     }
     private func goTodailyForecastVC() {
-        naviation.navigateToViewController(from: self, withIdentifier: "DailyForecastViewController")
+        naviation.navigateToVC(from: self, withIdentifier: .dailyForecastVC)
     }
     private func goToSettingVC(){
-        naviation.navigateToViewController(from: self, withIdentifier: "SetingViewController")
+        naviation.navigateToVC(from: self, withIdentifier: .setingVC)
     }
     private func underDevelopment(){
         let title = NSLocalizedString("The feature is under development", comment: "")

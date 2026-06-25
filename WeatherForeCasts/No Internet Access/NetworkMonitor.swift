@@ -9,30 +9,30 @@ class NetworkMonitor {
     let monitor = NWPathMonitor()
     private var status: NWPath.Status = .requiresConnection
     var isReachable: Bool { status == .satisfied }
-    var mainVC: MainViewController?
-    var mainPresenter: MainPresenter?
+    private let appCoordinator = AppCoordinator.shared
+
     
     func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
             self?.status = path.status
-            self?.mainVC?.handleNetworkStatusChange(isReachable: self?.isReachable ?? false)
+//            self?.mainVC?.handleNetworkStatusChange(isReachable: self?.isReachable ?? false)
             if path.status == .satisfied {
                 print("We're connected!")
-                print("isReachable: \(self?.isReachable)")
+                print("isReachable: \(self?.isReachable ?? false)")
             } else {
                 print("No connection.")
-                print("isReachable: \(self?.isReachable)")
+                print("isReachable: \(self?.isReachable  ?? false)")
                 if UserDefaults.standard.hasOnboarded {
                     if Auth.auth().currentUser != nil {
 //                        AppDelegate.scene?.goToMain()
                     } else {
                         DispatchQueue.main.async {
-                            AppDelegate.scene?.routeToNoInternetAccess()
+                            self?.appCoordinator.routeToScene(.noInternet)
                         }
                     }
                 }  else {
                     DispatchQueue.main.async {
-                        AppDelegate.scene?.routeToNoInternetAccess()
+                        self?.appCoordinator.routeToScene(.noInternet)
                     }
                 }
             }

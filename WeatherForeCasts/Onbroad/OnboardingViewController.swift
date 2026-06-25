@@ -7,6 +7,7 @@ class OnboardingViewController: UIViewController {
 
     
     var slides: [OnboardingSlide] = []
+    private let appCoordinator = AppCoordinator.shared
 
     let nextTitle = NSLocalizedString("Next", comment: "")
     let title1 = NSLocalizedString("Detailed 24-hour forecast", comment: "")
@@ -56,7 +57,7 @@ class OnboardingViewController: UIViewController {
     }
     func moveToNextPage() {
         if currentPage == slides.count - 1 {
-            AppDelegate.scene?.goToLogin()
+            appCoordinator.routeToScene(.login)
             UserDefaults.standard.hasOnboarded = true
         } else {
             currentPage += 1

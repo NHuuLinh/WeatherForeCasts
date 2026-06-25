@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55ABEC062FEAD9F000F369FC /* LoginVỉewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEC052FEAD9F000F369FC /* LoginVỉewModel.swift */; };
+		557FD5CB2FECD59F00C65DAC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FD5CA2FECD59F00C65DAC /* LoginViewModel.swift */; };
 		55ABEC082FEADE9400F369FC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEC072FEADE9400F369FC /* AppCoordinator.swift */; };
 		55ABEC0A2FEAE35000F369FC /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEC092FEAE35000F369FC /* AppViewModel.swift */; };
 		68FCE8813AC20DCDE97947BC /* Pods_WeatherForeCasts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E6F2BABE2D905ADBA95F39 /* Pods_WeatherForeCasts.framework */; };
@@ -131,7 +131,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		55ABEC052FEAD9F000F369FC /* LoginVỉewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVỉewModel.swift"; sourceTree = "<group>"; };
+		557FD5CA2FECD59F00C65DAC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		55ABEC072FEADE9400F369FC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		55ABEC092FEAE35000F369FC /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		80E6F2BABE2D905ADBA95F39 /* Pods_WeatherForeCasts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherForeCasts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,7 +505,7 @@
 			children = (
 				A41936B32ADE79DE00ED58BE /* LoginViewController.swift */,
 				A41936B52ADE7A5900ED58BE /* LoginPresenter.swift */,
-				55ABEC052FEAD9F000F369FC /* LoginVỉewModel.swift */,
+				557FD5CA2FECD59F00C65DAC /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -924,6 +924,7 @@
 				A42AAB022B3B2E7800C13D40 /* OnboardingCollectionViewCell.swift in Sources */,
 				A4A53D782B7D501000B6C31C /* LocationEntity+CoreDataProperties.swift in Sources */,
 				A4A53D712B7D501000B6C31C /* FullResImageEntity+CoreDataClass.swift in Sources */,
+				557FD5CB2FECD59F00C65DAC /* LoginViewModel.swift in Sources */,
 				A47111052B1A4ED00074167B /* ThemeSetting.swift in Sources */,
 				A41936A22ADE6F6B00ED58BE /* SceneDelegate.swift in Sources */,
 				A4694EAC2B0CE7CD00FBCA73 /* DailyForecastViewController.swift in Sources */,
@@ -934,7 +935,6 @@
 				A41936B62ADE7A5900ED58BE /* LoginPresenter.swift in Sources */,
 				A47472CA2B3492A100629349 /* Animation.swift in Sources */,
 				A448D0492B17A9E2000A70BF /* WeatherAdviceTableViewCell.swift in Sources */,
-				55ABEC062FEAD9F000F369FC /* LoginVỉewModel.swift in Sources */,
 				A41ADF862AE524CB0020A1BE /* OnbroadingSlide.swift in Sources */,
 				A465087F2B19DC8100E7FE0E /* SetingViewController.swift in Sources */,
 				A4A53D752B7D501000B6C31C /* ProfileEntity+CoreDataProperties.swift in Sources */,

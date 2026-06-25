@@ -6,6 +6,9 @@ class NoInternetAccessViewController: UIViewController {
     @IBOutlet weak var noInternetLb: UILabel!
     @IBOutlet weak var InternetMessageLb: UILabel!
     @IBOutlet weak var retryBtn: UIButton!
+    private let appCoordinator = AppCoordinator.shared
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +23,14 @@ class NoInternetAccessViewController: UIViewController {
             //Kiểm tra xem người dùng đã hoàn thành Onboarding Screen và check đăng nhập
             if UserDefaults.standard.hasOnboarded {
                 if Auth.auth().currentUser != nil {
-                    AppDelegate.scene?.goToMain()
+                    appCoordinator.routeToScene(.main)
                     print("goToMain")
                 } else {
-                    AppDelegate.scene?.goToLogin()
+                    appCoordinator.routeToScene(.login)
                     print("goToLogin")
                 }
             } else {
-                AppDelegate.scene?.goToOnboard()
+                appCoordinator.routeToScene(.onboard)
                 print("goToOnboard")
             }
         } else {

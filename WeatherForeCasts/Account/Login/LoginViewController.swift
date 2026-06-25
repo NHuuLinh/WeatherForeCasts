@@ -3,16 +3,15 @@ import UIKit
 import FirebaseAuth
 import MBProgressHUD
 import KeychainSwift
+import Combine
 
-protocol LoginViewControllerDisplay: UIViewController  {
-    
-}
+
 enum LoginFormField {
     case email
     case password
 }
 
-class LoginViewController: UIViewController, LoginViewControllerDisplay,checkValid {
+class LoginViewController: UIViewController,checkValid {
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
@@ -39,10 +38,11 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay,checkVal
     @IBOutlet weak var passwordLb: UILabel!
     @IBOutlet weak var dontHaveAcountLb: UILabel!
     @IBOutlet weak var orContinueWith: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    private var loginPresenter: LoginPresenter!
-    private var navigator = NavigationHelper.shared
     let keychain = KeychainSwift()
+    private let viewModel = LoginViewModel()
+    private var cancelable = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,22 +55,22 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay,checkVal
         //loading email,password người dùng đã đăng nhập thành công
         emailTF.text = keychain.get("email")
         passwordTF.text = keychain.get("password")
+        scrollView.keyboardDismissMode = .interactiveWithAccessory
         checkValidInput()
-        loginPresenter = LoginPresenterImpl(loginVC: self)
+        handleObserver()
     }
     
     func goToResgister() {
-        navigator.navigateToViewController(from: self, withIdentifier: "RegisterViewController")
+        AppCoordinator.shared.navigateToVC(from: self, withIdentifier: .registerVC)
         keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
         keychain.set(passwordTF.text ?? "", forKey: "TemporaryPassword")
     }
     
     func goToForgotPassword() {
-        navigator.navigateToViewController(from: self, withIdentifier: "ForgotPasswordViewController") { viewController in
+        AppCoordinator.shared.navigateToVC(from: self, withIdentifier: .forgotPasswordVC) { viewController in
             if let forgotVC = viewController as? ForgotPasswordViewController {
                 forgotVC.onSuccessResetPassword = { [weak self] email in
                     self?.emailTF.text = email
-
                     self?.checkValidInput()
                 }
             }
@@ -94,15 +94,31 @@ class LoginViewController: UIViewController, LoginViewControllerDisplay,checkVal
         case signUpBtn:
             goToResgister()
         case facebookBtn:
-            loginPresenter.loginBySocialNW()
+            viewModel.loginBySocialNW()
         case googleBtn:
-            loginPresenter.loginBySocialNW()
+            viewModel.loginBySocialNW()
         case loginBtn:
-            loginPresenter.login(email: emailTF.text ?? "", password: passwordTF.text ?? "")
+            viewModel.login(email: emailTF.text ?? "", password: passwordTF.text ?? "")
         default:
             break
         }
     }
+    
+    func handleObserver(){
+        viewModel.$loginErrorMess
+            .compactMap { $0}
+            .sink { [weak self] errorMes in
+                self?.showAlert(title: errorMes.title, message: errorMes.message)
+            }
+            .store(in: &cancelable)
+        viewModel.$isloading
+            .compactMap {$0}
+            .sink { [weak self] isShow in
+                self?.showLoading(isShow: isShow)
+            }
+            .store(in: &cancelable)
+    }
+    
 }
 
 extension LoginViewController {

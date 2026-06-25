@@ -15,22 +15,24 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-//    static var shared: AppDelegate?
-//
-//    var window: UIWindow?
+    static var shared: AppDelegate?
+
+    var window: UIWindow?
     static let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 
         print("url của file là: \(urls)")
-        // đổi theme
-        
         FirebaseApp.configure()
-        WeatherAPIManager.shared.getWeatherApiKey { apiKey in
-            UserDefaults.standard.set(apiKey, forKey: "WeatherAPIKey")
+
+        // đổi theme
+        DispatchQueue.global(qos: .background).async {
+            WeatherAPIManager.shared.getWeatherApiKey { apiKey in
+                UserDefaults.standard.set(apiKey, forKey: "WeatherAPIKey")
+            }
+            NetworkMonitor.shared.startMonitoring()
         }
-        NetworkMonitor.shared.startMonitoring()
             return true
     }
 
@@ -66,7 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 do {
                     try context.save()
                 } catch {
-
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                     let nserror = error as NSError
                     fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
                 }

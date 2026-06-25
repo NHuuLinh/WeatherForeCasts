@@ -12,6 +12,13 @@ enum AppScene {
     case login
     case main
     case noInternet
+    case registerVC
+    case forgotPasswordVC
+    case profileVC
+    case weatherLongDayVC
+    case mapsVC
+    case dailyForecastVC
+    case setingVC
     
     var identifier: String {
         switch self {
@@ -23,6 +30,20 @@ enum AppScene {
             return "LoginViewController"
         case .main:
             return "MainViewController"
+        case .registerVC:
+            return "RegisterViewController"
+        case .forgotPasswordVC:
+            return "ForgotPasswordViewController"
+        case .profileVC:
+            return "ProfileViewController"
+        case .weatherLongDayVC:
+            return "WeatherLongDayViewController"
+        case .mapsVC:
+            return "MapsViewController"
+        case .dailyForecastVC:
+            return "DailyForecastViewController"
+        case .setingVC:
+            return "SetingViewController"
         }
     }
     
@@ -30,7 +51,7 @@ enum AppScene {
         switch self {
         case .onboard:
             return false
-        case .noInternet,.login, .main:
+        default :
             return true
         }
     }
