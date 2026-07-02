@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-
-        print("url của file là: \(urls)")
+//        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//
+//        print("url của file là: \(urls)")
         FirebaseApp.configure()
 
         // đổi theme

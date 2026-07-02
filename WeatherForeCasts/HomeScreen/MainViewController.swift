@@ -1,14 +1,24 @@
 import UIKit
 import CoreLocation
-import Alamofire
+import Combine
+//import Alamofire
 
 protocol MainViewControllerDisplay: UIViewController {
     func updateDataForCurrentLocation(with weatherData: WeatherData24h,address: String? )
     func goToMapsVC()
     func updateInternetView()
 }
+enum HomeNewsSection: Int,CaseIterable {
+    case currentCell = 0
+    case dailyCell
+    case weeklyCell
+    case otherCell
+    case aqiCell
+    case astroCell
+    case adviceCell
+}
 
-class MainViewController: UIViewController,MainViewControllerDisplay {
+class MainViewController: UIViewController {
     @IBOutlet weak var mainTableView: UITableView!
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var blurMenuView: UIView!
@@ -20,17 +30,15 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     @IBOutlet weak var noInternetView: UIView!
     @IBOutlet weak var noInternetViewConstraints: NSLayoutConstraint!
     @IBOutlet weak var nointernetLb: UILabel!
-    private let naviation = AppCoordinator.shared
-    private let locationManager = CLLocationManager()
-    private var isMenuOpen = false
-    private var weatherData: WeatherData24h?
-    private var mainPresenter: MainPresenter?
-    private var sideMenuVC: SideMenuViewController?
-    private var hasReachedEnd = false
-    private var refeshControl = UIRefreshControl()
-    private let networkMonitor = NetworkMonitor.shared
     
-    enum HomeNewsSection: Int,CaseIterable {
+    
+    private let viewModel = MainViewModel()
+    private let navigation = AppCoordinator.shared
+    private var isMenuOpen = false
+    private var cancellables = Set<AnyCancellable>()
+    private var refeshControl = UIRefreshControl()
+    
+    enum HomeNewsSection: Int, CaseIterable {
         case currentCell = 0
         case dailyCell
         case weeklyCell
@@ -42,301 +50,313 @@ class MainViewController: UIViewController,MainViewControllerDisplay {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkMonitor.startMonitoring()
-        mainPresenter = MainPresenterImpl(mainVC: self)
+        NetworkMonitor.shared.startMonitoring()
         setupTableView()
-        updateInternetView()
-        sideMenuVC?.loadDataFromFirebase()
-        mainPresenter?.checkLocationAuthorizationStatus()
+        handleObserve()
+        viewModel.checkLocationAuthorizationStatus()
         pullToRefesh()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addSideMenuViewController()
         tapGestureSetup()
-        mainPresenter?.requestLocation()
-        locationManager.delegate = self
+        viewModel.requestLocation()
         navigationController?.isNavigationBarHidden = true
+        nointernetLb.text = NSLocalizedString(nointernetLb.text ?? "", comment: "")
     }
     
+    // MARK: - Combine Bindings
+    func handleObserve() {
+        viewModel.$weatherData
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.mainTableView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$locationName
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] name in
+                self?.locationNameLb.text = name
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.showLoading(isShow: isLoading)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] message in
+                self?.showAlert(title: "Thông báo", message: message)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$shouldShowNoInternet
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] noInternet in
+                self?.updateInternetView(isReachable: !noInternet)
+            }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - IBActions
     @IBAction func MenuBtnHandle(_ sender: Any) {
         displayMenu()
     }
-    @IBAction func locationBtn(_ sender: Any) {
-        print("requestLocation")
-        mainPresenter?.currentLocationBtnHandle()
-        mainTableView.reloadData()
-    }
-    @IBAction func mapBtn(_ sender: Any) {
-        mainPresenter?.mapBtnHandle()
-    }
-}
-// MARK: - Các hàm liên quan side Menu
-extension MainViewController {
     
-    // thêm tapGestureSetup cho blurview
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        let locationInView = sender.location(in: view)
-        if isMenuOpen {
-            displayMenu()
+    @IBAction func locationBtn(_ sender: Any) {
+        viewModel.currentLocationBtnHandle()
+    }
+    
+    @IBAction func mapBtn(_ sender: Any) {
+        if viewModel.mapBtnHandle() {
+            goToMapsVC()
         }
     }
     
-    func tapGestureSetup(){
+    // MARK: - Internet View
+    func updateInternetView(isReachable: Bool) {
+        noInternetView.isHidden = isReachable
+        noInternetViewConstraints.constant = isReachable ? -25 : 0
+    }
+}
+
+// MARK: - Side Menu
+extension MainViewController {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        if isMenuOpen { displayMenu() }
+    }
+    
+    func tapGestureSetup() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         blurMenuView.addGestureRecognizer(tapGesture)
     }
     
-    // thêm subview
     private func addSideMenuViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let menuController = storyboard.instantiateViewController(identifier: "SideMenuViewController") as? SideMenuViewController else {
-            return
-        }
+        guard let menuController = storyboard.instantiateViewController(
+            identifier: "SideMenuViewController"
+        ) as? SideMenuViewController else { return }
+        
         menuController.onMenuItemSelected = { [weak self] menuItem in
             self?.handleMenuItemSelection(menuItem)
         }
         configureSideMenuView(menuController)
     }
     
-    // cấu hình sidemenu
     private func configureSideMenuView(_ menuController: SideMenuViewController) {
-        //Thiết lập kích thước và vị trí của Side Menu:
         menuController.view.frame = menuView.bounds
-        //Thêm Side Menu vào menuView
         menuView.addSubview(menuController.view)
-        //Thêm Side Menu vào Child View Controller:
         addChild(menuController)
-        //Gọi để thông báo rằng side menu đã được thêm vào main view controller như là một child view controller.
         menuController.didMove(toParent: self)
-        //setup vị trí
         menuViewLocation.constant = -250
         blurMenuView.isHidden = true
         isMenuOpen = false
     }
-    // xử lí khi nhấn vào có ô trên menu
+    
     private func handleMenuItemSelection(_ menuItem: MenuItem) {
         switch menuItem.screen {
-        case .profile :
-            print("profile")
-            goToProfileVC()
-        case .location :
-            print("Location")
-            self.underDevelopment()
-        case .settings :
-            print("settings")
-            goToSettingVC()
-        case .notification :
-            self.underDevelopment()
-            print("notification")
-        case .aboutUs :
-            self.underDevelopment()
-            print("aboutUs")
-        case .privatePolicy :
-            self.underDevelopment()
-            print("privatePolicy")
-        case .termsOfUse :
-            self.underDevelopment()
-            print("termsOfUse")
-        case .logout :
-            mainPresenter?.logoutHandle()
-            print("logout")
+        case .profile:      goToProfileVC()
+        case .settings:     goToSettingVC()
+        case .logout:       viewModel.logoutHandle()
+        default:            underDevelopment()
         }
     }
     
-    // display menu
     private func displayMenu() {
         isMenuOpen.toggle()
         blurMenuView.alpha = isMenuOpen ? 0.5 : 0
         blurMenuView.isHidden = !isMenuOpen
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2) {
             self.menuViewLocation.constant = self.isMenuOpen ? 0 : -250
             self.view.layoutIfNeeded()
-        })
+        }
     }
 }
-// MARK: - Các hàm liên quan TableVC
-extension MainViewController : UITableViewDelegate, UITableViewDataSource {
+
+// MARK: - Navigation
+extension MainViewController: MapsViewControllerDelegate {
+    func loadDataAfterAuthorizationStatus() {
+        //unknow ?
+    }
+    
+    private func goToProfileVC() {
+        navigation.navigateToVC(from: self, withIdentifier: .profileVC)
+    }
+    
+    private func goToForecast14DaysVC() {
+        navigation.navigateToVC(from: self, withIdentifier: .weatherLongDayVC) { [weak self] vc in
+            if let weatherLongDayVC = vc as? WeatherLongDayViewController {
+                weatherLongDayVC.weatherData = self?.viewModel.weatherData
+            }
+        }
+    }
+    
+    func goToMapsVC() {
+        navigation.navigateToVC(from: self, withIdentifier: .mapsVC) { [weak self] vc in
+            if let mapsVC = vc as? MapsViewController {
+                mapsVC.delegate = self
+            }
+        }
+    }
+    
+    private func goToSettingVC() {
+        navigation.navigateToVC(from: self, withIdentifier: .setingVC)
+    }
+    
+    private func underDevelopment() {
+        showAlert(
+            title: NSLocalizedString("The feature is under development", comment: ""),
+            message: NSLocalizedString("The feature is under development, please try again later.", comment: "")
+        )
+    }
+    
+    func updateDataForCurrentLocation(with weatherData: WeatherData24h, address: String?) {
+        viewModel.weatherData = weatherData
+        viewModel.locationName = address
+    }
+}
+
+// MARK: - TableView
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     private func setupTableView() {
         mainTableView.dataSource = self
         mainTableView.delegate = self
         mainTableView.separatorStyle = .none
         mainTableView.sectionFooterHeight = 10
-        let dailyCell = UINib(nibName: "DailyTableViewCell", bundle: nil)
-        mainTableView.register(dailyCell, forCellReuseIdentifier: "DailyTableViewCell")
-        let weeklyCell = UINib(nibName: "WeeklyTableViewCell", bundle: nil)
-        mainTableView.register(weeklyCell, forCellReuseIdentifier: "WeeklyTableViewCell")
-        let otherCell = UINib(nibName: "OtherInformTableViewCell", bundle: nil)
-        mainTableView.register(otherCell, forCellReuseIdentifier: "OtherInformTableViewCell")
-        let aqiCell = UINib(nibName: "AQITableViewCell", bundle: nil)
-        mainTableView.register(aqiCell, forCellReuseIdentifier: "AQITableViewCell")
-        let astroCell = UINib(nibName: "AstroTableViewCell", bundle: nil)
-        mainTableView.register(astroCell, forCellReuseIdentifier: "AstroTableViewCell")
-        let currentCell = UINib(nibName: "CurrentWeatherTableViewCell", bundle: nil)
-        mainTableView.register(currentCell, forCellReuseIdentifier: "CurrentWeatherTableViewCell")
-        let adviceCell = UINib(nibName: "WeatherAdviceTableViewCell", bundle: nil)
-        mainTableView.register(adviceCell, forCellReuseIdentifier: "WeatherAdviceTableViewCell")
-    }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10 // Đặt khoảng cách giữa các section
-    }
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView()
-        footerView.backgroundColor = UIColor.clear // Đặt màu nền của footerInSection ở đây
-        return footerView
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        let numberOfCases = HomeNewsSection.allCases.count
-        return numberOfCases
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let homeSection = HomeNewsSection(rawValue: section)
-        switch homeSection {
-        case .currentCell:
-            return 1
-        case .dailyCell:
-            return 1
-        case .weeklyCell :
-            return 1
-        case .otherCell:
-            return 1
-        case .aqiCell:
-            return 1
-        case .astroCell:
-            return 1
-        case .adviceCell:
-            return 1
-        default:
-            return 0
+        
+        [("DailyTableViewCell", "DailyTableViewCell"),
+         ("WeeklyTableViewCell", "WeeklyTableViewCell"),
+         ("OtherInformTableViewCell", "OtherInformTableViewCell"),
+         ("AQITableViewCell", "AQITableViewCell"),
+         ("AstroTableViewCell", "AstroTableViewCell"),
+         ("CurrentWeatherTableViewCell", "CurrentWeatherTableViewCell"),
+         ("WeatherAdviceTableViewCell", "WeatherAdviceTableViewCell")
+        ].forEach { nibName, identifier in
+            mainTableView.register(
+                UINib(nibName: nibName, bundle: nil),
+                forCellReuseIdentifier: identifier
+            )
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        HomeNewsSection.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 10 }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let homeSection = HomeNewsSection(rawValue: indexPath.section)
-        switch homeSection {
-        case.currentCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentWeatherTableViewCell", for: indexPath) as! CurrentWeatherTableViewCell
-            if let forecastCurrent = weatherData {
-                cell.getCurrentData(with: forecastCurrent)
+        let data = viewModel.weatherData
+        switch HomeNewsSection(rawValue: indexPath.section) {
+        case .currentCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "CurrentWeatherTableViewCell", for: indexPath
+            ) as! CurrentWeatherTableViewCell
+            if let data = data { cell.getCurrentData(with: data) }
+            return cell
+            
+        case .dailyCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "DailyTableViewCell", for: indexPath
+            ) as! DailyTableViewCell
+            if let day1 = data?.forecast.forecastday[0],
+               let day2 = data?.forecast.forecastday[1] {
+                cell.getData24h(from: data?.location.localtime, with: day1.hour + day2.hour)
             }
             return cell
-        case.dailyCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "DailyTableViewCell", for: indexPath) as! DailyTableViewCell
-            if let forecastDay1 = weatherData?.forecast.forecastday[indexPath.row],
-               let forecastDay2 = weatherData?.forecast.forecastday[indexPath.row + 1] {
-                let forecastHours = forecastDay1.hour + forecastDay2.hour
-                let currentTime = weatherData?.location.localtime
-                cell.getData24h(from: currentTime, with: forecastHours)
-            }
-            return cell
-        case.weeklyCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyTableViewCell", for: indexPath) as! WeeklyTableViewCell
-            if let forecastWeek = weatherData?.forecast.forecastday {
+            
+        case .weeklyCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "WeeklyTableViewCell", for: indexPath
+            ) as! WeeklyTableViewCell
+            if let forecastWeek = data?.forecast.forecastday {
                 cell.getWeeklyDatas(with: forecastWeek)
                 cell.goToForecast14Days = { [weak self] in
                     self?.goToForecast14DaysVC()
                 }
             }
             return cell
-        case.otherCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "OtherInformTableViewCell", for: indexPath) as! OtherInformTableViewCell
-            if let forecastOther = weatherData?.current {
-                cell.getOtherData(with: forecastOther)
+            
+        case .otherCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "OtherInformTableViewCell", for: indexPath
+            ) as! OtherInformTableViewCell
+            if let current = data?.current { cell.getOtherData(with: current) }
+            return cell
+            
+        case .aqiCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "AQITableViewCell", for: indexPath
+            ) as! AQITableViewCell
+            if let aqi = data?.current.airQuality { cell.getAirData(with: aqi) }
+            return cell
+            
+        case .astroCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "AstroTableViewCell", for: indexPath
+            ) as! AstroTableViewCell
+            if let time = data?.location.localtime,
+               let astro = data?.forecast.forecastday[indexPath.row] {
+                cell.getAstroData(with: astro, with: time)
             }
             return cell
-        case.aqiCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AQITableViewCell", for: indexPath) as! AQITableViewCell
-            if let forecastAqi = weatherData?.current.airQuality {
-                cell.getAirData(with: forecastAqi)
+            
+        case .adviceCell:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "WeatherAdviceTableViewCell", for: indexPath
+            ) as! WeatherAdviceTableViewCell
+            if let advice = data?.forecast.forecastday[0] {
+                cell.getAdviceData(data: advice)
             }
             return cell
-        case.astroCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AstroTableViewCell", for: indexPath) as! AstroTableViewCell
-            if let currentTime = weatherData?.location.localtime, let forecastAstro = weatherData?.forecast.forecastday[indexPath.row] {
-                cell.getAstroData(with: forecastAstro, with: currentTime)
-            }
-            return cell
-        case.adviceCell:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherAdviceTableViewCell", for: indexPath) as! WeatherAdviceTableViewCell
-            if let forecastAdvice = weatherData?.forecast.forecastday[0] {
-                cell.getAdviceData(data: forecastAdvice)
-            }
-            return cell
+            
         default:
             return UITableViewCell()
         }
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let homeSection = HomeNewsSection(rawValue: indexPath.section)
-        switch homeSection {
-        case.aqiCell:
+        switch HomeNewsSection(rawValue: indexPath.section) {
+        case .aqiCell:
             print("aqiCell")
         default:
-            return
+            break
         }
     }
 }
-// MARK: - Các hàm chuyển màn hình
-extension MainViewController: MapsViewControllerDelegate {
-    private func goToProfileVC() {
-        naviation.navigateToVC(from: self, withIdentifier: .profileVC)
-    }
-    private func goToForecast14DaysVC() {
-        naviation.navigateToVC(from: self, withIdentifier: .weatherLongDayVC) { viewcontroller in
-            if let weatherLongDayVC = viewcontroller as? WeatherLongDayViewController {
-                weatherLongDayVC.weatherData = self.weatherData
-            }
-        }
-    }
-    func goToMapsVC() {
-        naviation.navigateToVC(from: self, withIdentifier: .mapsVC) { viewcontroller in
-            if let mapsVC = viewcontroller as? MapsViewController {
-                mapsVC.delegate = self
-            }
-        }
-    }
-    private func goTodailyForecastVC() {
-        naviation.navigateToVC(from: self, withIdentifier: .dailyForecastVC)
-    }
-    private func goToSettingVC(){
-        naviation.navigateToVC(from: self, withIdentifier: .setingVC)
-    }
-    private func underDevelopment(){
-        let title = NSLocalizedString("The feature is under development", comment: "")
-        let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")
-        showAlert(title: title, message: message)
-    }
-}
-// MARK: - Các hàm dể load data
-extension MainViewController : CLLocationManagerDelegate {
-    // sử dụng để load lại data sau khi chọn địa điểm trên maps
-    func loadDataAfterAuthorizationStatus(){
-        print("loadDataAfterAuthorizationStatus")
-        mainPresenter?.checkLocationAuthorizationStatus()
+
+// MARK: - Pull to Refresh
+extension MainViewController {
+    func pullToRefesh() {
+        refeshControl.addTarget(self, action: #selector(reloadData), for: .valueChanged)
+        mainTableView.addSubview(refeshControl)
     }
     
-    func updateDataForCurrentLocation(with weatherData: WeatherData24h,address: String? ){
-        self.weatherData = weatherData
-        self.locationNameLb.text = address
-        self.mainTableView.reloadData()
+    @objc func reloadData() {
+        viewModel.chooseDataToFetch()
+        refeshControl.endRefreshing()
     }
 }
-extension MainViewController: UIScrollViewDelegate {
-    func pullToRefesh(){
-        refeshControl.addTarget(self, action: #selector(reloadData), for: UIControl.Event.valueChanged)
-        mainTableView.addSubview(refeshControl)
-        nointernetLb.text = NSLocalizedString(nointernetLb.text ?? "", comment: "")
-    }
-    @objc func reloadData(send: UIRefreshControl){
-        DispatchQueue.main.async {
-            self.mainPresenter?.chooseDataToFetch()
-            print("đã scroll hết")
-            self.refeshControl.endRefreshing()
-        }
-    }
-}
+
+
+
 // MARK: - Các hàm xử lí liên quan đến kết nối internet
 extension MainViewController {
     // Khi có thay đổi trạng thái mạng, bạn có thể gọi hàm này để cập nhật UIView
@@ -346,7 +366,7 @@ extension MainViewController {
     }
     func updateInternetView() {
         print("updateInternetView")
-
+        
         if NetworkMonitor.shared.isReachable {
             DispatchQueue.main.async {
                 self.noInternetView.isHidden = true

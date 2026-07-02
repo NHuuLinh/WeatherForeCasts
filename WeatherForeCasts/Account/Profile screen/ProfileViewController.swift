@@ -13,7 +13,7 @@ enum Gender: String {
     case none
 }
 
-class ProfileViewController: UIViewController, UITextFieldDelegate {
+class ProfileViewController: BaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var idTF: UILabel!
@@ -217,16 +217,20 @@ extension ProfileViewController {
             }
         }
     }
+    
     func updateDataToFireBase() {
+        
         guard let currentUser = Auth.auth().currentUser?.uid else { return }
         let userRef = databaseRef.child("users").child(currentUser)
         userRef.child("name").setValue(nameTF.text)
         userRef.child("dateOfBirth").setValue(dateOfBirthTF.text)
         userRef.child("phoneNumber").setValue(phoneNumberTF.text)
         userRef.child("gender").setValue(selectedGender.rawValue)
+        
         updateGenderButtons()
         // update ảnh lên firebase
         uploadImageToFirebaseStorage()
+        
         guard let defaultImage = UIImage(named: "warning") else {return}
         CoreDataHelper.share.saveProfileValueToCoreData(avatar: avatarImg.image ?? defaultImage,
                                                         name: nameTF.text ?? "",
@@ -260,6 +264,7 @@ extension ProfileViewController {
 }
 // MARK: - date of birth text field
 extension ProfileViewController {
+    
     func createToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -273,6 +278,7 @@ extension ProfileViewController {
         toolbar.setItems([doneButton, flexibleSpace, cancelButton], animated: true)
         return toolbar
     }
+    
     func createDatePicker() {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
@@ -280,6 +286,7 @@ extension ProfileViewController {
         dateOfBirthTF.inputView = datePicker
         dateOfBirthTF.inputAccessoryView = createToolbar()
     }
+    
     @objc func doneBtn(){
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -287,6 +294,7 @@ extension ProfileViewController {
         self.dateOfBirthTF.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }
+    
     @objc func cancelBtn() {
         self.view.endEditing(true)
     }

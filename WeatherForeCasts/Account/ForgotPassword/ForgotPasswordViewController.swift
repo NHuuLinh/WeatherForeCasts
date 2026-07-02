@@ -2,11 +2,12 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import KeychainSwift
+import Combine
 
 enum ForgotPasswordFormField {
     case email
 }
-class ForgotPasswordViewController: UIViewController,checkValid {
+class ForgotPasswordViewController: BaseViewController, CheckValid {
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
     @IBOutlet weak var emailerrorTF: UITextField!
@@ -22,17 +23,21 @@ class ForgotPasswordViewController: UIViewController,checkValid {
     @IBOutlet weak var forogtPasswordLb: UILabel!
     @IBOutlet weak var alreadyHaveAcountLb: UILabel!
     @IBOutlet weak var orContinueWithLb: UILabel!
+    
     var onSuccessResetPassword: ((String) -> Void)?
     let keychain = KeychainSwift()
+    private var cancellables = Set<AnyCancellable>()
+    private let viewModel = ForgotPasswordViewModel()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         translateLangue()
+        handleObser()
     }
     func setupView() {
         clearEmailBtn.isHidden = true
-        navigationController?.isNavigationBarHidden = true
         emailTF.text = keychain.get("TemporaryEmail")
         checkValidInput()
     }
@@ -48,38 +53,45 @@ class ForgotPasswordViewController: UIViewController,checkValid {
         case signInBtn:
             self.navigationController?.popToRootViewController(animated: true)
         case facebookBtn:
-            loginBySocialNW()
+            viewModel.loginBySocialNW()
         case googleBtn:
-            loginBySocialNW()
+            viewModel.loginBySocialNW()
         case sendRequsetBtn:
-            sendRequestToFirebase()
+            viewModel.sendRequestToFirebase(email: emailTF.text ?? "")
         default:
             break
         }
     }
-    func sendRequestToFirebase(){
-        let email = emailTF.text ?? ""
-        self.showLoading(isShow: true)
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            self.showLoading(isShow: false)
-            if let error = error {
-                print("\(error)")
-                let title = NSLocalizedString("Error", comment: "")
-                let message = NSLocalizedString("Sever busy please try again later", comment: "")
-                self.showAlert(title: title, message: message)
-            } else {
-                let title = NSLocalizedString("Success", comment: "")
-                let message = NSLocalizedString("New password has been sent to your email. Please check your email and log in again with your new password", comment: "")
-                self.showAlert(title: title, message: message){
+    
+    func handleObser(){
+        
+        viewModel.$errorMsg
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let error = error, let self = self else {
+                    return
+                }
+                self.showAlert(title: error.title, message: error.message)
+            }
+            .store(in: &cancellables)
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.showLoading(isShow: isLoading)
+            }
+            .store(in: &cancellables)
+        viewModel.$isSuccess
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isSuccess in
+                guard let self = self else {return}
+                if isSuccess {
                     self.navigationController?.popToRootViewController(animated: true)
-                    self.onSuccessResetPassword?(email)
+                    self.onSuccessResetPassword?(self.emailTF.text ?? "")
                 }
             }
-        }
+            .store(in: &cancellables)
     }
-    func loginBySocialNW(){
-        self.showAlert(title: "The feature is under development", message: "The feature is under development, please try again later.")
-    }
+    
 }
 //MARK: - Validate Form
 extension ForgotPasswordViewController {

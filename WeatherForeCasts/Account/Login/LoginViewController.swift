@@ -6,12 +6,7 @@ import KeychainSwift
 import Combine
 
 
-enum LoginFormField {
-    case email
-    case password
-}
-
-class LoginViewController: UIViewController,checkValid {
+class LoginViewController: BaseViewController,  CheckValid {
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
@@ -40,19 +35,19 @@ class LoginViewController: UIViewController,checkValid {
     @IBOutlet weak var orContinueWith: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    let keychain = KeychainSwift()
+    private let keychain = KeychainSwift()
     private let viewModel = LoginViewModel()
-    private var cancelable = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         translateLangue()
     }
+    
     private func setupView(){
+        
         clearBtn.isHidden = true
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        //loading email,password người dùng đã đăng nhập thành công
         emailTF.text = keychain.get("email")
         passwordTF.text = keychain.get("password")
         scrollView.keyboardDismissMode = .interactiveWithAccessory
@@ -107,16 +102,23 @@ class LoginViewController: UIViewController,checkValid {
     func handleObserver(){
         viewModel.$loginErrorMess
             .compactMap { $0}
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] errorMes in
                 self?.showAlert(title: errorMes.title, message: errorMes.message)
+                print("$loginErrorMess: \(errorMes.title),\(errorMes.message)")
+
             }
-            .store(in: &cancelable)
+            .store(in: &cancellables)
+        
         viewModel.$isloading
-            .compactMap {$0}
+            .compactMap({ value in
+                return value
+            })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] isShow in
                 self?.showLoading(isShow: isShow)
             }
-            .store(in: &cancelable)
+            .store(in: &cancellables)
     }
     
 }

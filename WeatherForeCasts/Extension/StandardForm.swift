@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-protocol checkValid {
+protocol CheckValid {
     func passwordValidator(password: String) -> (message: String, valid: Bool)
     func emailValidator(_ email: String) -> (message: String, valid: Bool)
     func isValidEmail(_ email: String) -> Bool
 }
-extension checkValid {
+extension CheckValid {
     // kiểm tra thông tin mật khẩu  User nhập , trả về message để gán vào eror text, giá trị bool để gán vào hàm xử lí UI phía dưới
     func passwordValidator(password: String) -> (message: String, valid: Bool) {
         // tạo biến để dịch thuật
@@ -44,6 +44,7 @@ extension checkValid {
         }
     }
 }
+
 extension UIViewController {
     // hàm xử lí check valid khi người dùng nhập email,password
     // status là kết quả của các hàm check valid User nhập phía trên
@@ -84,6 +85,7 @@ extension UIViewController {
     }
     
 }
+
 // extension để đổi màu nhưng image không phải màu hệ thống, ví dụ muốn đổi một icon từ màu đen sang trắng
 extension UIImageView {
     func setImageColor(color: UIColor) {

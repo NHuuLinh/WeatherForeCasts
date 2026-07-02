@@ -11,76 +11,67 @@ import Combine
 
 
 class LoginViewModel {
-    let keychain = KeychainSwift()
-    private weak var appCoordinator : AppCoordinator?
-    @Published var loginErrorMess : LoginError?
-    @Published var isloading = false
-
     
-    init(appCoordinator: AppCoordinator? = nil) {
-        self.appCoordinator = appCoordinator
+    let keychain = KeychainSwift()
+    private let appCoordinator = AppCoordinator.shared
+    @Published var loginErrorMess : FireBaseError?
+    @Published var isloading = false
+    private let service = WeatherAPIManager.shared
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        
     }
-
+    
+    func loginBySocialNW(){
+        loginErrorMess = .loginBySocialNW
+    }
     func login(email: String, password: String) {
+        loginErrorMess = nil
         isloading = true
-        Auth.auth().signIn(withEmail: email, password: password) {
-            [weak self] authResult, error in
-            guard let self = self else { return }
-            if let error = error {
-                isloading = false
-                loginErrorMess = .unknownError(message: error.localizedDescription)
-                return
-            } else {
-                switch AuthErrorCode.Code(rawValue: error!._code) {
-                case .userDisabled:
-                    loginErrorMess = .userDisabled
-                case .wrongPassword:
-                    loginErrorMess = .wrongPassword
-                case .userNotFound:
-                    loginErrorMess = .userNotFound
-                default:
-                    loginErrorMess = .unknownError(message: error?.localizedDescription ?? "Unknow error")
-                    isloading = false
-                    return
+        service.login(email: email, password: password)
+        //1. check có lỗi gì không
+            .flatMap { [weak self] _ -> AnyPublisher<Bool,FireBaseError> in
+                guard let self = self else {
+                    return Fail(error: .unknownError(message:"Unknown Error")).eraseToAnyPublisher()
                 }
-                guard let user = Auth.auth().currentUser else {
-                    // Đối tượng user không tồn tại
-                    loginErrorMess = .userNotFound
-                    isloading = false
-                    return
+                return self.service.isEmailVerified()
+            }
+        //2. kiểm tra user hiện tại có đúng không và gửi email xác nhận nếu đúng
+            .flatMap { [weak self] isVerified -> AnyPublisher<Void,FireBaseError> in
+                guard let self = self else {
+                    return Fail(error: .unknownError(message:"Unknown Error")).eraseToAnyPublisher()
                 }
-                
-                if user.isEmailVerified {
-                    // Cho phép đăng nhập
-                    // Điều hành đến màn hình chính hoặc thực hiện các bước khác sau khi đăng nhập
-                    isloading = false
-                    appCoordinator?.routeToScene(.main)
-                    keychain.set(email, forKey: "email")
-                    keychain.set(password, forKey: "password")
-                    print("Đăng nhập thành công")
+                if isVerified {
+                    return Just(())
+                        .setFailureType(to: FireBaseError.self)
+                        .eraseToAnyPublisher()
                 } else {
-                    isloading = false
-                    // Hiển thị thông báo cho người dùng rằng họ cần xác thực email trước khi đăng nhập
-                    //                self.loginVC.showLoading(isShow: false)
-                    //                self.loginVC.showAlert(title: "Error", message: "Vui lòng xác thực email trước khi đăng nhập.")
-                    // Gửi lại email xác thực (nếu cần)
-                    loginErrorMess = .userNotFound
-                    user.sendEmailVerification { (sendEmailError) in
-                        if let error = sendEmailError {
-                            print("Lỗi khi gửi lại email xác thực: \(error.localizedDescription)")
+                    return self.service.sendEmailVerification()
+                        .flatMap { _ -> AnyPublisher<Void, FireBaseError> in
+                            Fail(error: FireBaseError.emailNotVerified).eraseToAnyPublisher()
                         }
-                    }
-                    
+                        .eraseToAnyPublisher()
                 }
             }
-        }
+        // xử lí kết quả trả về nếu đã ok hết
+            .sink { [weak self] completion in
+                guard let self = self else { return }
+                self.isloading = false
+                if case(.failure(let error)) = completion {
+                    self.loginErrorMess = error
+                }
+            } receiveValue: {[weak self] _ in
+                guard let self = self else { return }
+                self.isloading = false
+                self.appCoordinator.routeToScene(.main)
+                keychain.set(email, forKey: "email")
+                keychain.set(password, forKey: "password")
+                print("Đăng nhập thành công")
+            }
+            .store(in: &cancellables)
     }
-        func loginBySocialNW(){
-            let title = NSLocalizedString("The feature is under development", comment: "")
-            let message = NSLocalizedString("The feature is under development, please try again later.", comment: "")
-            loginErrorMess = .loginBySocialNW
-        }
-    }
-    
+}
+
 
 

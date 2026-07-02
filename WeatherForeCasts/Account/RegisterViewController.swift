@@ -2,12 +2,10 @@
 import UIKit
 import FirebaseAuth
 import KeychainSwift
+import Combine
 
-protocol RegisterDisplay: UIViewController {
-    
-}
 
-class RegisterViewController: UIViewController, RegisterDisplay,checkValid {
+class RegisterViewController: BaseViewController,CheckValid {
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var emailErrorView: UIView!
@@ -42,27 +40,52 @@ class RegisterViewController: UIViewController, RegisterDisplay,checkValid {
     @IBOutlet weak var dotHaveAcountLb: UILabel!
     @IBOutlet weak var orContinueWith: UILabel!
     
-    private var registerPresenter: RegisterPresenter!
     let keychain = KeychainSwift()
+    let viewModel = RegisterViewModel()
+    var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         translateLangue()
+        handlePublished()
     }
     private func setupView(){
         clearBtn.isHidden = true
-        navigationController?.setNavigationBarHidden(true, animated: true)
         emailTF.text = keychain.get("TemporaryEmail")
         passwordTF.text = keychain.get("TemporaryPassword")
         rePassworđTF.text = keychain.get("TemporaryPassword")
         checkValidInput()
-        registerPresenter = RegisterPresenterImpl(registerVC: self)
     }
+
     
     func goToForgotPassword() {
         AppCoordinator.shared.navigateToVC(from: self, withIdentifier: .forgotPasswordVC)
         keychain.set(emailTF.text ?? "", forKey: "TemporaryEmail")
+    }
+    func handlePublished() {
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.showLoading(isShow: isLoading)
+            }
+            .store(in: &cancellables)
+
+        viewModel.$errorMess
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] errorMes in
+                self?.showAlert(title: errorMes.title, message: errorMes.message)
+            }
+            .store(in: &cancellables)
+        viewModel.$isRegisterSuccess
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isSuccess in
+                if isSuccess {
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     @IBAction func textDidChange(_ sender: UITextField) {
@@ -83,11 +106,11 @@ class RegisterViewController: UIViewController, RegisterDisplay,checkValid {
         case signInBtn:
             self.navigationController?.popToRootViewController(animated: true)
         case facebookBtn:
-            registerPresenter.loginBySocialNW()
+            viewModel.loginBySocialNW()
         case googleBtn:
-            registerPresenter.loginBySocialNW()
+            viewModel.loginBySocialNW()
         case registerBtn:
-            registerPresenter.register(email: emailTF.text ?? "", password: passwordTF.text ?? "")
+            viewModel.register(email: emailTF.text ?? "", password: passwordTF.text ?? "")
         default:
             break
         }
